@@ -1,0 +1,365 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+:root {
+    --nav: #FBFCFD;
+    --navUpdate: #E8F1FF;
+    --navRGBA: rgba(251, 252, 253, 0.8);
+    --navBorder: #e5e7eb;
+    --blue: #8854C0;
+    --box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+    --white: #FFFFFF;
+    --subTitle: rgb(120, 120, 120);
+    --footerBorder: rgb(213, 213, 213);
+}
+
+#navbar {
+    border-bottom: 1px solid var(--navBorder);
+    background-color: var(--navRGBA);
+}
+
+#navbar .navbar-toggler {
+    border: none;
+}
+
+#navbar .navbar-toggler:focus {
+    box-shadow: none;
+}
+
+#navBar>ul {
+    width: 40%;
+}
+
+#drop-menu {
+    position: absolute;
+    left: -450%;
+    top: 120%;
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+    border: 1px solid var(--navBorder);
+}
+
+#bell-icon {
+    color: #8854C0;
+    cursor: pointer;
+}
+
+#user-image {
+    width: 2rem;
+    padding: 0;
+    border-radius: 50%;
+    border: 2px solid var(--blue);
+    transition: all 0.3s ease;
+}
+
+#navbar .navbar-nav li a {
+    padding: 2px 1rem;
+    border-radius: 0.5rem;
+    color: var(--blue);
+    font-weight: 500;
+    font-size: 0.938rem;
+}
+
+#navbar .navbar-nav li .active {
+    background-color: var(--blue);
+    color: white;
+}
+
+#navbar .navbar-nav li a:hover {
+    background-color: var(--blue);
+    color: white;
+}
+
+#theme {
+    color: var(--blue);
+    cursor: pointer;
+}
+
+/* Navbar Ends Here */
+
+/* SideBar starts here */
+
+#inner-side-bar {
+    width: 35%;
+}
+
+#side-bar {
+    width: 100%;
+    padding: 1rem 0 !important;
+}
+
+
+.date-bar {
+    background-color: var(--white);
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+    ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.date-bar p:last-child {
+    color: rgb(88, 88, 88);
+}
+
+.active-date-bar {
+    background-color: var(--blue);
+    color: white;
+}
+
+.active-date-bar p:last-child {
+    color: var(--white)
+}
+
+#next-quiz>div>h6 {
+    font-weight: 600;
+}
+
+#next-quiz>div>span {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.next-quiz-card {
+    background-color: var(--white);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 0.5rem;
+    position: relative;
+    height: 100px;
+    width: 95%;
+}
+
+/* .active-quiz-bar{
+    background-color: #6A5ACD;
+    color: white;
+} */
+
+.next-quiz-card>p {
+    width: 4px;
+    height: 50%;
+    background-color: green;
+    margin-right: 10%;
+    border-radius: 5px;
+}
+
+.next-quiz-header h3 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.next-quiz-label h5 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.next-quiz-label p {
+    font-size: 0.8rem;
+}
+
+/* SideBar ends here */
+
+/* Side Nav Button */
+.side-nav {
+    position: absolute;
+    top: 10%;
+    right: 0;
+    font-size: 1rem;
+    color: var(--blue);
+    display: none;
+}
+
+/* Home Content Starts Here */
+
+#home-content {
+    width: 100%;
+}
+
+#content-left {
+    width: 65%;
+}
+
+#inner-content {
+    width: 85%;
+}
+
+.home-post-card {
+    width: 90% !important;
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 0.4rem;
+    position: relative;
+    box-shadow: -3px 2px 15px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--navBorder);
+}
+
+.isroom {
+    font-size: 10px;
+}
+
+#home-post-author {
+    font-size: 11px;
+}
+
+.home-post-card .card-upper {
+    position: relative;
+}
+
+.home-post-card .card-upper h6 {
+    font-weight: 600;
+}
+
+.home-post-card .card-upper p {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--subTitle);
+}
+
+.home-post-card .card-upper .bookmark {
+    position: absolute;
+    right: 5%;
+    cursor: pointer;
+    color: var(--blue);
+}
+
+.home-post-card .card-lower {
+    position: relative;
+    padding: 0.5rem;
+}
+
+.home-post-card .card-lower span {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+
+.home-post-card .card-lower span i {
+    color: var(--blue);
+}
+
+/* Footer Starts */
+footer {
+    height: 15vh;
+    border-top: 1px solid var(--footerBorder);
+}
+
+footer p {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--subTitle);
+}
+
+footer>div {
+    width: 8% !important;
+}
+
+footer a {
+    color: var(--blue);
+    font-size: 1.2rem;
+}
+
+/* Footer Ends */
+
+/* Responsive Inner Content */
+@media only screen and (max-width: 1300px) {
+    #inner-content {
+        width: 100%;
+    }
+
+    .date-bar {
+        padding: 7px 8px;
+        font-size: 13px;
+    }
+
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .date-bar {
+        padding: 7px;
+        font-size: 12px;
+    }
+}
+
+
+
+/* Positioning drop menu */
+@media only screen and (max-width: 990px) {
+
+    #drop-menu {
+        position: absolute;
+        left: 0;
+    }
+
+    #content-left {
+        width: 100%;
+    }
+
+    #inner-side-bar {
+        width: 80%;
+        position: absolute;
+        right: 0;
+        top: 15%;
+        background-color: var(--nav);
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+    }
+
+    .side-nav {
+        display: inline-block;
+    }
+
+    #navbar .navbar-nav li a {
+        padding: 2px 0px;
+        margin-top: 2%;
+    }
+
+    .home-post-card {
+        width: 100%;
+    }
+
+    #navbar .navbar-nav li a:hover {
+        background-color: transparent;
+        color: var(--blue);
+    }
+
+    #navbar .navbar-nav li .active {
+        background-color: transparent;
+        color: var(--blue);
+    }
+
+    #bell-icon {
+        display: none;
+    }
+
+    #theme {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 370px) {
+
+    .date-bar {
+        padding: 5px;
+        font-size: 10px;
+    }
+
+    #inner-side-bar {
+        width: 90%;
+    }
+}

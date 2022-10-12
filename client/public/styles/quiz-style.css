@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+:root {
+    --blue: #8854C0;
+}
+
+
+body {
+    background-color: rgb(253, 253, 253);
+}
+
+#quiz-section-content {
+    min-height: 100vh;
+}
+
+#quiz-section {
+    width: 65%;
+}
+
+#quiz-all-content {
+    width: 70%;
+}
+
+.course-quiz-cards {
+    width: 100%;
+    height: 150px;
+    background-color: white;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+    padding: 2rem 1rem;
+    border-radius: 2%;
+}
+
+#pills-tab .pill-button {
+    background-color: transparent;
+    color: gray;
+    padding: 5px 2px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#pills-tab .active {
+    color: black;
+    border-bottom: 2px solid black;
+    border-radius: 0;
+}
+
+.quiz-devider {
+    width: 1px;
+    height: 50%;
+    background-color: gray;
+}
+
+.course-quiz-cards .quiz-reg-btn {
+    font-size: 12px;
+    background: rgb(136, 84, 192);
+    background: linear-gradient(90deg, rgba(136, 84, 192, 1) 0%, rgba(177, 143, 214, 1) 100%);
+    border: none;
+    color: white;
+    font-weight: 400;
+    border-radius: 2px;
+    padding: 5px 10px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+}
+
+.course-quiz-cards .quiz-reg-btn:focus {
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.course-quiz-cards .quiz-reg-btn:hover {
+    color: black;
+}
+
+.quiz-time-header h6 {
+    font-weight: 600;
+}
+
+.quiz-time-header p {
+    font-weight: 400;
+    font-size: 12px;
+    color: gray;
+}
+
+.quiz-time-remain>p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.quiz-time-remain p:last-child {
+    margin-top: -4%;
+    font-size: 12px;
+    font-weight: 500;
+    color: black;
+    letter-spacing: 1px;
+}
+
+@media only screen and (max-width: 1200px) {
+    #pills-course .course-quiz-cards {
+        width: 100%;
+    }
+
+    #quiz-all-content {
+        width: 75%;
+    }
+
+}
+
+@media only screen and (max-width: 990px) {
+
+    #quiz-section-content {
+        width: 90%;
+    }
+
+    #quiz-all-content {
+        width: 90%;
+    }
+
+    #quiz-section {
+        width: 100%;
+    }
+
+    #quiz-all-content {
+        width: 75%;
+    }
+}
+
+@media only screen and (max-width: 630px) {
+
+    #quiz-section-content {
+        width: 100%;
+    }
+
+    #quiz-all-content {
+        width: 95%;
+    }
+
+    #quiz-section {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+
+    #quiz-all-content {
+        width: 100%;
+    }
+
+    .quiz-time-header h6 {
+        font-size: 12px;
+    }
+
+    .quiz-time-header p {
+        font-size: 9px;
+    }
+
+    .reg-btn {
+        font-size: 10px;
+        padding: 3px 7px;
+    }
+
+    .quiz-time-remain>p {
+        font-size: 11px;
+    }
+
+    .quiz-time-remain p:last-child {
+        font-size: 10px;
+    }
+}

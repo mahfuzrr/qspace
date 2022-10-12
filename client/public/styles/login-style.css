@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+:root {
+    --nav: #FBFCFD;
+    --navUpdate: #E8F1FF;
+    --navRGBA: rgba(251, 252, 253, 0.8);
+    --navBorder: #e5e7eb;
+    --blue: #8854C0;
+    --box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+    --white: #FFFFFF;
+    --subTitle: rgb(120, 120, 120);
+    --inputBg: #ECECEC;
+}
+
+#login-left-side {
+    width: 60%;
+}
+
+#login-right-side {
+    width: 40%;
+}
+
+#login-right-side img {
+    height: 65%;
+    pointer-events: none;
+    user-select: none;
+}
+
+#login-inner-side {
+    width: 60%;
+    margin-top: 5%;
+}
+
+.reg-error {
+    font-size: 12px;
+    color: red;
+}
+
+.reg-noterror {
+    display: none;
+}
+
+
+#login-inner-side .log-input-style {
+    border: none;
+    background-color: var(--inputBg);
+    border-radius: 30px;
+    padding: 12px 1.5rem;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#login-inner-side .log-input-style:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+#login-inner-side .log-input-style::placeholder {
+    font-size: 13px;
+}
+
+#log-button {
+    padding: 10px 1rem;
+    color: white;
+    background-color: var(--blue);
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+#log-button:active {
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+
+#log-button:focus {
+    box-shadow: none;
+}
+
+#log-show-pass-group span {
+    position: absolute;
+    right: 7%;
+    top: 25%;
+    cursor: pointer;
+}
+
+#reg-show-pass-group span {
+    position: absolute;
+    right: 7%;
+    top: 25%;
+    cursor: pointer;
+}
+
+#login-header-content h3 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--blue);
+    user-select: none;
+}
+
+#login-header-content p {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--subTitle);
+    user-select: none;
+}
+
+#user-reg {
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+#user-reg a {
+    color: var(--blue);
+}
+
+#remember {
+    width: 0.9rem;
+    height: 0.9rem;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+#remember:focus {
+    box-shadow: none;
+}
+
+#remember-group label {
+    font-size: 13px;
+}
+
+#forgot-password a {
+    font-size: 13px;
+    color: var(--blue);
+    text-decoration: none;
+}
+
+/* Register Modal Starts here */
+.modal-content {
+    background-color: #fcfff9;
+}
+
+#regModal {
+    font-size: 16px;
+}
+
+#close {
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--button);
+}
+
+#reg-form form {
+    width: 90%;
+    margin: auto;
+    padding: 5px;
+}
+
+#reg-form form .input-field {
+    border: none;
+    background-color: var(--inputBg);
+    width: 100%;
+    padding: 10px;
+}
+
+#reg-form form .input-field::placeholder {
+    font-size: 13px;
+}
+
+#reg-form form .input-field:focus {
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+#role-selector input[type="radio"] {
+    cursor: pointer;
+}
+
+#reg-form input::file-selector-button {
+    border: 1px solid var(--subTitle);
+    margin-left: 1%;
+    font-size: 12px;
+    background-color: var(--blue);
+    border-radius: 5px;
+    padding: 3px 5px;
+    color: white;
+}
+
+#role-selector>p {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+#role-selector label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#profile-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+#subForm {
+    display: block;
+    background-color: var(--blue);
+    margin: 10px auto;
+    color: white;
+    border-radius: 5px;
+    padding: 7px 20px;
+    font-size: 14px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Register Modal Ends Here */
+
+/* Responsive Starts Here */
+@media only screen and (max-width: 1200px) {
+
+    #login-inner-side {
+        width: 80%;
+    }
+
+}
+
+@media only screen and (max-width: 990px) {
+    #login-right-side img {
+        height: 50%;
+    }
+}
+
+@media only screen and (max-width: 769px) {
+    #login-left-side {
+        width: 90%;
+    }
+
+    #login-right-side {
+        width: 70%;
+        margin-top: 20px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    #login-content {
+        padding: 0 !important;
+    }
+
+    #login-header-content p {
+        text-align: center;
+    }
+
+    #login-inner-side {
+        width: 100%;
+    }
+
+    #login-left-side {
+        width: 100%;
+    }
+
+    #form-all-contents {
+        width: 100%;
+    }
+
+    #login-left-side form {
+        width: 100%;
+    }
+
+    #login-right-side {
+        width: 70%;
+        margin-top: 20px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #remember-group label {
+        font-size: 12px;
+    }
+
+    #forgot-password a {
+        font-size: 12px;
+    }
+}

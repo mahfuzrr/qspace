@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --btn-background: #CDCDCD;
+    --text1: #a3a3a3;
+    --blue: #8854C0;
+    --card: #FDFEFE;
+}
+
+#joinRoom .modal-header {
+    padding: 12px 50px;
+}
+
+#joinRoom .modal-content {
+    background-color: var(--card);
+}
+
+#joinRoom-close-btn {
+    border-radius: 50%;
+    background-color: var(--btn-background);
+    color: white;
+    font-size: 7px;
+}
+
+#joinRoom-close-btn:focus {
+    box-shadow: none;
+}
+
+#joinRoomLabel {
+    color: var(--text1);
+    user-select: none;
+    font-size: 1rem;
+}
+
+/* Form Styling Start */
+
+#join-room-form {
+    width: 90%;
+    margin: 7% auto 0px auto;
+    position: relative;
+}
+
+#join-room-form label {
+    color: var(--text1);
+}
+
+#join-room-form input {
+    border: 2px solid var(--btn-background);
+    border-radius: 5px;
+    padding: 10px 5px;
+    width: 100%;
+    color: #000000;
+    font-size: 14px;
+    padding-left: 20px;
+    box-shadow: none;
+}
+
+#join-room-form input:focus+label,
+#join-room-form input:valid+label {
+    font-size: 12px;
+    color: var(--blue);
+    top: -5px;
+    left: 10px;
+    background: white;
+    padding: 0px 5px 0px 5px;
+}
+
+#join-room-form .form-group {
+    width: auto;
+    height: auto;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+#join-room-form .form-group label {
+    font-family: arial;
+    font-size: 13px;
+    color: var(--text1);
+    padding: 14px;
+    position: absolute;
+    top: -3%;
+    left: 0;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+    pointer-events: none;
+}
+
+#join-room-form input:focus {
+    outline: none;
+    border: 2px solid var(--blue);
+}
+
+
+#join-room-btn-grp {
+    margin-top: 7%;
+}
+
+#join-room-btn {
+    background-color: var(--blue);
+    color: white;
+    padding: 5px 20px;
+    font-size: 14px;
+    font-weight: 300;
+    box-shadow: 0px 5px 10px 0px rgba(157, 157, 157, 0.2);
+}
+
+#join-room-btn:active {
+    box-shadow: 0px 0px 1px 0px rgba(198, 198, 198, 0.1);
+}
+
+#join-room-note-content {
+    width: 90%;
+    margin: 2% auto 0 auto;
+    padding: 0 !important;
+}
+
+#join-room-note-content p {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+#join-room-note-content ul li {
+    font-size: 13px;
+    font-weight: 300;
+}
+
+/* Form Styling End */
+
+@media only screen and (max-width: 360px) {
+    #join-room-form {
+        width: 100%;
+    }
+}

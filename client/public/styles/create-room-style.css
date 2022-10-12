@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --btn-background: #CDCDCD;
+    --text1: #7D7D7D;
+    --blue: #8854C0;
+}
+
+#close-create-btn {
+    border-radius: 50%;
+    background-color: var(--btn-background);
+    color: white;
+    font-size: 7px;
+}
+
+#close-create-btn:focus {
+    box-shadow: none;
+}
+
+#modalHeader h5 {
+    color: var(--text1);
+    user-select: none;
+}
+
+/* Form Styling Start */
+
+#create-room-form {
+    width: 40%;
+    margin: 5% auto 0px auto;
+    position: relative;
+}
+
+#create-room-form input {
+    border: 2px solid var(--btn-background);
+    border-radius: 5px;
+    padding: 10px 5px;
+    width: 100%;
+    color: #000000;
+    font-size: 14px;
+    padding-left: 20px;
+    box-shadow: none;
+}
+
+#create-room-form textarea {
+    border: 2px solid var(--btn-background);
+    border-radius: 5px;
+    padding: 10px 5px;
+    width: 100%;
+    color: #000000;
+    font-size: 14px;
+    padding-left: 20px;
+    box-shadow: none;
+}
+
+#create-room-form input:focus+label,
+#create-room-form input:valid+label {
+    font-size: 12px;
+    color: var(--blue);
+    top: -5px;
+    left: 10px;
+    background: white;
+    padding: 0px 5px 0px 5px;
+}
+
+#create-room-form textarea:focus+label,
+#create-room-form textarea:valid+label {
+    font-size: 12px;
+    color: var(--blue);
+    top: -5px;
+    left: 10px;
+    background: white;
+    padding: 0px 5px 0px 5px;
+}
+
+.form-group {
+    width: auto;
+    height: auto;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    font-family: arial;
+    font-size: 13px;
+    color: var(--text1);
+    padding: 14px;
+    position: absolute;
+    top: -3%;
+    left: 0;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+    pointer-events: none;
+}
+
+#create-room-form input:focus {
+    outline: none;
+    border: 2px solid var(--blue);
+}
+
+#create-room-form textarea:focus {
+    outline: none;
+    border: 2px solid var(--blue);
+}
+
+#room-create-btn-grp {
+    margin-top: 7%;
+}
+
+#room-create-btn {
+    background-color: var(--btn-background);
+    color: rgb(31, 31, 31);
+    padding: 5px 20px;
+    font-size: 14px;
+    font-weight: 300;
+    box-shadow: 0px 5px 10px 0px rgba(157, 157, 157, 0.2);
+}
+
+#room-create-btn:active {
+    box-shadow: 0px 0px 1px 0px rgba(198, 198, 198, 0.1);
+}
+
+#note-content {
+    width: 40%;
+    margin: 2% auto 0 auto;
+    padding: 0 !important;
+}
+
+#note-content p {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#note-content ul li {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+/* Form Styling End */
+
+@media only screen and (max-width: 1200px) {
+    #create-room-form {
+        width: 45%;
+    }
+
+    #note-content {
+        width: 45%;
+    }
+}
+
+@media only screen and (max-width: 997px) {
+    #create-room-form {
+        width: 55%;
+    }
+
+    #note-content {
+        width: 55%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #create-room-form {
+        width: 70%;
+    }
+
+    #note-content {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 519px) {
+    #create-room-form {
+        width: 80%;
+    }
+
+    #note-content {
+        width: 80%;
+    }
+}
+
+
+@media only screen and (max-width: 400px) {
+    #create-room-form {
+        width: 95%;
+    }
+
+    #note-content {
+        width: 95%;
+        margin: 15% auto 0 auto;
+    }
+}

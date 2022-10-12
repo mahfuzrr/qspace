@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri&family=Inter&family=Open+Sans&family=Poppins&family=Roboto&family=Ubuntu&display=swap');
+
+:root {
+    --toolbar: #f1f4f4;
+    --code-bg: #F2F4F4;
+    --blue: #8854C0;
+}
+
+.text-editor {
+    padding: 15px 10px;
+    width: 100%;
+}
+
+#text-editor-save-cancel {
+    padding: 10px;
+    width: 90%;
+    margin-top: 0% !important;
+}
+
+
+.ql-font-roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+.text-editor .ql-editor {
+    min-height: 15em;
+    background-color: white;
+    font-size: 13px;
+}
+
+.ql-font-hind-siliguri {
+    font-family: 'Hind Siliguri', sans-serif;
+}
+
+.ql-font-inter {
+    font-family: 'Inter', sans-serif;
+}
+
+.ql-font-ubuntu {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.ql-font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+.ql-font-open-sans {
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+.ql-size-10px {
+    font-size: 10px;
+}
+
+.ql-size-12px {
+    font-size: 12px;
+}
+
+.ql-size-14px {
+    font-size: 14px;
+}
+
+.ql-size-16px {
+    font-size: 16px;
+}
+
+.ql-size-18px {
+    font-size: 18px;
+}
+
+.ql-size-20px {
+    font-size: 20px;
+}
+
+.ql-snow .ql-editor pre.ql-syntax {
+    background-color: var(--code-bg) !important;
+    color: rgb(99, 99, 99) !important;
+    overflow: visible;
+}
+
+#toolbar {
+    background-color: var(--toolbar);
+    border-top-left-radius: 0.4em;
+    border-top-right-radius: 0.4em;
+    border-bottom: none;
+}

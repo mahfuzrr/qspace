@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+:root {
+    --nav: #FBFCFD;
+    --navUpdate: #E8F1FF;
+    --navRGBA: rgba(251, 252, 253, 0.8);
+    --navBorder: #e5e7eb;
+    --blue: #8854C0;
+    --box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+    --white: #FFFFFF;
+    --subTitle: rgb(120, 120, 120);
+    --footerBorder: rgb(213, 213, 213);
+}
+
+
+/* Profile Sidebar */
+
+#v-pills-tab button {
+    background-color: transparent;
+    color: gray;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    padding: 5px 7px;
+    font-size: 0.9rem;
+}
+
+#v-pills-tab .active {
+    border-bottom: 1px solid var(--blue);
+    color: var(--blue);
+}
+
+#v-pills-tabContent {
+    border-left: 1px solid var(--navBorder);
+}
+
+.profile-content input {
+    width: 50%;
+    border: 1px solid var(--footerBorder);
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.profile-content label {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.profile-content input:focus {
+    outline: none;
+    border: 1px solid var(--blue);
+}
+
+.profile-content input::placeholder {
+    font-size: 12px;
+}
+
+.profile-content input[type="file"] {
+    font-size: 14px;
+    background-color: white;
+}
+
+.profile-content input[type="file"]::file-selector-button {
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    background-color: var(--blue);
+    color: white;
+    border-radius: 3px;
+    padding: 3px 10px;
+    margin-right: 1rem;
+}
+
+#profile-update {
+    width: 100px;
+    background-color: var(--blue);
+    color: white;
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+#profile-update:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
+#password-update {
+    width: 100px;
+    background-color: var(--blue);
+    color: white;
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+#password-update:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Footer Starts */
+#profile-footer {
+    height: 15vh;
+    border-top: 1px solid var(--footerBorder);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+#profile-footer p {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--subTitle);
+}
+
+#profile-footer>div {
+    width: 8% !important;
+}
+
+#profile-footer a {
+    color: var(--blue);
+    font-size: 1.2rem;
+}
+
+/* Footer Ends */
+
+@media only screen and (max-width: 767px) {
+    #v-pills-tabContent {
+        border-left: none;
+        margin-top: 2rem;
+    }
+
+    .profile-content input {
+        width: 80%;
+
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .profile-content input {
+        width: 100%;
+
+    }
+
+    .profile-content input[type="file"] {
+        font-size: 12px;
+    }
+
+    .profile-content input[type="file"]::file-selector-button {
+        font-size: 12px;
+        padding: 3px;
+        margin-right: 0.5rem;
+    }
+
+    #profile-sidebar {
+        padding: 0 !important;
+    }
+
+    #profile-sidebar>div {
+        padding: 0 !important;
+    }
+
+    #v-pills-tabContent {
+        border-left: none;
+    }
+}

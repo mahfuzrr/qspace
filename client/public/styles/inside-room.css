@@ -1,0 +1,396 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+:root {
+    --btn-background: #CDCDCD;
+    --btn-cancel: #F5F5F5;
+    --text1: #7D7D7D;
+    --blue: #8854C0;
+    --card: #FDFEFE;
+    --border: #E8E8E8;
+    --icon: #05c46b;
+    --card1: #CFC7C7;
+}
+
+#room-leftSide {
+    width: 60%;
+    margin-bottom: 30px;
+}
+
+#room-rightSide {
+    width: 30%;
+}
+
+#room-all-side {
+    margin-top: 3%;
+}
+
+#text-editor {
+    margin-top: 5%;
+    border-radius: 5px;
+    width: 98%;
+    background-color: var(--card);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+    padding: 10px 0px;
+}
+
+#text-editor-cancel {
+    padding: 3px 20px;
+    font-size: 14px;
+    background-color: var(--btn-cancel);
+    color: #3b3b3b;
+    border: none;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+#add-room-post-quiz li p {
+    cursor: pointer;
+}
+
+#add-room-post-quiz li p:active {
+    background-color: var(--blue);
+}
+
+#text-editor-cancel:focus {
+    box-shadow: none;
+}
+
+#room-post-description h5 {
+    font-size: 18px;
+}
+
+#text-editor-post {
+    padding: 3px 20px;
+    font-size: 14px;
+    background-color: var(--blue);
+    border: none;
+    color: white;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+#text-editor-post:focus {
+    box-shadow: none;
+}
+
+#room-cover {
+    width: 100%;
+    height: 120px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+#room-add-btn {
+    padding: 2px 20px 2px 2px;
+    background-color: rgba(136, 84, 192, 0.5);
+    border: none;
+    border-radius: 45px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#room-sort-btn {
+    padding: 2px 20px 2px 2px;
+    background-color: rgba(136, 84, 192, 0.5);
+    border: none;
+    border-radius: 45px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#room-add-btn i {
+    color: rgb(0, 0, 0);
+    font-size: 1.5rem;
+}
+
+#room-add-btn:focus {
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+#room-add ul {
+    background-color: #F8F9F9;
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+#room-add ul li {
+    font-size: 15px;
+    padding: 0;
+}
+
+#select {
+    width: 50%;
+}
+
+#select select {
+    margin-left: 5%;
+    cursor: pointer;
+    width: 60%;
+}
+
+#select select:focus {
+    box-shadow: none;
+}
+
+#select label {
+    font-size: 13px;
+    width: 40%;
+}
+
+#about-course {
+    background-color: var(--card);
+    border: 0.5px solid var(--border);
+    padding: 17px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+
+#room-about-header i {
+    font-size: 1.1rem;
+    color: var(--icon);
+}
+
+#room-about-header h6 {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+#course-details {
+    margin-top: 5%;
+}
+
+#copy-to-clip {
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--icon);
+}
+
+#course-details p {
+    font-size: 13px;
+}
+
+.about-mini-title {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#course-description {
+    margin-top: 5%;
+}
+
+#course-description p {
+    font-size: 13px;
+}
+
+#course-progress {
+    background-color: var(--card);
+    border: 0.5px solid var(--border);
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+    padding: 10px 5px;
+    margin-top: 7%;
+    border-radius: 5px;
+}
+
+#course-progress i:first-child {
+    color: #ffa801;
+}
+
+#course-progress i:last-child {
+    position: absolute;
+    right: 5%;
+    top: 15%;
+    cursor: pointer;
+    color: #ffa801;
+}
+
+#course-tasks {
+    background-color: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 5px;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+    margin-top: 7%;
+    padding: 20px 15px;
+}
+
+#tasks-header i {
+    color: #3c40c6;
+}
+
+#tasks-header h6 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+#task-edit i {
+    cursor: pointer;
+}
+
+#all-tasks {
+    margin-top: 6%;
+}
+
+#all-tasks .check {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#all-tasks .check i {
+    color: red;
+}
+
+#completed-tasks {
+    background-color: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 5px;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+    margin-top: 7%;
+    padding: 20px 15px;
+    margin-bottom: 50px;
+}
+
+#completed-tasks .title-check {
+    color: #44bd32;
+}
+
+#all-completed-tasks i {
+    color: #05c46b;
+}
+
+#completed-tasks-header h6 {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+#all-completed-tasks .check {
+    font-size: 14px;
+}
+
+#room-post-cards {
+    margin-top: 7%;
+}
+
+#room-post-cards:last-child {
+    margin-bottom: 5%;
+}
+
+#text-editor-post-title {
+    margin-left: 2%;
+}
+
+#text-editor-post-title label {
+    font-size: 13px;
+}
+
+#text-editor-post-title input {
+    width: 95%;
+    font-size: 13px;
+}
+
+#text-editor-post-title input:focus {
+    box-shadow: none;
+    border: 1px solid var(--blue);
+}
+
+#text-editor-post-description {
+    font-size: 13px;
+}
+
+#room-post-single-card {
+    background-color: var(--card);
+    border: 0.5px solid var(--card1);
+    padding: 20px 1rem;
+    border-radius: 5px;
+}
+
+#room-user-info p:first-child {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#room-user-info p:last-child {
+    font-size: 12px;
+    color: var(--text1);
+}
+
+#room-post-description {
+    margin-top: 4%;
+}
+
+#room-post-description p {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+#room-see-more {
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    margin-top: 2% !important;
+}
+
+#trash-icon {
+    color: red !important;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 992px) {
+    #room-all-side {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #room-leftSide {
+        width: 90%;
+    }
+
+    #room-rightSide {
+        width: 80%;
+        margin-top: 5%;
+    }
+
+    #course-progress {
+        margin-top: 3%;
+    }
+
+    #course-tasks {
+        margin-top: 3%;
+    }
+
+    #completed-tasks {
+        margin-top: 3%;
+        margin-bottom: 8%;
+    }
+}
+
+@media only screen and (max-width: 769px) {
+    #room-all-side {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #room-leftSide {
+        width: 100%;
+    }
+
+    #room-rightSide {
+        width: 100%;
+        margin-top: 5%;
+    }
+}
+
+@media only screen and (max-width: 769px) {
+    #full-room {
+        width: 100%;
+        padding: 0 !important;
+    }
+
+    #select {
+        width: 100%;
+    }
+}
