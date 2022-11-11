@@ -16,7 +16,7 @@ export default function TextEditor({ handleClose }) {
     const { roomId } = useParams();
     const { email } = useSelector((state) => state.auth);
 
-    const [addCoursePost] = useAddCoursePostMutation();
+    const [addCoursePost, { data }] = useAddCoursePostMutation();
 
     const handleChange = (value) => {
         setContent({ value });
@@ -24,6 +24,7 @@ export default function TextEditor({ handleClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const updateObject = {
             title,
             description: DOMPurify.sanitize(content.value),
@@ -33,14 +34,13 @@ export default function TextEditor({ handleClose }) {
 
         if (content && title) {
             addCoursePost(updateObject);
-            const customId = 'post';
 
             toast.success('Posted Successfully !', {
                 position: toast.POSITION.TOP_RIGHT,
-                toastId: customId,
             });
             setTitle('');
             setContent({ value: null });
+            console.log(data);
         }
     };
 

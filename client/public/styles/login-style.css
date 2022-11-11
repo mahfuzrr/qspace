@@ -64,6 +64,7 @@
 
 #login-inner-side .log-input-style::placeholder {
     font-size: 13px;
+    font-weight: 400;
 }
 
 #log-button {
@@ -75,6 +76,10 @@
     font-weight: 600;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.3);
 }
+
+/* #remember-group {
+    padding-left: 0 !important;
+} */
 
 #log-button:active {
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
@@ -134,6 +139,8 @@
 
 #remember-group label {
     font-size: 13px;
+    margin-left: 4%;
+    cursor: pointer;
 }
 
 #forgot-password a {
@@ -172,6 +179,7 @@
 
 #reg-form form .input-field::placeholder {
     font-size: 13px;
+    font-weight: 400;
 }
 
 #reg-form form .input-field:focus {

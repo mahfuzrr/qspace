@@ -35,10 +35,9 @@ const courseSchema = mongoose.Schema(
     ],
     quizzes: [
       {
-        title: {
-          type: String,
-          required: true,
-        },
+        type: mongoose.Types.ObjectId,
+        ref: "Quiz",
+        default: null,
       },
     ],
     tasks: [

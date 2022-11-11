@@ -1,46 +1,28 @@
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 const authChecker = (req, res) => {
-   const cookie = req.cookies['qspace-user'];
-   if(cookie){
-        let decode = JSON.parse(cookie);
-        const email = decode.email;
+   const cookie = req.cookies;
+   const updateData = JSON.parse(cookie.qspace);
+   
+   const {email, accessToken} = updateData;
 
-        User.findOne({email: email}).then((user) => {
-            if(user && user._id){
-                const responseObject = {
-                    name: user.userName,
-                    email,
-                    role: user.role,
-                    college: user.institution,
-                };
+   User.findOne({email: email}).then((user) => {
+    if(user && user._id){
+        const responseObject = {
+            name: user.userName,
+            email,
+            role: user.role,
+            college: user.institution,
+        };
 
-                res.json({
-                    success: true,
-                    message: responseObject,
-                    accessToken: decode.accessToken
-                });
-            }
-            else{
-
-                res.json({
-                    success: false,
-                    message: "Not authorized",
-                })
-            }
-        }).catch((er)=>{
-            res.json({
-                success: false,
-                message: er
-            })
+        res.json({
+            success: true,
+            message: responseObject,
+            accessToken
         });
-   }
-   else{
-    res.json({
-        success: false,
-        message: "Not authorized",
-    });
-   }
+    }
+   })
 }
 
 module.exports = authChecker;

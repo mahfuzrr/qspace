@@ -9,6 +9,7 @@ export const updateProfileApi = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: data,
             }),
+            invalidatesTags: ['AddUserInfo'],
 
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {

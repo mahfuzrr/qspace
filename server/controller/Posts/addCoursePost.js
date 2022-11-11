@@ -1,4 +1,6 @@
 //model importing
+const mongoose = require('mongoose');
+
 const Course = require("../../models/Course");
 const Post = require("../../models/Post");
 const User = require("../../models/User");
@@ -6,13 +8,16 @@ const User = require("../../models/User");
 const addCoursePostController = (req, res) => {
   const { title, description, roomId, email } = req.body;
 
+  const updatedRoomId = mongoose.Types.ObjectId(roomId);
+
   let updateObject = {
     title,
     content: description,
     writterEmail: email,
     isPublic: false,
-    postedOn: Date.now().toLocaleDateString(),
+    postedOn: Date.now().toString(),
   };
+
 
   User.findOne({ email: email }).then((user) => {
     if (user && user._id) {
@@ -24,14 +29,13 @@ const addCoursePostController = (req, res) => {
 
       newPost.save((err, post) => {
         if (err) {
-          console.log(err.message);
           res.json({
             success: false,
             message: "Server Error",
           });
         } else {
           Course.updateOne(
-            { _id: roomId },
+            { _id: updatedRoomId },
             { $addToSet: { posts: [post._id] } }
           )
             .then((result) => {

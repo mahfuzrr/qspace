@@ -9,7 +9,7 @@ function notFoundHandler(req, res, next) {
 function errorHandler(err, req, res, next) {
     res.json({
         success: false,
-        message: err,
+        message: err.message,
     });
 }
 

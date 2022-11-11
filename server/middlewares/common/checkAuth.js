@@ -2,34 +2,36 @@ const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 
 const checkAuth = (req, res, next) => {
-    let cookies =
-        Object.keys(req.signedCookies).length > 0 ? req.signedCookies : null;
+    
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
 
-    const { email } = req.body;
+        let token = req.headers.authorization.split(" ")[1];
 
-    if (cookies) {
-        try {
-            const token = cookies[process.env.COOKIE_NAME];
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            const updateEmail = email.toString();
+        console.log(token);
+        // verify token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-            if (decoded.email !== updateEmail) {
-                res.json({
-                    success: false,
-                    message: "Authentication failure",
-                });
-            } else {
-                req.userData = decoded;
+        User.findOne({email: decoded.email}).then((user) => {
+            if(user && user._id){
                 next();
             }
-        } catch (err) {
-            res.status(500).json({
+            else{
+                res.json({
+                    success: false,
+                    message: "Not Authorized!",
+                })
+            }
+        }).catch((err) => {
+            res.json({
                 success: false,
-                message: "Authentication failure!",
-            });
-        }
-    } else {
-        next("Authentication failure!");
+                message: "Not Authorized!",
+            })
+        })
+    }else{
+        res.json({
+            success: false,
+            message: "Not Authorized!",
+        })
     }
 };
 

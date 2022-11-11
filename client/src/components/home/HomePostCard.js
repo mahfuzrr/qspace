@@ -1,9 +1,21 @@
 import parse from 'html-react-parser';
+import { useState } from 'react';
 
 export default function HomePostCard({ contents }) {
+    const [isMore, setIsMore] = useState(true);
+
     const convertDate = (date) => {
         const newDate = new Date(date);
         return newDate;
+    };
+
+    const resizeContents = (conts) => {
+        let cont = conts;
+        if (cont.length > 200) {
+            cont = cont.slice(0, 200);
+            cont = `${cont}<span> ...</span>`;
+        }
+        return cont;
     };
 
     return (
@@ -23,11 +35,17 @@ export default function HomePostCard({ contents }) {
             </div>
 
             {/* <!-- mid section --> */}
-            <div className="container-fluid card-mid px-4 py-1">{parse(contents?.content)}</div>
+            <div
+                className="container-fluid card-mid px-4 py-1"
+                role="presentation"
+                onClick={() => setIsMore(!isMore)}
+            >
+                {isMore ? parse(resizeContents(contents?.content)) : parse(contents?.content)}
+            </div>
 
             {/* <!-- lower section --> */}
             <div className="container-fluid card-lower">
-                <span>
+                <span role="presentation" onClick={() => setIsMore(!isMore)}>
                     More <i className="fa-solid fa-right-long" />
                 </span>
             </div>

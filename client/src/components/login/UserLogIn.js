@@ -1,16 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logImage from '../../assets/logIn.png';
 import { useLoginMutation } from '../../features/auth/authApi';
 
 export default function UserLogIn() {
-    const { accessToken, isLogged } = useSelector((state) => state.auth);
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -18,8 +15,6 @@ export default function UserLogIn() {
     const [remember, setRemember] = useState(false);
 
     const [login, { data, isLoading }] = useLoginMutation();
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (!data?.success) {
@@ -29,11 +24,16 @@ export default function UserLogIn() {
                     position: toast.POSITION.TOP_CENTER,
                 });
             }
+        } else if (data?.success) {
+            let cookie = {
+                email: data?.info?.email,
+                accessToken: data?.info?.accessToken,
+            };
+            cookie = JSON.stringify(cookie);
+
+            Cookies.set('qspace', cookie);
         }
-        // if (accessToken && isLogged) {
-        //     navigate('/home');
-        // }
-    }, [data, navigate, accessToken, isLogged]);
+    }, [data]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

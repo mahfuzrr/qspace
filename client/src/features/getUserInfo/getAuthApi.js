@@ -6,11 +6,10 @@ export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         cookie: builder.query({
             query: () => ({
-                url: '/api/user/cookie',
+                url: '/api/user/reload-user-save',
                 credentials: 'include',
             }),
-            // invalidatesTags: ['createRoom'],
-            // refetchOnMountOrArgChange: true,
+            providesTags: ['AddUserInfo'],
 
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
@@ -41,8 +40,8 @@ export const authApi = apiSlice.injectEndpoints({
         }),
 
         getUserInformation: builder.query({
-            query: (email) => ({
-                url: `/api/user/userinfo/${email}`,
+            query: (data) => ({
+                url: `/api/user/userinfo/${data}`,
                 method: 'GET',
             }),
             providesTags: ['getUserInfo'],

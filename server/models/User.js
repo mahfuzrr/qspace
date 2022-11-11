@@ -30,11 +30,13 @@ const userSchema = mongoose.Schema(
     avatar: {
       type: String,
     },
-    quizes: {
-      type: mongoose.Types.ObjectId,
-      ref: "Quiz",
-      default: null,
-    },
+    quizzes: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Quiz",
+        default: null,
+      }
+    ],
     course: [
       {
         type: mongoose.Types.ObjectId,

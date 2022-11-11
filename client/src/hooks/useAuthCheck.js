@@ -1,19 +1,13 @@
-import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 import { useCookieQuery } from '../features/getUserInfo/getAuthApi';
 
 export default function useAuthCheck() {
-    const [authChecked, setAuthChecked] = useState(false);
-    const { data } = useCookieQuery();
-    // const { isLogged } = useSelector((state) => state.auth);
-    // let authChecked = false;
-    // console.log(isLogged);
+    let token = Cookies.get('qspace');
+    if (token) token = JSON.parse(token);
+    else token = '';
 
-    useEffect(() => {
-        if (data?.success) {
-            setAuthChecked(true);
-            // console.log(data);
-        }
-    }, [setAuthChecked, data?.success]);
+    useCookieQuery(token?.accessToken);
 
-    return authChecked;
+    if (token && token?.accessToken) return true;
+    return false;
 }

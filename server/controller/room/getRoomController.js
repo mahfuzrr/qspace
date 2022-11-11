@@ -2,7 +2,7 @@ const User = require('../../models/User');
 
 const getRoomController = (req, res) => {
     
-    let cookies = req.cookies['qspace-user'];
+    let cookies = req.cookies['qspace'];
     cookies = JSON.parse(cookies);
 
     const email = cookies.email;

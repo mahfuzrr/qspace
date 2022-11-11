@@ -42,17 +42,17 @@ const logInController = (req, res) => {
                                     }
                                 );
 
-                                let updatedToken = JSON.stringify(token);
+                                // let updatedToken = JSON.stringify(token);
 
-                                const currentTimeAsMs = Date.now();
-                                const adjustedTimeAsMs = currentTimeAsMs + (1000 * 60 * 60 * 24 * 30);
+                                // const currentTimeAsMs = Date.now();
+                                // const adjustedTimeAsMs = currentTimeAsMs + (1000 * 60 * 60 * 24 * 30);
                                 
-                                //set cookie
-                                res.cookie(process.env.COOKIE_NAME, updatedToken, {
-                                    maxAge: adjustedTimeAsMs,
-                                    httpOnly: true,
-                                    signed: true,
-                                });
+                                // //set cookie
+                                // res.cookie(process.env.COOKIE_NAME, updatedToken, {
+                                //     maxAge: adjustedTimeAsMs,
+                                //     httpOnly: true,
+                                //     signed: true,
+                                // });
 
                                 res.status(200).json({
                                     info:{

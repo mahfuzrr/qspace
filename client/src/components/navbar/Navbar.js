@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import NavProfileLink from './NavProfileLink';
 
@@ -7,6 +8,8 @@ export default function Navbar() {
     url = url.slice(1, url.length);
 
     const [activeLink, setActive] = useState(url);
+
+    const { role } = useSelector((state) => state.auth);
 
     return (
         <nav className="navbar sticky-top navbar-expand-lg navbar-light lh-lg" id="navbar">
@@ -48,6 +51,19 @@ export default function Navbar() {
                                 Quiz
                             </Link>
                         </li>
+                        {role === 'teacher' && (
+                            <li className="nav-item">
+                                <Link
+                                    className={`nav-link ${
+                                        activeLink === 'dashboard' ? 'active' : ''
+                                    }`}
+                                    to="/dashboard"
+                                    onClick={() => setActive('dashboard')}
+                                >
+                                    Create
+                                </Link>
+                            </li>
+                        )}
                         <li className="nav-item">
                             <Link
                                 className={`nav-link ${activeLink === 'room' ? 'active' : ''}`}

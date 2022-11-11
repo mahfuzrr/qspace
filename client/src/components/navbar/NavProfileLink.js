@@ -1,15 +1,17 @@
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import userImage from '../../assets/user.png';
 import { userLoggedOut } from '../../features/auth/authSlice';
 
 export default function NavProfileLink() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogOut = () => {
         dispatch(userLoggedOut());
-        Cookies.remove('qspace-user');
+        Cookies.remove('qspace');
+        navigate('/');
     };
 
     return (

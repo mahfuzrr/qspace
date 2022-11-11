@@ -12,7 +12,7 @@ const profileUpdateController = async (req, res) => {
 
 
   if (name || college) {
-    const updateObj = {};
+    let updateObj = {};
 
     if(name)updateObj.userName = name;
     if(college)updateObj.institution = college;

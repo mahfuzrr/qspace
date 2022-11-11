@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
-import { useCookieQuery } from '../../features/getUserInfo/getAuthApi';
 import { useUpdateMutation } from '../../features/updateProfile/updateProfileApi';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 export default function UpdateProfileInfo() {
-    const { name = '', email = '', college = '' } = useSelector((state) => state.userinfo);
-    const { data } = useCookieQuery({ count: 5 }, { refetchOnMountOrArgChange: true });
+    const { name, email, college } = useSelector((state) => state.userinfo);
+    // const { data } = useCookieQuery({ count: 5 }, { refetchOnMountOrArgChange: true });
 
     const [update, { data: updateData }] = useUpdateMutation();
 
@@ -18,13 +17,13 @@ export default function UpdateProfileInfo() {
     const [isSame, setIsSame] = useState(true);
 
     useEffect(() => {
-        if (data?.message?.name) {
-            setUpdatedName(data?.message?.name);
-            setUpNewName(data?.message?.name);
+        if (name) {
+            setUpdatedName(name);
+            setUpNewName(name);
         }
-        if (data?.message?.college) {
-            setUpdatedCollege(data?.message?.college);
-            setNewCollege(data?.message?.college);
+        if (college) {
+            setUpdatedCollege(college);
+            setNewCollege(college);
         }
         if (updateData?.success) {
             setUpdatedName(updateData?.message?.userName);
@@ -32,13 +31,9 @@ export default function UpdateProfileInfo() {
             setUpNewName(updateData?.message?.userName);
             setNewCollege(updateData?.message?.institution);
 
-            toast.success('Successfully Updated !', {
-                position: toast.POSITION.TOP_RIGHT,
-            });
-
             setIsSame(true);
         }
-    }, [data, updateData]);
+    }, [updateData, name, college]);
 
     const handleUpdate = () => {
         const updateObj = {};
@@ -49,6 +44,9 @@ export default function UpdateProfileInfo() {
         if (updateObj) {
             updateObj.email = email;
             update(updateObj);
+            toast.success('Successfully Updated !', {
+                position: toast.POSITION.TOP_RIGHT,
+            });
         }
     };
 

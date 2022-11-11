@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState } from 'react';
-import { Fade } from 'react-awesome-reveal';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import roomCover from '../../assets/nature-background-9.jpg';
@@ -93,11 +92,7 @@ export default function RoomLeftSide() {
                 {/* <!-- Add sort button section --> */}
             </div>
 
-            {isOpen && (
-                <Fade direction="left" duration={500}>
-                    <TextEditor handleClose={handleClose} />
-                </Fade>
-            )}
+            {isOpen && <TextEditor handleClose={handleClose} />}
 
             <div className="container-fluid" id="room-allPost">
                 {postData

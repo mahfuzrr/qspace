@@ -27,6 +27,12 @@ const studentTaskDelete = require("../controller/addTask/studentTaskDelete");
 const addCoursePostController = require("../controller/Posts/addCoursePost");
 const getRoomPostsController = require("../controller/Posts/getRoomPostsController");
 const getPrivatePostsController = require("../controller/Posts/getPrivatePostsController");
+const createQuizController = require("../controller/create-quiz/createQuizHandler");
+const getCourseController = require("../controller/getCourse/getCouresController");
+const getQuizInfoController = require("../controller/getQuizDash/getQuizInfoController");
+const getQuestionController = require("../controller/getQuizDash/getQuestionController");
+const deleteQuizController = require("../controller/getQuizDash/deleteQuizController");
+const editStatusController = require("../controller/getQuizDash/editStatusController");
 
 //router
 const router = express.Router();
@@ -38,7 +44,7 @@ router.post("/register", regController);
 router.post("/login", logInController);
 
 // user authentication
-router.get("/cookie", authChecker);
+router.get("/reload-user-save", authChecker);
 
 //update user information
 router.patch("/update-user", profileUpdateController);
@@ -47,7 +53,7 @@ router.patch("/update-user", profileUpdateController);
 router.patch("/update-password", passUpdateController);
 
 // get user information
-router.get("/userinfo/:email", userInfo);
+router.get("/userinfo/:email", checkAuth, userInfo);
 
 // create room
 router.post("/create-room", roomController);
@@ -83,12 +89,30 @@ router.post("/join-room-student",  joinRoomController);
 router.get("/get-room-student/:email", getStudentRoomController);
 
 // add course Post
-router.post("/add-course-post", addCoursePostController);
+router.post("/add-course-post", checkAuth, addCoursePostController);
 
 // get course post
 router.get("/get-course-post/:roomId", getRoomPostsController);
 
 // get private posts
 router.get('/get-private-post/:email', getPrivatePostsController);
+
+// Quiz Routers
+router.post('/create-quiz', createQuizController);
+
+// get all courselist
+router.get('/get-courses/:email', getCourseController);
+
+// get quiz list for quiz dashboard
+router.get('/get-quizzes/:email', getQuizInfoController);
+
+// get questions
+router.get('/get-questions/:id', getQuestionController);
+
+// delete questions
+router.delete('/delete-question/:id', deleteQuizController);
+
+// update active/hidden status
+router.patch('/update-quiz-status', editStatusController);
 
 module.exports = router;

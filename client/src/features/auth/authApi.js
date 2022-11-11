@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import apiSlice from '../api/apiSlice';
 import { setUserInfo } from '../getUserInfo/getUserInfoSlice';
 import { userLoggedIn } from './authSlice';
@@ -52,14 +51,14 @@ export const authApi = apiSlice.injectEndpoints({
                             })
                         );
 
-                        const cookieObj = {
-                            accessToken: result?.data?.info?.accessToken,
-                            user: result.data.info?.userName,
-                            role: result?.data?.info?.role,
-                            email: result.data.info?.email,
-                        };
+                        // const cookieObj = {
+                        //     accessToken: result?.data?.info?.accessToken,
+                        //     user: result.data.info?.userName,
+                        //     role: result?.data?.info?.role,
+                        //     email: result.data.info?.email,
+                        // };
 
-                        Cookies.set('qspace-user', JSON.stringify(cookieObj), { expires: 7 });
+                        // Cookies.set('qspace-user', JSON.stringify(cookieObj), { expires: 7 });
                     }
                 } catch (err) {
                     // do nothing

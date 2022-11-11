@@ -1,66 +1,88 @@
 const mongoose = require("mongoose");
 
 const quizSchema = mongoose.Schema({
-  quizId: {
-    type: Number,
-    unique: true,
+  author: {
+    type: String,
     required: true,
   },
-  author: {
+  title:{
+    type: String,
+    required: true,
+  },
+  subjectName:{
     type: String,
     required: true,
   },
   catagory:{
     type: String,
     enum: ["course", "public"],
+    default: 'public',
     required: true,
-  },
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  duration: {
-    {
-        hours:{
-            type: Number,
-            default: 0,
-        },
-        minutes:{
-            type: Number,
-            default: 0,
-        }
-        seconds:{
-            type: Number,
-            default: 0,
-        }
-    }
   },
   quizDate: {
     type: Date,
+    required: true,
+  },
+  quizTime:{
+    type: String,
+    required: true
+  },
+  duration: {
+    type: String,
+    required: true,
+  },
+  status:{
+    type: String,
     required: true,
   },
   isOver: {
     type: Boolean,
     required: true,
   },
-  isAuthor: {
-    type: Boolean,
-    required: true,
-  },
   questions: [
     {
-      type: mongoose.Types.ObjectId,
-      ref: "Question",
+      question:{
+        type: String,
+        required: true,
+      },
+      type:{
+        type: String,
+        required: true,
+      },
+      mark:{
+        type: Number,
+        required: true,
+      },
+      options: [
+        {
+          type: String,
+          required: true,
+        }
+      ],
+      answer:[
+        {
+          type: String,
+          required: true,
+        }
+      ],
     },
   ],
-  authorId: {
-    type: mongoose.Types.ObjectId,
-    ref: "User",
-  },
-  perticipants: {
-    type: mongoose.Types.ObjectId,
-    ref: "User",
-  },
+  perticipants: [
+    {
+      userId: {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+      },
+      marks:{
+        type: Number,
+        default: null,
+      },
+      submitTime:{
+        type: Date,
+        default: null,
+      }
+    }
+  ],
 },
 {
     timestamps: true,
