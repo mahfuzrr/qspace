@@ -8,7 +8,7 @@ export const createQuizApi = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: data,
             }),
-            invalidatesTags: ['getQuizInfo'],
+            invalidatesTags: ['getQuizInfo', 'quizPage'],
         }),
         getCourses: builder.query({
             query: (email) => ({

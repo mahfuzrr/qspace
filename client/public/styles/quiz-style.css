@@ -101,6 +101,11 @@ body {
     letter-spacing: 1px;
 }
 
+#no-quiz img {
+    width: 350px;
+    height: 120px;
+}
+
 @media only screen and (max-width: 1200px) {
     #pills-course .course-quiz-cards {
         width: 100%;

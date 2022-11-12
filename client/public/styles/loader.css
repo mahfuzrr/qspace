@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --navBg: #FEFEFE;
+    --primary: #0BE881;
+    --text1: #5d5d5d;
+}
+
+#loader {
+    min-height: 90vh;
+    background-color: var(--navBg);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#loader .dottet-loader {
+    height: 100px;
+    width: 100px;
+    border-color: var(--primary);
+    border-style: solid solid dotted dotted;
+    border-width: 5px;
+    border-radius: 50%;
+    animation: turn-left 2s infinite linear;
+    -webkit-animation: turn-left 2s infinite linear;
+}
+
+#loader .dottet-loader::before {
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    border: 2px var(--primary);
+    border-style: solid dotted;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    position: absolute;
+    animation: turn-right 1s infinite linear;
+    -webkit-animation: turn-right 1s infinite linear;
+}
+
+@keyframes turn-left {
+    from {
+        transform: rotate(0);
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -ms-transform: rotate(0);
+        -o-transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(1turn);
+        -webkit-transform: rotate(1turn);
+        -moz-transform: rotate(1turn);
+        -ms-transform: rotate(1turn);
+        -o-transform: rotate(1turn);
+    }
+
+}
+
+@keyframes turn-right {
+    from {
+        transform: rotate(0);
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -ms-transform: rotate(0);
+        -o-transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(-1turn);
+        -webkit-transform: rotate(-1turn);
+        -moz-transform: rotate(-1turn);
+        -ms-transform: rotate(-1turn);
+        -o-transform: rotate(-1turn);
+    }
+
+}

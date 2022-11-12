@@ -31,7 +31,7 @@ export default function UserLogIn() {
             };
             cookie = JSON.stringify(cookie);
 
-            Cookies.set('qspace', cookie);
+            Cookies.set('qspace', cookie, { expires: 2 });
         }
     }, [data]);
 

@@ -13,7 +13,7 @@ import {
 
 export default function QuizControls() {
     const [allData, setAllData] = useState([]);
-    const [edit, setEdit] = useState(false);
+    const [edit, setEdit] = useState('');
     const [updatedStatus, setUpdatedStatus] = useState('');
 
     const { email } = useSelector((state) => state.auth);
@@ -35,15 +35,25 @@ export default function QuizControls() {
     };
 
     const handleEdit = (curVal, id) => {
-        setEdit(false);
-        if (updatedStatus === curVal) {
+        setEdit('');
+
+        if (updatedStatus === curVal || updatedStatus.length === 0) {
             toast.error('Already Updated!', {
                 position: 'top-right',
             });
+            return;
         }
 
         const updatedObj = { curStatus: updatedStatus, id };
         editStatus(updatedObj);
+    };
+
+    const handleEditToggle = (id) => {
+        if (edit.length === 0) {
+            setEdit(id);
+        } else {
+            setEdit('');
+        }
     };
 
     useEffect(() => {
@@ -95,7 +105,7 @@ export default function QuizControls() {
                                         : 'quiz-dashboard-hidden'
                                 }`}
                             >
-                                {edit ? (
+                                {edit === element?._id ? (
                                     <div className="container m-0 p-0 d-flex justify-content-around">
                                         <select
                                             defaultValue={element?.status}
@@ -133,7 +143,7 @@ export default function QuizControls() {
                                     <span
                                         className="table-quiz-edit-icon"
                                         role="presentation"
-                                        onClick={() => setEdit(!edit)}
+                                        onClick={() => handleEditToggle(element?._id)}
                                     >
                                         <i className="fa-solid fa-pen-to-square" />
                                     </span>

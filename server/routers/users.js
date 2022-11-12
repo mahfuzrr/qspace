@@ -33,6 +33,7 @@ const getQuizInfoController = require("../controller/getQuizDash/getQuizInfoCont
 const getQuestionController = require("../controller/getQuizDash/getQuestionController");
 const deleteQuizController = require("../controller/getQuizDash/deleteQuizController");
 const editStatusController = require("../controller/getQuizDash/editStatusController");
+const getAllQuizController = require("../controller/quiz/getAllQuizController");
 
 //router
 const router = express.Router();
@@ -114,5 +115,8 @@ router.delete('/delete-question/:id', deleteQuizController);
 
 // update active/hidden status
 router.patch('/update-quiz-status', editStatusController);
+
+// get all quizzes
+router.get('/get-all-quizzes', getAllQuizController);
 
 module.exports = router;

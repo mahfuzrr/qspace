@@ -21,6 +21,7 @@ const apiSlice = createApi({
         'getPrivatePost',
         'AddUserInfo',
         'getQuizInfo',
+        'quizPage',
     ],
     endpoints: () => ({}),
 });

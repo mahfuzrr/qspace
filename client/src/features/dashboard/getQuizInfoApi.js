@@ -18,7 +18,7 @@ export const getQuizInfoApi = apiSlice.injectEndpoints({
                 url: `/api/user/delete-question/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['getQuizInfo'],
+            invalidatesTags: ['getQuizInfo', 'quizPage'],
         }),
         editStatus: builder.mutation({
             query: (data) => ({
@@ -26,7 +26,7 @@ export const getQuizInfoApi = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: data,
             }),
-            invalidatesTags: ['getQuizInfo'],
+            invalidatesTags: ['getQuizInfo', 'quizPage'],
         }),
     }),
 });
