@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
-import LeftSideQuestions from './LeftSideQuestions';
-import RightSideNavigator from './RightSideNavigator';
 
-export default function QuizPage() {
+import Footer from '../components/footer/Footer';
+import Navbar from '../components/navbar/Navbar';
+import RightSideNavigator from '../components/quizPage/RightSideNavigator';
+import Result from '../components/result/Result';
+
+export default function ResultPage() {
     const getWindowDimensions = () => {
         const { innerWidth: width, innerHeight: height } = window;
         return {
@@ -30,6 +33,7 @@ export default function QuizPage() {
 
     return (
         <>
+            <Navbar />
             {windowDimension.width <= 890 && (
                 <div className="container-fluid position-relative" id="side-nav-question-hidden">
                     <span className="question-sideNav" onClick={handleToggle} role="presentation">
@@ -37,9 +41,9 @@ export default function QuizPage() {
                     </span>
                 </div>
             )}
-            <div className="container-fluid overflow-hidden" id="quiz-page-contents">
-                <div className="container-fluid d-flex" id="quiz-page-wrapper">
-                    <LeftSideQuestions />
+            <div className="container-fluid overflow-hidden" id="result-page-contents">
+                <div className="container-fluid d-flex" id="result-page-wrapper">
+                    <Result />
                     {windowDimension.width > 890 ? (
                         <RightSideNavigator />
                     ) : (
@@ -47,6 +51,7 @@ export default function QuizPage() {
                     )}
                 </div>
             </div>
+            <Footer />
         </>
     );
 }

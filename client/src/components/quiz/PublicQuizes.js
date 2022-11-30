@@ -1,8 +1,11 @@
 import moment from 'moment';
 import Countdown from 'react-countdown';
+import { useNavigate } from 'react-router-dom';
 
 /* eslint-disable no-underscore-dangle */
 export default function PublicQuizes({ quizData }) {
+    const navigate = useNavigate();
+
     const getDate = (d) => {
         const date = new Date(d);
         const dt = date.getDate();
@@ -45,6 +48,10 @@ export default function PublicQuizes({ quizData }) {
         return date1;
     };
 
+    const handleNavigate = (id) => {
+        navigate(`/quizz/${id}`);
+    };
+
     // const renderer = ({ hours, minutes, seconds }) => (
     //     <span>
     //         {hours}:{minutes}:{seconds}
@@ -73,8 +80,12 @@ export default function PublicQuizes({ quizData }) {
                                     Starts on {getDate(elem?.quizDate).date}{' '}
                                     {getDate(elem?.quizDate).month}, {getDate(elem?.quizDate).year}
                                 </p>
-                                <button type="button" className="btn quiz-reg-btn">
-                                    Register
+                                <button
+                                    type="button"
+                                    className="btn quiz-reg-btn"
+                                    onClick={() => handleNavigate(elem?._id)}
+                                >
+                                    Enter
                                 </button>
                             </div>
                             <p className="quiz-devider" />

@@ -2,8 +2,11 @@
 /* eslint-disable no-underscore-dangle */
 import moment from 'moment';
 import Countdown from 'react-countdown';
+import { useNavigate } from 'react-router-dom';
 
 export default function CourseQuizes({ quizData }) {
+    const navigate = useNavigate();
+
     const getDate = (d) => {
         const date = new Date(d);
         const dt = date.getDate();
@@ -52,6 +55,14 @@ export default function CourseQuizes({ quizData }) {
         </span>
     );
 
+    const handleOnComplete = (id) => {
+        navigate(`/quizz/${id}`);
+    };
+
+    const handleNavigate = (id) => {
+        navigate(`/quizz/${id}`);
+    };
+
     return (
         <div
             className="tab-pane fade show active"
@@ -74,8 +85,12 @@ export default function CourseQuizes({ quizData }) {
                                     Starts on {getDate(elem?.quizDate).date}{' '}
                                     {getDate(elem?.quizDate).month}, {getDate(elem?.quizDate).year}
                                 </p>
-                                <button type="button" className="btn quiz-reg-btn">
-                                    Register
+                                <button
+                                    type="button"
+                                    className="btn quiz-reg-btn"
+                                    onClick={() => handleNavigate(elem?._id)}
+                                >
+                                    Enter
                                 </button>
                             </div>
                             <p className="quiz-devider" />
@@ -85,6 +100,7 @@ export default function CourseQuizes({ quizData }) {
                                     {getHourAndMinute(elem?.quizDate, elem?.quizTime) > 0 ? (
                                         <Countdown
                                             date={getHourAndMinute(elem?.quizDate, elem?.quizTime)}
+                                            onComplete={() => handleOnComplete(elem?._id)}
                                         />
                                     ) : (
                                         <span>Finished</span>

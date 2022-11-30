@@ -1,0 +1,264 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: #8854C0;
+    --box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+    --white: #FFFFFF;
+    --ques-bg: #FEFEFE;
+    --bg: #F5F5F5;
+    --border: #E3E3E3;
+    --anotherColor: #A074FF;
+    --red: #ED2939;
+    --green: #05c46b;
+    --border-2: #CFCFCF;
+    --goback: #b785fe7f;
+    --border3: #DADADA;
+    --secondColor: #808e9b;
+    --res-bg: #FDFDFD;
+    --yellow: #F0D545;
+    --table-bg: #EAEDED;
+}
+
+#teacher-res-details{
+    width: 70%;
+}
+
+#teacher-res-upper-btn{
+    width: 80%;
+}
+
+#teacher-res-upper-btn button{
+    background-color: white;
+    border: 1px solid var(--anotherColor);
+    font-size: 0.8rem;
+    transition: all 0.1s ease;
+    border-radius: 3px;
+    margin-top: 1.5%;
+}
+
+#teacher-res-upper-btn button:last-child{
+    padding: 5px 15px;
+}
+
+#teacher-res-upper-btn button:hover{
+    background-color: var(--anotherColor);
+    color: white;
+    border: 1px solid white;
+}
+
+#teacher-res-upper-btn button:focus{
+    box-shadow: none;
+}
+
+#teacher-res-upper-btn button:active{
+    transform: scale(0.94);
+}
+
+#teacher-res-summary > p{
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#teacher-res-all-details{
+    margin-top: 3%;
+    background-color: var(--res-bg);
+    padding: 3rem 2.5rem;
+    border-radius: 3px;
+    border: 1px solid var(--border3);
+}
+
+#teacher-res-sum .res-cards{
+    background-color: white;
+    border: 1px solid var(--border3);
+    border-radius: 3px;
+    padding: 1rem 8px;
+    margin-top: 3%;
+}
+
+#teacher-res-sum .res-total-icon{
+    width: 30%;
+}
+
+#teacher-res-sum .res-total-sum{
+    width: 70%;
+}
+
+#teacher-res-sum .res-total-icon i{
+    font-size: 2rem;
+}
+
+#teacher-res-course-short .res-course-details{
+    font-weight: 400;
+    font-size: 14px;
+}
+
+#teacher-res-course-short .res-course-details span{
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+#teacher-res-sum .res-cards .res-total-sum > p{
+    font-size: 15px;
+}
+
+#teacher-res-sum .res-cards .res-total-sum .total-no{
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+#teacher-res-sum .res-cards .res-total-icon .absent-icon{
+    color: var(--red);
+}
+
+#teacher-res-sum .res-cards .res-total-icon .submitted-icon{
+    color: var(--green);
+}
+
+#teacher-res-sum .res-cards .res-total-icon .total-icon{
+    color: var(--blue);
+}
+
+#pills-tab li button{
+    border-bottom: 2px solid white;
+    border-radius: 0;
+    background-color: white;
+    color: gray;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px;
+
+}
+
+#pills-tab li .active{
+    border-bottom: 2px solid var(--blue);
+    border-radius: 0;
+    color: var(--blue);
+    padding: 5px;
+}
+
+#attendend-table .table thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid var(--table-bg);
+}
+
+#attendend-table .table thead>tr>th,.table tbody>tr>th,.table tfoot>tr>th,.table thead>tr>td,.table tbody>tr>td,.table tfoot>tr>td{
+    padding:8px;
+    line-height:1.428571429;
+    vertical-align:top;
+    border-top:1px solid var(--table-bg)
+}
+
+#attendend-table .table thead{
+    background-color: var(--table-bg);
+}
+
+#attendend-table .table tbody{
+    font-size: 14px;
+}
+
+#attendend-table .table tbody, thead  tr{
+    border-radius: 10px;
+}
+
+#attendend-table .table tbody tr .passed{
+    color: var(--green);
+    font-weight: 500;
+
+}
+
+#attendend-table .table tbody tr .failed{
+    color: var(--red);
+    font-weight: 500;
+}
+
+/* --absent--- */
+#absent-table .table thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid var(--table-bg);
+}
+
+#absent-table .table thead>tr>th,.table tbody>tr>th,.table tfoot>tr>th,.table thead>tr>td,.table tbody>tr>td,.table tfoot>tr>td{
+    padding:8px;
+    line-height:1.428571429;
+    vertical-align:top;
+    border-top:1px solid var(--table-bg)
+}
+
+#absent-table .table thead{
+    background-color: var(--table-bg);
+}
+
+#absent-table .table tbody{
+    font-size: 14px;
+}
+
+#absent-table .table tbody, thead  tr{
+    border-radius: 10px;
+}
+
+#absent-table .table tbody tr .passed{
+    color: var(--green);
+    font-weight: 500;
+
+}
+
+#absent-table .table tbody tr .failed{
+    color: var(--red);
+    font-weight: 500;
+}
+
+@media only screen and (max-width: 986px) {
+  
+    #teacher-res-sum{
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 785px) {
+  
+    #result-chart{
+        width: 95% !important;
+        flex-direction: column !important;
+        padding: 0 !important;
+    }
+    #result-total-score{
+        width: 50%;
+    }
+
+    #teacher-res-scores{
+        width: 95%;
+    }
+
+    #res-pie-details{
+        margin-top: 5%;
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    #result-summary-chart{
+        padding: 1rem !important;
+    }
+}
+
+@media only screen and (max-width: 545px) {
+    #teacher-res-details{
+        width: 90%;
+        padding: 0 !important;
+    }
+
+    #teacher-res-contents{
+        padding: 0 !important;
+    }
+
+    #teacher-res-all-details{
+        padding: 1rem !important;
+    }
+    
+    #teacher-res-upper-btn{
+        width: 100%;
+    }
+}

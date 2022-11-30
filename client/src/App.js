@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import LogIn from './pages/LogIn';
 import Profile from './pages/Profile';
 import Quiz from './pages/Quiz';
+import ResultPage from './pages/ResultPage';
 import Room from './pages/Room';
 import RoomInPage from './pages/RoomInPage';
 
@@ -94,6 +95,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <Exam />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/result/:id"
+                    element={
+                        <PrivateRoute>
+                            <ResultPage />
                         </PrivateRoute>
                     }
                 />
