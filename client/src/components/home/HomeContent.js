@@ -31,7 +31,7 @@ export default function HomeContent() {
     }, [email, data]);
 
     return (
-        <div className="container" id="content-left">
+        <div className="container min-vh-100" id="content-left">
             <div className="container-fluid" id="inner-content">
                 <h5 className="ms-5">Recent Post</h5>
                 {/* <!-- All Cards --> */}

@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import userImage from '../../assets/user.png';
 import { userLoggedOut } from '../../features/auth/authSlice';
 
 export default function NavProfileLink() {
@@ -14,6 +13,10 @@ export default function NavProfileLink() {
         navigate('/');
     };
 
+    const { photoURL } = useSelector((state) => state.auth);
+
+    console.log(photoURL);
+
     return (
         <div className="btn-group ms-lg-5 position-relative">
             <button
@@ -24,7 +27,7 @@ export default function NavProfileLink() {
                 aria-expanded="false"
                 id="user-image"
             >
-                <img src={userImage} alt="user" className="img-fluid" />
+                <img src={photoURL} alt="user" className="img-fluid" />
             </button>
             <ul className="dropdown-menu dropdown-menu-start" id="drop-menu">
                 <li>
@@ -35,11 +38,6 @@ export default function NavProfileLink() {
                         >
                             Profile
                         </Link>
-                    </button>
-                </li>
-                <li>
-                    <button className="dropdown-item" type="button">
-                        Settings
                     </button>
                 </li>
                 <li>

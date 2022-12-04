@@ -2,6 +2,7 @@
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import Countdown from 'react-countdown';
+import { FaArrowRight } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuid4 } from 'uuid';
@@ -114,7 +115,7 @@ export default function Sidebar() {
                     <div className="container-fluid d-flex justify-content-between align-items-center">
                         <h6>Schedule</h6>
                         <span role="presentation" onClick={handleNavigate}>
-                            See all <i className="fa-solid fa-arrow-right ms-1" />
+                            See all <FaArrowRight />
                         </span>
                     </div>
 

@@ -14,8 +14,15 @@ export const quizPageApi = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: data,
             }),
+            invalidatesTags: ['resultPage'],
+        }),
+        getResult: builder.query({
+            query: (data) => ({
+                url: `/api/user/get-result/${data.email}/${data.quizid}`,
+            }),
+            providesTags: ['resultPage'],
         }),
     }),
 });
 
-export const { useGetAllQuizQuery, useSubmitQuizMutation } = quizPageApi;
+export const { useGetAllQuizQuery, useSubmitQuizMutation, useGetResultQuery } = quizPageApi;

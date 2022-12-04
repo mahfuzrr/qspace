@@ -7,6 +7,7 @@ const initialState = {
     email: undefined,
     role: undefined,
     isLogged: null,
+    photoURL: undefined,
 };
 
 const authSlice = createSlice({
@@ -18,7 +19,8 @@ const authSlice = createSlice({
             state.user = action.payload.user;
             state.role = action.payload.role;
             state.email = action.payload.email;
-            state.isLogged = true;
+            state.isLogged = action.payload.isLogged;
+            state.photoURL = action.payload.photoURL;
         },
 
         userLoggedOut: (state) => {

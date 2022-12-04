@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
 }
 
 :root {
@@ -54,7 +51,7 @@
     border-radius: 30px;
     padding: 12px 1.5rem;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 #login-inner-side .log-input-style:focus {
@@ -175,6 +172,8 @@
     background-color: var(--inputBg);
     width: 100%;
     padding: 10px;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 #reg-form form .input-field::placeholder {

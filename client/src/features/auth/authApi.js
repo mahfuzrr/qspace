@@ -4,22 +4,6 @@ import { userLoggedIn } from './authSlice';
 
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        // register: builder.mutation({
-        //     query: (data) => ({
-        //         url: 'api/user/register',
-        //         method: 'POST',
-        //         body: data,
-        //     }),
-
-        //     async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        //         try {
-        //             const result = await queryFulfilled;
-        //             dispatch(setResponseData(result.data));
-        //         } catch (err) {
-        //             // do nothing
-        //         }
-        //     },
-        // }),
         login: builder.mutation({
             query: (data) => ({
                 url: '/api/user/login',
@@ -33,6 +17,7 @@ export const authApi = apiSlice.injectEndpoints({
                     const result = await queryFulfilled;
                     // console.log('result: ', result);
                     if (result?.data?.success) {
+                        // console.log(result.data);
                         dispatch(
                             userLoggedIn({
                                 accessToken: result?.data?.info?.accessToken,
@@ -40,6 +25,7 @@ export const authApi = apiSlice.injectEndpoints({
                                 role: result?.data?.info?.role,
                                 email: result.data.info?.email,
                                 isLogged: true,
+                                photoURL: result.data.info?.photoURL,
                             })
                         );
 
@@ -50,15 +36,6 @@ export const authApi = apiSlice.injectEndpoints({
                                 college: result.data.info?.college,
                             })
                         );
-
-                        // const cookieObj = {
-                        //     accessToken: result?.data?.info?.accessToken,
-                        //     user: result.data.info?.userName,
-                        //     role: result?.data?.info?.role,
-                        //     email: result.data.info?.email,
-                        // };
-
-                        // Cookies.set('qspace-user', JSON.stringify(cookieObj), { expires: 7 });
                     }
                 } catch (err) {
                     // do nothing

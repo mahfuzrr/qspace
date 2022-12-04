@@ -22,6 +22,7 @@ const apiSlice = createApi({
         'AddUserInfo',
         'getQuizInfo',
         'quizPage',
+        'resultPage',
     ],
     endpoints: () => ({}),
 });

@@ -1,10 +1,17 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import axios from 'axios';
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
 import { useEffect, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { IoCloseCircle } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import app from '../../firebase/firebase.init';
+
+const auth = getAuth(app);
 
 export default function UserRegister() {
     const [userName, setuserName] = useState('');
@@ -12,22 +19,90 @@ export default function UserRegister() {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
     const [institute, setInstitute] = useState('');
-    const [isError, setError] = useState(false);
     const [allError, setAllError] = useState({});
     const [success, setSuccess] = useState(false);
     const [show, setShow] = useState(true);
+    const [error, setError] = useState(false);
 
     const navigate = useNavigate();
+
+    const imageHostKey = process.env.REACT_APP_imgbb_key;
 
     const successNotify = (data) => {
         toast.success(data, {
             position: toast.POSITION.TOP_RIGHT,
             pauseOnHover: false,
+            autoClose: 1000,
         });
+    };
+
+    const handleAnother = (imgurl, reqBody) => {
+        // eslint-disable-next-line no-param-reassign
+        reqBody.photoURL = imgurl;
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((user) => {
+                updateProfile(auth.currentUser, {
+                    displayName: userName,
+                    photoURL: reqBody.photoURL,
+                })
+                    .then((finalRes) => {
+                        axios
+                            .post('http://localhost:5000/api/user/register', reqBody)
+                            .then((upRess) => {
+                                if (upRess?.data?.success) {
+                                    successNotify(upRess?.data?.message);
+                                    setSuccess(true);
+                                }
+                            })
+                            .catch((err) => {
+                                setSuccess(false);
+                                toast.error(err.message, {
+                                    position: toast.POSITION.TOP_RIGHT,
+                                    autoClose: 1000,
+                                });
+                            });
+                    })
+                    .catch((err2) => {
+                        toast.error(err2.message, {
+                            position: toast.POSITION.TOP_RIGHT,
+                            autoClose: 1000,
+                        });
+                    });
+            })
+            .catch((err1) => {
+                toast.error(err1.message, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+            });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        setAllError({});
+        setError(false);
+
+        if (userName?.length === 0) {
+            setError(true);
+            setAllError({ name: 'User name is required' });
+            return;
+        }
+        if (email.length === 0) {
+            setError(true);
+            setAllError({ email: 'Email is required' });
+            return;
+        }
+        if (password.length === 0) {
+            setError(true);
+            setAllError({ password: 'Password is required' });
+            return;
+        }
+
+        const imgData = e.target.avatar.files[0];
+        const formData = new FormData();
+        formData.append('image', imgData);
 
         const body = {
             userName,
@@ -37,25 +112,27 @@ export default function UserRegister() {
             institution: institute,
         };
 
-        axios
-            .post('http://localhost:5000/api/user/register', body)
-            .then((res) => {
-                if (!res?.data?.success) {
-                    setError(true);
-                    setAllError(res.data.errors);
-                    setSuccess(false);
-                } else {
-                    successNotify(res.data.message);
-                    setError(false);
-                    setSuccess(true);
-                    setuserName('');
-                    setEmail('');
-                    setPassword('');
-                    setInstitute('');
-                    setRole('');
-                }
+        if (formData.get('image') === 'undefined') {
+            handleAnother('https://i.ibb.co/hcCP2K4/u.png', body);
+            return;
+        }
+
+        const imgbbUrl = `https://api.imgbb.com/1/upload?expiration=15552000&key=${imageHostKey}`;
+
+        fetch(imgbbUrl, {
+            method: 'POST',
+            body: formData,
+        })
+            .then((result) => {
+                result.json().then((upRes) => {
+                    if (upRes?.success) {
+                        handleAnother(upRes?.data?.url, body);
+                    }
+                });
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err.message);
+            });
     };
 
     const handleShowHide = () => {
@@ -88,7 +165,7 @@ export default function UserRegister() {
                             Sign Up
                         </h5>
                         <span id="close" data-bs-dismiss="modal" aria-label="Close">
-                            <i className="fa-solid fa-circle-xmark" />
+                            <IoCloseCircle />
                         </span>
                     </div>
 
@@ -104,7 +181,7 @@ export default function UserRegister() {
                                     setuserName(e.target.value);
                                 }}
                             />
-                            <p className={isError ? 'reg-error' : 'reg-noterror'}>
+                            <p className={error ? 'reg-error' : 'reg-noterror'}>
                                 {allError?.name ? allError?.name : ''}
                             </p>
                             <input
@@ -117,7 +194,7 @@ export default function UserRegister() {
                                     setEmail(e.target.value);
                                 }}
                             />
-                            <p className={isError ? 'reg-error' : 'reg-noterror'}>
+                            <p className={error ? 'reg-error' : 'reg-noterror'}>
                                 {allError?.email ? allError?.email : ''}
                             </p>
                             <div
@@ -133,16 +210,11 @@ export default function UserRegister() {
                                         setPassword(e.target.value);
                                     }}
                                 />
-                                <p className={isError ? 'reg-error' : 'reg-noterror'}>
+                                <p className={error ? 'reg-error' : 'reg-noterror'}>
                                     {allError?.password ? allError?.password : ''}
                                 </p>
-                                <span>
-                                    <i
-                                        className={
-                                            show ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
-                                        }
-                                        onClick={handleShowHide}
-                                    />
+                                <span role="presentation" onClick={handleShowHide}>
+                                    {show ? <FaEye /> : <FaEyeSlash />}
                                 </span>
                             </div>
                             <div
@@ -178,7 +250,7 @@ export default function UserRegister() {
                                     </label>
                                 </div>
                             </div>
-                            <p className={isError ? 'reg-error' : 'reg-noterror'}>
+                            <p className={error ? 'reg-error' : 'reg-noterror'}>
                                 {allError?.roll ? allError?.roll : ''}
                             </p>
                             <input
@@ -198,6 +270,9 @@ export default function UserRegister() {
                                 id="avatar"
                                 name="avatar"
                             />
+                            <p className={error ? 'reg-error' : 'reg-noterror'}>
+                                {allError?.avatar ? allError?.avatar : ''}
+                            </p>
                             <button
                                 type="submit"
                                 className="btn mt-5"

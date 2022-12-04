@@ -1,8 +1,9 @@
+import { FaLock, FaUser } from 'react-icons/fa';
 import UpdateContents from './UpdateContents';
 
 export default function ProfileContents() {
     return (
-        <div className="container-fluid d-md-flex align-items-start mt-md-5 ms-md-5">
+        <div className="container-fluid d-md-flex align-items-start mt-md-5 ms-md-5 min-vh-100">
             <div
                 className="nav flex-column nav-pills me-3"
                 id="v-pills-tab"
@@ -20,7 +21,7 @@ export default function ProfileContents() {
                     aria-selected="true"
                 >
                     <span className="d-flex justify-content-start align-items-center gap-2">
-                        <i className="fa-solid fa-user" /> Profile
+                        <FaUser /> Profile
                     </span>
                 </button>
                 <button
@@ -34,7 +35,7 @@ export default function ProfileContents() {
                     aria-selected="false"
                 >
                     <span className="d-flex justify-content-start align-items-center gap-2">
-                        <i className="fa-solid fa-lock" /> Password
+                        <FaLock /> Password
                     </span>
                 </button>
             </div>

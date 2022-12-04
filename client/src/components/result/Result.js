@@ -1,6 +1,56 @@
+import { useEffect, useState } from 'react';
+import { Chart } from 'react-google-charts';
 import UpperButton from '../quizPage/UpperButton';
 
-export default function Result() {
+export default function Result({ resultData }) {
+    const [cAns, setCAns] = useState(0);
+    const [incAns, setIncAns] = useState(0);
+    const [unAns, setUnAns] = useState(0);
+
+    useEffect(() => {
+        if (resultData) {
+            let correctAns = 0;
+
+            for (let i = 0; i < resultData?.submission?.length; i += 1) {
+                let check = true;
+
+                for (let j = 0; j < resultData?.submission[i]?.userAnswer?.length; j += 1) {
+                    const index = resultData.submission[i].mainAnswer.indexOf(
+                        resultData.submission[i].userAnswer[j]
+                    );
+                    if (index < 0) {
+                        check = false;
+                        break;
+                    }
+                }
+
+                if (check) correctAns += 1;
+            }
+
+            if (resultData.submission) {
+                const unAnswer = resultData.totalQuestion - resultData.submission.length;
+                const incorrectAns = resultData.submission.length - correctAns;
+                setIncAns(incorrectAns);
+                setUnAns(unAnswer);
+            }
+
+            setCAns(correctAns);
+        }
+    }, [resultData]);
+
+    const pieChartData = [
+        ['Task', 'Hours per Day'],
+        ['Correct Answer', cAns],
+        ['Wrong Answer', incAns],
+        ['Not Answered', unAns],
+    ];
+    const options = {
+        legend: 'none',
+        pieSliceText: 'label',
+        title: '',
+        pieStartAngle: 100,
+    };
+
     return (
         <div className="container overflow-hidden min-vh-100" id="result-page-leftSide">
             <UpperButton />
@@ -10,17 +60,21 @@ export default function Result() {
 
                 <div className="container p-0" id="result-total-score">
                     <p className="m-0">Score:</p>
-                    <p className="m-0">20/25</p>
+                    <p className="m-0">
+                        {resultData?.mark}/{resultData?.totalMarks}
+                    </p>
                 </div>
 
                 <div className="container p-0" id="result-summary-chart">
                     <p className="m-0">Overall Performance</p>
                     <div className="container d-flex" id="result-chart">
                         <div className="container" id="res-pie-chart">
-                            <img
-                                className="img-fluid"
-                                src="../assets/pie-chart.png"
-                                alt="pie-chart"
+                            <Chart
+                                chartType="PieChart"
+                                data={pieChartData}
+                                options={options}
+                                width="100%"
+                                height="300px"
                             />
                         </div>
                         <div
@@ -35,7 +89,7 @@ export default function Result() {
                                     </div>
                                 </div>
                                 <div className="container w-25 single-pie-details-right d-flex justify-content-start align-items-center">
-                                    10
+                                    {incAns}
                                 </div>
                             </div>
                             <div className="container d-flex justify-content-between single-pie-details">
@@ -46,7 +100,7 @@ export default function Result() {
                                     </div>
                                 </div>
                                 <div className="container w-25 single-pie-details-right d-flex justify-content-start align-items-center">
-                                    10
+                                    {cAns}
                                 </div>
                             </div>
                             <div className="container d-flex justify-content-between single-pie-details">
@@ -57,7 +111,7 @@ export default function Result() {
                                     </div>
                                 </div>
                                 <div className="container w-25 single-pie-details-right d-flex justify-content-start align-items-center">
-                                    10
+                                    {unAns}
                                 </div>
                             </div>
                         </div>

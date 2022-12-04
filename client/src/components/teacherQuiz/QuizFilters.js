@@ -1,3 +1,5 @@
+import { BsFillPlusCircleFill } from 'react-icons/bs';
+import { FaFilter } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -13,7 +15,7 @@ export default function QuizFilters() {
             {/* <!-- add quiz button --> */}
             <div className="container" id="add-quiz-dashboard">
                 <button type="button" className="btn filter-dashboard-btn" onClick={handleAddQuiz}>
-                    <i className="fa-solid fa-circle-plus" /> Add Quiz
+                    <BsFillPlusCircleFill /> Add Quiz
                 </button>
             </div>
 
@@ -59,7 +61,7 @@ export default function QuizFilters() {
 
                 <span>
                     <button type="button" className="btn filter-dashboard-btn mt-2">
-                        <i className="fa-solid fa-filter" /> Add filter
+                        <FaFilter /> Add filter
                     </button>
                 </span>
             </div>

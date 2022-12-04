@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logImage from '../../assets/logIn.png';
@@ -89,13 +90,8 @@ export default function UserLogIn() {
                                     <p className={error?.password ? 'reg-error' : 'reg-noterror'}>
                                         {error?.password ? error?.password : ''}
                                     </p>
-                                    <span>
-                                        <i
-                                            className={
-                                                show ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
-                                            }
-                                            onClick={handleShowHide}
-                                        />
+                                    <span role="presentation" onClick={handleShowHide}>
+                                        {show ? <FaEye /> : <FaEyeSlash />}
                                     </span>
                                 </div>
                                 <div className="container-fluid w-100 d-flex justify-content-between p-1 mt-4">

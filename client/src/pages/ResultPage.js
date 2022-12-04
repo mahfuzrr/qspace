@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import Footer from '../components/footer/Footer';
 import Navbar from '../components/navbar/Navbar';
 import RightSideNavigator from '../components/quizPage/RightSideNavigator';
 import Result from '../components/result/Result';
+import { useGetResultQuery } from '../features/quiz/quizPageApi';
 
 export default function ResultPage() {
     const getWindowDimensions = () => {
@@ -16,12 +19,21 @@ export default function ResultPage() {
 
     const [windowDimension, setWindowDimension] = useState(getWindowDimensions());
     const [isOpen, setIsOpen] = useState(false);
+    const [resultData, setResultData] = useState({});
+
+    const { email } = useSelector((state) => state.userinfo);
+    const { id } = useParams();
+
+    const { data } = useGetResultQuery({ email, quizid: id });
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
 
     useEffect(() => {
+        if (data?.success) {
+            setResultData(data?.message);
+        }
         const handleResize = () => {
             setWindowDimension(getWindowDimensions());
         };
@@ -29,7 +41,7 @@ export default function ResultPage() {
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, [data]);
 
     return (
         <>
@@ -43,7 +55,7 @@ export default function ResultPage() {
             )}
             <div className="container-fluid overflow-hidden" id="result-page-contents">
                 <div className="container-fluid d-flex" id="result-page-wrapper">
-                    <Result />
+                    <Result resultData={resultData} />
                     {windowDimension.width > 890 ? (
                         <RightSideNavigator />
                     ) : (

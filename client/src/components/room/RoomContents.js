@@ -26,7 +26,7 @@ export default function RoomContents() {
     }, [data, email, role]);
 
     return (
-        <div className="container" id="room-content-left">
+        <div className="container min-vh-100" id="room-content-left">
             <div className="container-fluid" id="room-inner-content">
                 <div className="container d-flex justify-content-around" id="room-upper-header">
                     <div className="container">

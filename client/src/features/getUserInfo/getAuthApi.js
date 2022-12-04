@@ -15,12 +15,14 @@ export const authApi = apiSlice.injectEndpoints({
                 try {
                     const result = await queryFulfilled;
                     if (result?.data?.success && result) {
+                        // console.log(result.data);
                         dispatch(
                             userLoggedIn({
                                 accessToken: result?.data?.accessToken,
                                 user: result.data?.message?.name,
                                 role: result.data?.message?.role,
                                 email: result.data?.message?.email,
+                                photoURL: result.data?.message?.photoURL,
                                 isLogged: true,
                             })
                         );

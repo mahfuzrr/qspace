@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 import React, { useEffect, useState } from 'react';
+import { FaTrash } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -284,7 +285,7 @@ export default function SingleQuestions({
                                           id={item.id}
                                           onClick={(e) => handleDelete(e.currentTarget.id)}
                                       >
-                                          <i className="fa-solid fa-trash" />
+                                          <FaTrash />
                                       </span>
                                   </div>
                               ))
@@ -312,7 +313,7 @@ export default function SingleQuestions({
                                           id={item.id}
                                           onClick={(e) => handleDelete(e.currentTarget.id)}
                                       >
-                                          <i className="fa-solid fa-trash" />
+                                          <FaTrash />
                                       </span>
                                   </div>
                               ))}
