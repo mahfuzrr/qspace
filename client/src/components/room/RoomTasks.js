@@ -2,6 +2,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { BsCheckAll } from 'react-icons/bs';
+import { FaEdit, FaTasks } from 'react-icons/fa';
+
 import { useParams } from 'react-router-dom';
 import { useGetUserInformationQuery } from '../../features/getUserInfo/getAuthApi';
 import { useGetInfoQuery } from '../../features/singleRoom/getRoomInfo';
@@ -33,16 +36,18 @@ export default function RoomTasks({ code }) {
                     className="container-fluid d-flex align-items-center justify-content-between"
                     id="tasks-header"
                 >
-                    <div className="container w-75 d-flex ps-0">
-                        <i className="fa-solid fa-list-check me-3" />
+                    <div className="container w-75 d-flex align-items-center ps-0">
+                        <FaTasks size={17} color="#8854C0" className="me-2" />
                         <h6 className="m-0">Tasks</h6>
                     </div>
                     <div className="container w-25 d-flex justify-content-end" id="task-edit">
                         {role === 'teacher' && (
-                            <i
-                                className="fa-solid fa-pen-to-square"
+                            <FaEdit
                                 data-bs-toggle="modal"
                                 data-bs-target="#create-task"
+                                color="#3c40c6"
+                                size={18}
+                                style={{ cursor: 'pointer' }}
                             />
                         )}
                     </div>
@@ -73,7 +78,7 @@ export default function RoomTasks({ code }) {
                     className="container-fluid d-flex align-items-center"
                     id="completed-tasks-header"
                 >
-                    <i className="fa-solid fa-check-double me-2 title-check" />
+                    <BsCheckAll size={20} className="me-2" color="#05c46b" />
                     <h6 className="m-0">Completed Tasks</h6>
                 </div>
 

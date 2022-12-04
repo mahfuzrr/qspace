@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState } from 'react';
+import { IoAddCircleSharp } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import roomCover from '../../assets/nature-background-9.jpg';
@@ -44,7 +45,7 @@ export default function RoomLeftSide() {
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                                <i className="fa-solid fa-circle-plus d-block" />
+                                <IoAddCircleSharp size={23} />
                                 <span className="d-block ms-2">Add</span>
                             </button>
 

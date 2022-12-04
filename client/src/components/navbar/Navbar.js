@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaRegBell, FaRegMoon } from 'react-icons/fa';
+import { FaMoon, FaRegBell } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import NavProfileLink from './NavProfileLink';
@@ -78,7 +78,7 @@ export default function Navbar() {
                             <FaRegBell />
                         </li>
                         <li id="theme">
-                            <FaRegMoon />
+                            <FaMoon />
                         </li>
                     </ul>
 

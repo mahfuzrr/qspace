@@ -102,11 +102,6 @@
     justify-content: space-between;
 }
 
-#room-add-btn i {
-    color: rgb(0, 0, 0);
-    font-size: 1.5rem;
-}
-
 #room-add-btn:focus {
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }

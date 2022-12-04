@@ -1,14 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { useGetRoomsQuery } from '../../features/createRoom/createRoomApi';
 import JoinRoom from '../joinRoom/JoinRoom';
 import CreateRoom from './CreateRoom';
 import RoomLists from './RoomLists';
 
-export default function RoomContents() {
+export default function RoomContents({ data }) {
     const { email, role } = useSelector((state) => state.auth);
-    const { data } = useGetRoomsQuery({ count: 5 }, { refetchOnMountOrArgChange: true });
     const [roomLists, setRoomLists] = useState([]);
     const [Role, setRole] = useState('student');
 
@@ -27,6 +26,7 @@ export default function RoomContents() {
 
     return (
         <div className="container min-vh-100" id="room-content-left">
+            <Toaster position="top-right" reverseOrder={false} />
             <div className="container-fluid" id="room-inner-content">
                 <div className="container d-flex justify-content-around" id="room-upper-header">
                     <div className="container">

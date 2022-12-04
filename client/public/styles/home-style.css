@@ -68,7 +68,7 @@ body {
 
 #navbar .navbar-nav li a {
     padding: 2px 1rem;
-    border-radius: 0.3rem;
+    border-radius: 0.2rem;
     color: var(--blue);
     font-weight: 400;
     font-size: 15px;

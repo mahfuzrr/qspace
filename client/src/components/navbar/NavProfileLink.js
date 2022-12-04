@@ -15,8 +15,6 @@ export default function NavProfileLink() {
 
     const { photoURL } = useSelector((state) => state.auth);
 
-    console.log(photoURL);
-
     return (
         <div className="btn-group ms-lg-5 position-relative">
             <button

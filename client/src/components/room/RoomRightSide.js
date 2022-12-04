@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { FaCopy, FaInfoCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -37,7 +37,7 @@ export default function RoomRightSide() {
                         className="container-fluid d-flex align-items-center"
                         id="room-about-header"
                     >
-                        <i className="fa-solid fa-circle-info me-2" />
+                        <FaInfoCircle size={18} className="me-1" color="#05c46b" />
                         <h6 className="m-0">About Course</h6>
                     </div>
                     {/* <!-- Course Details --> */}
@@ -63,7 +63,12 @@ export default function RoomRightSide() {
                                         text={roomInfo?.accessCode}
                                         onCopy={handleCopy}
                                     >
-                                        <i className="ms-3 fa-solid fa-copy" />
+                                        <FaCopy
+                                            size={16}
+                                            color="#05c46b"
+                                            className="ms-2"
+                                            style={{ verticalAlign: 'center' }}
+                                        />
                                     </CopyToClipboard>
                                 </span>
                             </p>

@@ -1,15 +1,10 @@
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useGetPrivatePostQuery } from '../../features/addPost/PostApi';
 import HomePostCard from './HomePostCard';
 
-export default function HomeContent() {
+export default function HomeContent({ data }) {
     const [postData, setPostData] = useState([]);
-
-    const { email } = useSelector((state) => state.auth);
-    const { data } = useGetPrivatePostQuery(email);
 
     const settingData = (value) => {
         let modified = [];
@@ -28,7 +23,7 @@ export default function HomeContent() {
         if (data?.success) {
             settingData(data?.message);
         }
-    }, [email, data]);
+    }, [data]);
 
     return (
         <div className="container min-vh-100" id="content-left">

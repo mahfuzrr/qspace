@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useJoinRoomMutation } from '../../features/joinRoom/joinRoom';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 export default function JoinRoom() {
     const [accessCode, setAccessCode] = useState('');
-    const [joinRoom] = useJoinRoomMutation();
+    const [joinRoom, { data }] = useJoinRoomMutation();
     const { email } = useSelector((state) => state.auth);
 
     const handleSubmit = (e) => {
@@ -14,6 +15,16 @@ export default function JoinRoom() {
             joinRoom({ accessCode, email });
         }
     };
+
+    useEffect(() => {
+        if (data) {
+            if (data?.success) {
+                toast.success(data?.message);
+            } else {
+                toast.error(data?.message);
+            }
+        }
+    }, [data]);
 
     return (
         <div

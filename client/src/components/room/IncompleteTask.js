@@ -1,3 +1,4 @@
+import { FaRegCircle, FaTrash } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
@@ -31,20 +32,24 @@ export default function IncompleteTask({ task }) {
 
     return (
         <div className="check-task">
-            <span className="check">
-                <i
-                    className="fa-regular fa-circle me-3"
+            <span className="check d-flex align-items-center mb-3">
+                <FaRegCircle
                     role="presentation"
                     onClick={handleComplete}
+                    className="me-3"
+                    color="red"
+                    size={17}
                 />
                 <a href={link} target="_blank" rel="noreferrer">
                     {title}
                 </a>
                 {role === 'teacher' && (
-                    <i
-                        className="fa-solid fa-trash ms-4"
+                    <FaTrash
                         role="presentation"
                         onClick={handleDelete}
+                        className="ms-3"
+                        color="red"
+                        size={16}
                     />
                 )}
             </span>

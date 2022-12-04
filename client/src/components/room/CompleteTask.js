@@ -1,3 +1,5 @@
+import { BsCheckCircleFill } from 'react-icons/bs';
+import { FaTrash } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
@@ -21,16 +23,17 @@ export default function CompleteTask({ task }) {
 
     return (
         <div className="check-task">
-            <span className="check mt-2">
-                <i className="fa-solid fa-circle-check me-3" />
+            <span className="check mt-2 d-flex align-items-center">
+                <BsCheckCircleFill color="#05c46b" size={17} className="me-2" />
                 <a href={link} target="_blank" rel="noreferrer">
                     {title}
                 </a>
-                <i
-                    className="fa-solid fa-trash ms-4"
-                    role="presentation"
+                <FaTrash
                     id="trash-icon"
+                    className="ms-4"
+                    role="presentation"
                     onClick={handleDelete}
+                    size={16}
                 />
             </span>
         </div>
