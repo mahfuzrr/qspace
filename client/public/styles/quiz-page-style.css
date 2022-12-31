@@ -53,12 +53,12 @@
 }
 
 #quiz-right-upper h5 {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     margin-bottom: 5%;
 }
 
 #quiz-right-upper .quiz-running {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 5% !important;
 }
@@ -226,6 +226,12 @@
     box-shadow: none;
 }
 
+#page-all-questions .question-img-style {
+    width: 55%;
+    display: flex;
+    justify-content: start;
+}
+
 #submit-answer {
     display: flex;
     justify-content: start;
@@ -359,4 +365,56 @@
     #submit-answer {
         width: 90%;
     }
+}
+
+#page-all-questions .question-page-file-option {
+    width: 50%;
+    margin-left: 0 !important;
+    margin-top: 2%;
+    padding-left: 0 !important;
+}
+
+#page-all-questions .question-page-file-option .file-upload .filelabel {
+    width: 100%;
+    border: 3px dashed var(--anotherColor);
+    border-radius: 5px;
+    display: block;
+    padding: 1rem 5px;
+    transition: border 300ms ease;
+    cursor: pointer;
+    text-align: center;
+}
+
+#page-all-questions .question-page-file-option .file-upload .filelabel .pdf-icon {
+    display: block;
+    font-size: 30px;
+    padding-bottom: 5px;
+    color: #FA0F00 !important;
+}
+
+#page-all-questions .question-page-file-option .file-upload .filelabel .pdf-icon,
+#page-all-questions .question-page-file-option .file-upload .filelabel .title {
+    color: black;
+    transition: 200ms color;
+}
+
+#page-all-questions .question-page-file-option .file-upload .filelabel:hover {
+    border: 3px solid var(--anotherColor);
+}
+
+#page-all-questions .question-page-file-option .file-upload .filelabel:hover .pdf-icon,
+.filelabel:hover .title {
+    color: var(--anotherColor);
+}
+
+#FileInput {
+    display: none;
+}
+
+#page-all-questions .question-page-file-option .file-upload .file-delete {
+    cursor: pointer;
+}
+
+#page-all-questions .question-page-file-option .file-upload .file-delete:hover {
+    color: var(--red);
 }

@@ -8,6 +8,12 @@ export const getQuizInfoApi = apiSlice.injectEndpoints({
             }),
             providesTags: ['getQuizInfo'],
         }),
+        getQuizInfoStudent: builder.query({
+            query: (email) => ({
+                url: `/api/user/get-quiz-student/${email}`,
+            }),
+            providesTags: ['getQuizInfo'],
+        }),
         getQuestions: builder.query({
             query: (id) => ({
                 url: `/api/user/get-questions/${id}`,
@@ -36,4 +42,5 @@ export const {
     useGetQuestionsQuery,
     useDeleteQuestionMutation,
     useEditStatusMutation,
+    useGetQuizInfoStudentQuery,
 } = getQuizInfoApi;

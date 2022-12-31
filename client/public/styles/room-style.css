@@ -78,6 +78,14 @@
     font-weight: 500;
 }
 
+#like-dislike {
+    padding: 0px 20px;
+}
+
+#like-dislike span {
+    cursor: pointer;
+}
+
 /* Cards Ends Here */
 
 

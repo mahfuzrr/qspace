@@ -7,7 +7,7 @@ export default function QuizFilters() {
     const navigate = useNavigate();
 
     const handleAddQuiz = () => {
-        navigate('/create-quiz');
+        navigate('/dashboard');
     };
 
     return (

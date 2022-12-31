@@ -1,0 +1,135 @@
+:root {
+    --nav: #FBFCFD;
+    --navUpdate: #E8F1FF;
+    --navRGBA: rgba(251, 252, 253, 0.8);
+    --navBorder: #e5e7eb;
+    --blue: #8854C0;
+    --box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+    --white: #FFFFFF;
+    --subTitle: rgb(120, 120, 120);
+    --footerBorder: rgb(213, 213, 213);
+    --red: #ff3838;
+}
+
+#student-list-content {
+    margin-top: 3%;
+}
+
+#student-list-main-content .single-row {
+    background-color: white;
+    box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.1);
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#student-list-main-content .single-row .img-col img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+#student-list-main-content .single-row .action-col button {
+    background-color: var(--red);
+    font-size: 12px;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+#student-list-main-content .single-row .action-col button:focus {
+    box-shadow: none;
+}
+
+#student-list-main-content .single-row .action-col button:active {
+    transform: scale(0.98);
+}
+
+#student-list-main-content .up-header {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#student-list-title {
+    font-weight: 500;
+    padding-left: 10px;
+}
+
+@media only screen and (max-width: 772px) {
+    #student-list-main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .single-row {
+        font-size: 9px;
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .single-row .action-col button {
+        font-size: 9px;
+        padding: 3px 5px;
+    }
+
+    #student-list-main-content .single-row .img-col img {
+        width: 20px;
+        height: 20px;
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .single-row .img-col {
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .up-header .img-col {
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .single-row .name-col {
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .single-row .email-col {
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .single-row .college-col {
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .single-row .action-col {
+        padding: 0 !important;
+    }
+
+    #student-list-content {
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .up-header {
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .up-header .name-col {
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .up-header .email-col {
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .up-header .college-col {
+        padding: 0 !important;
+    }
+
+    #student-list-main-content .up-header .action-col {
+        padding: 0 !important;
+    }
+
+    #student-list-div {
+        padding: 0 !important;
+    }
+
+}

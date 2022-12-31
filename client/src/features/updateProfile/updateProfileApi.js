@@ -9,7 +9,7 @@ export const updateProfileApi = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: data,
             }),
-            invalidatesTags: ['AddUserInfo'],
+            invalidatesTags: ['AddUserInfo', 'getStudents'],
 
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
@@ -35,7 +35,16 @@ export const updateProfileApi = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        updatePhoto: builder.mutation({
+            query: (data) => ({
+                url: 'api/user/update-profile-photo',
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: ['AddUserInfo', 'getStudents'],
+        }),
     }),
 });
 
-export const { useUpdateMutation, useUpdatePasswordMutation } = updateProfileApi;
+export const { useUpdateMutation, useUpdatePasswordMutation, useUpdatePhotoMutation } =
+    updateProfileApi;

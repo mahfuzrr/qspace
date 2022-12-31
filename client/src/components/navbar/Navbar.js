@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { FaMoon, FaRegBell } from 'react-icons/fa';
+import { BsPlusCircleFill } from 'react-icons/bs';
+import { FaBookReader } from 'react-icons/fa';
+import { HiHome } from 'react-icons/hi';
+import { MdGroups, MdLibraryBooks } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Logo from '../../assets/Qspace-logo.png';
 import NavProfileLink from './NavProfileLink';
 
 export default function Navbar() {
@@ -16,7 +20,7 @@ export default function Navbar() {
         <nav className="navbar sticky-top navbar-expand-lg navbar-light lh-lg" id="navbar">
             <div className="container">
                 <Link className="navbar-brand" to="/home">
-                    QSpace
+                    <img src={Logo} alt="logo" className="img-fluid" />
                 </Link>
 
                 <button
@@ -32,15 +36,17 @@ export default function Navbar() {
                 </button>
 
                 <div className="collapse container navbar-collapse justify-content-end" id="navBar">
-                    <ul className="navbar-nav mb-lg-0 d-flex justify-content-around">
+                    <ul className="navbar-nav mb-lg-0 me-3 d-flex justify-content-around">
                         <li className="nav-item">
                             <Link
-                                className={`nav-link ${activeLink === 'home' ? 'active' : ''}`}
+                                className={`nav-link d-flex align-items-center ${
+                                    activeLink === 'home' ? 'active' : ''
+                                }`}
                                 aria-current="page"
                                 to="/home"
                                 onClick={() => setActive('home')}
                             >
-                                Home
+                                <HiHome size={18} /> <span className="ms-1">Home</span>
                             </Link>
                         </li>
                         <li className="nav-item">
@@ -49,7 +55,7 @@ export default function Navbar() {
                                 to="/quiz"
                                 onClick={() => setActive('quiz')}
                             >
-                                Quiz
+                                <FaBookReader /> <span className="ms-1">Quiz</span>
                             </Link>
                         </li>
                         {role === 'teacher' && (
@@ -61,24 +67,30 @@ export default function Navbar() {
                                     to="/dashboard"
                                     onClick={() => setActive('dashboard')}
                                 >
-                                    Create
+                                    <BsPlusCircleFill />
+                                    <span className="ms-1">Create</span>
                                 </Link>
                             </li>
                         )}
+
+                        <li className="nav-item">
+                            <Link
+                                className={`nav-link ${activeLink === 'library' ? 'active' : ''}`}
+                                to="/library"
+                                onClick={() => setActive('library')}
+                            >
+                                <MdLibraryBooks /> <span className="ms-1">My Library</span>
+                            </Link>
+                        </li>
+
                         <li className="nav-item">
                             <Link
                                 className={`nav-link ${activeLink === 'room' ? 'active' : ''}`}
                                 to="/room"
                                 onClick={() => setActive('room')}
                             >
-                                Room
+                                <MdGroups size={18} /> <span className="ms-1">Room</span>
                             </Link>
-                        </li>
-                        <li className="nav-item" id="bell-icon">
-                            <FaRegBell />
-                        </li>
-                        <li id="theme">
-                            <FaMoon />
                         </li>
                     </ul>
 

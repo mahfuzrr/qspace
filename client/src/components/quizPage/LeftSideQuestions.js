@@ -1,11 +1,14 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-unreachable */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import parse from 'html-react-parser';
 import { useEffect, useState } from 'react';
+import { BsFillFileEarmarkPdfFill } from 'react-icons/bs';
+import { FaTrashAlt } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import swal from 'sweetalert';
-import { v4 as uuidv4 } from 'uuid';
 import { useGetQuestionsQuery } from '../../features/dashboard/getQuizInfoApi';
 import { useSubmitQuizMutation } from '../../features/quiz/quizPageApi';
 import UpperButton from './UpperButton';
@@ -15,14 +18,14 @@ export default function LeftSideQuestions() {
     const [questions, setQuestions] = useState([]);
     const [answer, setAnswer] = useState([]);
     const [checkBox, setCheckBox] = useState([]);
+    const [blankAns, setBlankAns] = useState([]);
+    const [allFiles, setAllFiles] = useState({});
 
     const { id } = useParams();
     const { email } = useSelector((state) => state.auth);
 
     const { data } = useGetQuestionsQuery(id);
     const [submitQuiz, { data: submitRes }] = useSubmitQuizMutation();
-
-    const navigate = useNavigate();
 
     const isSelected = (value, id2) => {
         for (let i = 0; i < answer.length; i += 1) {
@@ -47,6 +50,7 @@ export default function LeftSideQuestions() {
     };
 
     const handleChange = (eVal, correctAns, userAnswerr, mark, id1, type, indexx) => {
+        // console.log(eVal, correctAns, JSON.stringify(userAnswerr), mark, id1, type, indexx);
         if (type === 'choice') {
             if (eVal) {
                 let check = false;
@@ -62,7 +66,7 @@ export default function LeftSideQuestions() {
                     updatedData.push({
                         id: id1,
                         index: indexx,
-                        mainAnswer: correctAns,
+                        mainAnswer: [...correctAns],
                         type,
                         userAnswer: userAnswerr,
                         mark,
@@ -77,7 +81,7 @@ export default function LeftSideQuestions() {
                                 id: id1,
                                 index: indexx,
                                 type,
-                                mainAnswer: correctAns,
+                                mainAnswer: [...correctAns],
                                 userAnswer: userAnswerr,
                                 mark,
                             };
@@ -92,7 +96,7 @@ export default function LeftSideQuestions() {
                 const temp = answer.filter((elem) => elem?.id !== id1);
                 setAnswer(temp);
             }
-        } else if (type === 'checkbox') {
+        } else if (type === 'check') {
             if (eVal) {
                 let check = false;
                 for (let i = 0; i < checkBox.length; i += 1) {
@@ -110,7 +114,7 @@ export default function LeftSideQuestions() {
                     updatedData.push({
                         id: id1,
                         index: indexx,
-                        mainAnswer: correctAns,
+                        mainAnswer: [...correctAns],
                         type,
                         userAnswer: temp,
                         mark,
@@ -124,7 +128,7 @@ export default function LeftSideQuestions() {
                                 id: id1,
                                 index: indexx,
                                 type,
-                                mainAnswer: correctAns,
+                                mainAnswer: [...correctAns],
                                 userAnswer: [...elem.userAnswer, userAnswerr],
                                 mark,
                             };
@@ -184,27 +188,37 @@ export default function LeftSideQuestions() {
         return () => window.removeEventListener('beforeunload', unloadCallback);
     }, [data, submitRes]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const customIndexOf = (mainAnswer, val) => {
+        for (let i = 0; i < mainAnswer?.length; i += 1) {
+            if (mainAnswer[i]?.input === val) return i;
+        }
 
-        const allData = [...answer, ...checkBox];
+        return -1;
+    };
 
+    const anotherSubmission = (allData) => {
         allData.sort((a, b) => a.index < b.index);
+        // return;
 
         let totalMarks = 0;
 
         for (let i = 0; i < allData.length; i += 1) {
             if (allData[i].type === 'choice') {
-                const index = allData[i].mainAnswer.indexOf(allData[i].userAnswer);
+                // const index = allData[i].mainAnswer.indexOf(allData[i].userAnswer);
+                const index = customIndexOf(allData[i].mainAnswer, allData[i].userAnswer);
                 if (index >= 0) {
                     totalMarks += parseInt(allData[i].mark, 10);
                 }
-            } else if (allData[i].type === 'checkbox') {
+            } else if (allData[i].type === 'check') {
                 if (allData[i].userAnswer?.length === allData[i].mainAnswer?.length) {
                     let check = true;
 
                     for (let j = 0; j < allData[i].userAnswer.length; j += 1) {
-                        const index = allData[i].mainAnswer.indexOf(allData[i].userAnswer[j]);
+                        // const index = allData[i].mainAnswer.indexOf(allData[i].userAnswer[j]);
+                        const index = customIndexOf(
+                            allData[i].mainAnswer,
+                            allData[i].userAnswer[j]
+                        );
                         if (index < 0) {
                             check = false;
                             break;
@@ -212,6 +226,11 @@ export default function LeftSideQuestions() {
                     }
 
                     if (check) totalMarks += parseInt(allData[i].mark, 10);
+                }
+            } else if (allData[i].type === 'blank') {
+                const index = customIndexOf(allData[i].mainAnswer, allData[i].userAnswer);
+                if (index >= 0) {
+                    totalMarks += parseInt(allData[i].mark, 10);
                 }
             }
         }
@@ -224,95 +243,338 @@ export default function LeftSideQuestions() {
             submittedResult: [...allData],
         };
 
-        console.log(requestData);
+        submitQuiz(requestData);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const allData = [...answer, ...checkBox, ...blankAns];
+
+        if (allFiles?.files) {
+            const baseUrl = 'https://api.upload.io';
+            const accountId = '12a1xuc';
+            const apiKey = 'public_12a1xucERSoBGJ5kodYvotGCNiUe';
+
+            const path = `/v2/accounts/${accountId}/uploads/form_data`;
+            const entries = (obj) =>
+                Object.entries(obj).filter(([, val]) => (val ?? null) !== null);
+
+            const formData = new FormData();
+            formData.append('file', allFiles?.files[0]);
+
+            fetch(`${baseUrl}${path}`, {
+                method: 'POST',
+                body: formData,
+                headers: Object.fromEntries(
+                    entries({
+                        Authorization: `Bearer ${apiKey}`,
+                    })
+                ),
+            })
+                .then((res) => {
+                    res.json().then((upRes) => {
+                        const obj = {
+                            id: allFiles.id,
+                            index: allFiles.index,
+                            userAnswer: [upRes?.files[0]?.fileUrl],
+                            mark: allFiles.mark,
+                            type: allFiles.type,
+                            mainAnswer: [{ id: '', input: '' }],
+                        };
+                        allData.push(obj);
+                        anotherSubmission(allData);
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            return;
+        }
+
+        allData.sort((a, b) => a.index < b.index);
+
+        console.log(allData);
+        // return;
+
+        let totalMarks = 0;
+
+        for (let i = 0; i < allData.length; i += 1) {
+            if (allData[i].type === 'choice') {
+                // const index = allData[i].mainAnswer.indexOf(allData[i].userAnswer);
+                const index = customIndexOf(allData[i].mainAnswer, allData[i].userAnswer);
+                if (index >= 0) {
+                    totalMarks += parseInt(allData[i].mark, 10);
+                }
+            } else if (allData[i].type === 'check') {
+                if (allData[i].userAnswer?.length === allData[i].mainAnswer?.length) {
+                    let check = true;
+
+                    for (let j = 0; j < allData[i].userAnswer.length; j += 1) {
+                        // const index = allData[i].mainAnswer.indexOf(allData[i].userAnswer[j]);
+                        const index = customIndexOf(
+                            allData[i].mainAnswer,
+                            allData[i].userAnswer[j]
+                        );
+                        if (index < 0) {
+                            check = false;
+                            break;
+                        }
+                    }
+
+                    if (check) totalMarks += parseInt(allData[i].mark, 10);
+                }
+            } else if (allData[i].type === 'blank') {
+                const index = customIndexOf(allData[i].mainAnswer, allData[i].userAnswer);
+                if (index >= 0) {
+                    totalMarks += parseInt(allData[i].mark, 10);
+                }
+            }
+        }
+
+        const requestData = {
+            email,
+            quizId: id,
+            marks: totalMarks,
+            submitTime: Date.now(),
+            submittedResult: [...allData],
+        };
 
         submitQuiz(requestData);
     };
 
-    const handleResult = () => {
-        navigate(`/result/${id}`);
+    // const handleResult = () => {
+    //     if (role === 'teacher') navigate(`/quiz-details/${id}`);
+    //     else navigate(`/result/${id}`);
+
+    //     return null;
+    // };
+
+    const handleBlankAnswer = (id1, userAnswer, index, mainAnswer, type, mark) => {
+        let check = false;
+
+        for (let i = 0; i < blankAns.length; i += 1) {
+            if (blankAns[i].id === id1) {
+                check = true;
+                break;
+            }
+        }
+
+        if (!check) {
+            const updatedData = [...blankAns];
+            updatedData.push({
+                id: id1,
+                index,
+                mainAnswer: [...mainAnswer],
+                type,
+                userAnswer,
+                mark,
+            });
+
+            setBlankAns(updatedData);
+        } else {
+            let temp = [];
+            temp = blankAns.map((elem) => {
+                if (elem.id === id1) {
+                    return {
+                        id: id1,
+                        index,
+                        type,
+                        mainAnswer: [...mainAnswer],
+                        userAnswer,
+                        mark,
+                    };
+                }
+
+                return elem;
+            });
+
+            setBlankAns(temp);
+        }
+    };
+
+    const onFileChange = (e, index, id1, type, mark) => {
+        const { files } = e.target;
+        const filesArr = Array.prototype.slice.call(files);
+
+        const obj = {
+            id: id1,
+            index,
+            type,
+            files: [...filesArr],
+            mark,
+        };
+
+        setAllFiles(obj);
+    };
+
+    const removeFile = () => {
+        setAllFiles({});
+    };
+
+    const getFileName = (id1) => {
+        if (allFiles?.id === id1) return allFiles?.files[0]?.name;
+        return '';
     };
 
     return (
-        <div className="container overflow-hidden" id="quiz-page-leftSide">
-            <UpperButton handleResult={handleResult} />
+        <div className="container min-vh-100 overflow-hidden" id="quiz-page-leftSide">
+            <UpperButton />
 
             <div className="container" id="page-all-questions">
                 {questions.map((ques, index) => (
                     <div className="container-fluid single-question" key={ques._id}>
                         <p className="question-no">Question {index + 1}</p>
                         <div className="container p-0 single-main-question">
-                            {parse(ques.question)}
+                            {parse(ques.questions)}
                             <span className="question-marks">Mark: {ques.mark}</span>
                         </div>
 
+                        {ques?.imgLink && (
+                            <div className="container question-img-style ms-0 ps-0">
+                                <img src={ques?.imgLink} alt="qimage" className="img-fluid" />
+                            </div>
+                        )}
+
                         {/* <!-- Options --> */}
-                        <div className="container p-0 question-page-options">
-                            {ques?.type === 'checkbox'
-                                ? ques?.options.map((opt, index1) => (
-                                      <div
-                                          className="form-check form-check-custom-style"
-                                          key={uuidv4()}
-                                      >
-                                          <input
-                                              className="form-check-input"
-                                              type="checkbox"
-                                              name={`checkbox-${ques?._id}-${index1}`}
-                                              value={opt}
-                                              id={`checkbox${ques._id}-${index1}`}
-                                              checked={isChanged(opt, ques._id)}
-                                              onChange={(e) => {
-                                                  handleChange(
-                                                      e.target.checked,
-                                                      ques?.answer,
-                                                      e.target.value,
-                                                      ques?.mark,
-                                                      ques?._id,
-                                                      ques.type,
-                                                      index
-                                                  );
-                                              }}
-                                          />
-                                          <label
-                                              className="form-check-label"
-                                              htmlFor={`checkbox${ques._id}-${index1}`}
-                                          >
-                                              {opt}
-                                          </label>
-                                      </div>
-                                  ))
-                                : ques?.options.map((opt1, index1) => (
-                                      <div
-                                          className="form-check form-check-custom-style form-radio-custom-style"
-                                          key={uuidv4()}
-                                      >
-                                          <input
-                                              className="form-check-input"
-                                              type="radio"
-                                              name={`${ques?._id}-${index1}`}
-                                              id={`${ques?._id}-${index1}`}
-                                              checked={isSelected(opt1, ques._id)}
-                                              onChange={(e) => {
-                                                  handleChange(
-                                                      e.target.checked,
-                                                      ques?.answer,
-                                                      e.target.value,
-                                                      ques?.mark,
-                                                      ques?._id,
-                                                      ques.type,
-                                                      index
-                                                  );
-                                              }}
-                                              value={opt1}
-                                          />
-                                          <label
-                                              className="form-check-label"
-                                              htmlFor={`${ques?._id}-${index1}`}
-                                          >
-                                              {opt1}
-                                          </label>
-                                      </div>
-                                  ))}
+                        <div
+                            className={`container p-0 ${
+                                ques?.type === 'files'
+                                    ? 'question-page-file-option'
+                                    : 'question-page-options'
+                            }`}
+                        >
+                            {ques?.type === 'check' ? (
+                                ques?.options.map((opt, index1) => (
+                                    <div
+                                        className="form-check form-check-custom-style"
+                                        key={opt?._id}
+                                    >
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name={`check-${ques?._id}-${index1}`}
+                                            value={opt?.input}
+                                            id={`check${ques._id}-${index1}`}
+                                            checked={isChanged(opt.input, ques._id)}
+                                            onChange={(e) => {
+                                                handleChange(
+                                                    e.target.checked,
+                                                    ques?.answer,
+                                                    e.target.value,
+                                                    ques?.mark,
+                                                    ques?._id,
+                                                    ques.type,
+                                                    index
+                                                );
+                                            }}
+                                        />
+                                        <label
+                                            className="form-check-label"
+                                            htmlFor={`check${ques._id}-${index1}`}
+                                        >
+                                            {opt?.input}
+                                        </label>
+                                    </div>
+                                ))
+                            ) : ques?.type === 'choice' ? (
+                                ques?.options.map((opt1, index1) => (
+                                    <div
+                                        className="form-check form-check-custom-style form-radio-custom-style"
+                                        key={opt1?.id}
+                                    >
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name={`${ques?._id}-${index1}`}
+                                            id={`${ques?._id}-${index1}`}
+                                            value={opt1?.input}
+                                            checked={isSelected(opt1?.input, ques._id)}
+                                            onChange={(e) => {
+                                                handleChange(
+                                                    e.target.checked,
+                                                    ques?.answer,
+                                                    e.target.value,
+                                                    ques?.mark,
+                                                    ques?._id,
+                                                    ques.type,
+                                                    index
+                                                );
+                                            }}
+                                        />
+                                        <label
+                                            className="form-check-label"
+                                            htmlFor={`${ques?._id}-${index1}`}
+                                        >
+                                            {opt1?.input}
+                                        </label>
+                                    </div>
+                                ))
+                            ) : ques?.type === 'blank' ? (
+                                ques?.options.map((opt) => (
+                                    <div className="form-blank-custom-style" key={opt?._id}>
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            value={
+                                                blankAns[index]?.userAnswer
+                                                    ? blankAns[index]?.userAnswer
+                                                    : ''
+                                            }
+                                            onChange={(e) =>
+                                                handleBlankAnswer(
+                                                    ques?._id,
+                                                    e.target.value,
+                                                    index,
+                                                    ques?.answer,
+                                                    ques?.type,
+                                                    ques?.mark
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="container ms-0 me-0 d-flex align-items-center file-upload">
+                                    <label className="filelabel">
+                                        <BsFillFileEarmarkPdfFill
+                                            size={70}
+                                            className="pdf-icon m-auto"
+                                        />
+                                        <span className="title">Upload File</span>
+                                        <input
+                                            className="FileUpload1"
+                                            id="FileInput"
+                                            accept="application/pdf"
+                                            type="file"
+                                            onChange={(e) =>
+                                                onFileChange(
+                                                    e,
+                                                    index,
+                                                    ques?._id,
+                                                    ques?.type,
+                                                    ques?.mark
+                                                )
+                                            }
+                                        />
+                                    </label>
+                                    <div className="file-preview ms-3 d-flex" role="presentation">
+                                        {getFileName(ques?._id) && (
+                                            <>
+                                                <p className="m-0">{allFiles?.files[0]?.name}</p>
+                                                <p className="mb-0 ms-3 ">
+                                                    <FaTrashAlt
+                                                        role="presentation"
+                                                        className="file-delete"
+                                                        onClick={removeFile}
+                                                    />
+                                                </p>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}

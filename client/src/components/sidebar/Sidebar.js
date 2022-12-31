@@ -12,7 +12,8 @@ export default function Sidebar() {
     const [week, setWeek] = useState([]);
     const [weekDate, setWeekDate] = useState([]);
     const [selectedQuiz, setSelectedQuiz] = useState([]);
-    const [select, setSelect] = useState('');
+    const [select, setSelect] = useState(new Date().getDate());
+    const [month, setMonth] = useState('');
 
     const { email } = useSelector((state) => state.auth);
     const { data } = useGetQuizInfoQuery(email);
@@ -22,36 +23,41 @@ export default function Sidebar() {
     const handleFiltering = (date) => {
         setSelect(date);
         let tmp = [];
+
         tmp = data?.message?.filter((element) => moment(element?.quizDate).get('date') === date);
         setSelectedQuiz(tmp);
     };
 
     const getDate = (date) => moment(date).get('date');
 
-    // const renderer = ({ hours, minutes, seconds }) => (
-    //     <span>
-    //         {hours}:{minutes}:{seconds}
-    //     </span>
-    // );
-
     const getHourAndMinute = (d, hm) => {
-        const hm1 = hm?.split(':');
-        let h = parseInt(hm1[0], 10);
-        const m = parseInt(hm1[1], 10);
+        const temp = new Date(hm).toLocaleTimeString();
+        let tmp = temp.split(':');
+        let hr = parseInt(tmp[0], 10);
+        const mint = parseInt(tmp[1], 10);
 
-        h -= 6;
-        h *= 60;
-        h += m;
+        tmp = temp.split(' ');
 
-        const date1 = moment(d).add(h, 'm').toDate();
-        // const currDate = new Date();
-        // currDate = currDate.getDate();
+        if (tmp[1] === 'PM') {
+            hr += 12;
+        }
 
-        // const dayDiff = date1.getDate() - currDate;
-        // if (dayDiff < 0) return -1;
+        const date = new Date(d);
 
-        // dayDiff = dayDiff * 24 * 60 * 60 * 1000;
-        // console.log(dayDiff);
+        date.setHours(hr);
+        date.setMinutes(mint);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+
+        // const hm1 = hm?.split(':');
+        // let h = parseInt(hm1[0], 10);
+        // const m = parseInt(hm1[1], 10);
+
+        // h -= 6;
+        // h *= 60;
+        // h += m;
+
+        const date1 = new Date(date);
 
         return date1;
     };
@@ -62,27 +68,49 @@ export default function Sidebar() {
 
     useEffect(() => {
         const weekDay = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        const monthh = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+        ];
+
+        const tt = new Date().getMonth();
+        setMonth(monthh[tt]);
+
         setWeek([]);
         setWeekDate([]);
         const temp = [];
         const temp1 = [];
 
-        for (let i = 0; i < 7; i += 1) {
+        const j = new Date().getDay();
+        let t = 0;
+
+        for (let i = j; i < j + 7; i += 1) {
             temp.push(weekDay[i % 7]);
-            temp1.push(moment().add(i, 'days').get('date'));
+            temp1.push(moment().add(t, 'days').get('date'));
+            t += 1;
         }
 
         setWeek(temp);
         setWeekDate(temp1);
-        if (data?.success) {
-            const selectedDate = new Date().getDate();
-            setSelect(selectedDate);
-            let tmp = [];
 
+        const selectedDate = new Date().getDate();
+
+        if (data?.success) {
+            let tmp = [];
             tmp = data?.message?.filter(
                 (element) => moment(element?.quizDate).get('date') === selectedDate
             );
-
+            // console.log(tmp);
             setSelectedQuiz(tmp);
         }
     }, [data]);
@@ -92,7 +120,9 @@ export default function Sidebar() {
                 {/* <!-- Date Section --> */}
                 <div className="container-fluid">
                     <div className="container-fluid mb-4">
-                        <h6>April, 2022</h6>
+                        <h6>
+                            {month}, {new Date().getFullYear()}
+                        </h6>
                     </div>
                     <div className="container-fluid d-flex justify-content-around">
                         {week.map((day, index) => (
@@ -143,14 +173,12 @@ export default function Sidebar() {
                                             Time Left:{' '}
                                             {getHourAndMinute(
                                                 element?.quizDate,
-                                                element?.quizTime
-                                            ) -
-                                                Date.now() >
-                                            0 ? (
+                                                element?.startTime
+                                            ) > 0 ? (
                                                 <Countdown
                                                     date={getHourAndMinute(
                                                         element?.quizDate,
-                                                        element?.quizTime
+                                                        element?.startTime
                                                     )}
                                                 />
                                             ) : (

@@ -7,8 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import {
     useDeleteQuestionMutation,
     useEditStatusMutation,
+    useGetQuizInfoQuery,
     // eslint-disable-next-line prettier/prettier
-    useGetQuizInfoQuery
+    useGetQuizInfoStudentQuery
 } from '../../features/dashboard/getQuizInfoApi';
 
 export default function QuizControls() {
@@ -16,8 +17,10 @@ export default function QuizControls() {
     const [edit, setEdit] = useState('');
     const [updatedStatus, setUpdatedStatus] = useState('');
 
-    const { email } = useSelector((state) => state.auth);
+    const { email, role } = useSelector((state) => state.auth);
+
     const { data } = useGetQuizInfoQuery(email);
+    const { data: stData } = useGetQuizInfoStudentQuery(email);
     const [deleteQuestion, { data: delResponse }] = useDeleteQuestionMutation();
     const [editStatus, { data: editResponse }] = useEditStatusMutation();
 
@@ -57,9 +60,12 @@ export default function QuizControls() {
     };
 
     useEffect(() => {
-        if (data?.success) {
-            // console.log(data);
+        if (data?.success && data?.message && role === 'teacher') {
             setAllData(data?.message);
+        }
+        if (stData?.success && stData?.message && role === 'student') {
+            console.log(stData?.message);
+            setAllData(stData?.message);
         }
         if (delResponse?.success) {
             toast.success(delResponse?.message, {
@@ -73,61 +79,69 @@ export default function QuizControls() {
                 id: 'editResponse',
             });
         }
-    }, [data, delResponse, editResponse]);
+    }, [data, delResponse, editResponse, stData, role]);
 
     return (
-        <div className="container overflow-hidden" id="quiz-table">
-            <table className="table" id="quiz-control-table">
+        <div
+            className={`container overflow-hidden ${role === 'student' && 'st-table'}`}
+            id="quiz-table"
+        >
+            {role === 'student' && <p className="lib-st">My Library</p>}
+            <table className="table content-table" id="quiz-control-table">
                 <thead>
-                    <tr>
+                    <tr className="text-center">
                         <th>Subject</th>
                         <th>Title</th>
-                        <th>Status</th>
+                        {role === 'teacher' && <th>Status</th>}
                         <th>Date</th>
                         <th>View</th>
-                        <th>Controls</th>
+                        {role === 'teacher' && <th>Controls</th>}
                     </tr>
                 </thead>
                 <tbody>
                     {/* <!-- First Row --> */}
-                    {allData.map((element) => (
-                        <tr key={element._id}>
+                    {allData.map((element, index) => (
+                        <tr key={element._id} className={index % 2 && 'active-row'}>
                             <td>
                                 {element?.subjectName === 'public'
                                     ? 'Public QUiz'
                                     : element?.subjectName}
                             </td>
                             <td>{element?.title}</td>
-                            <td
-                                className={`${
-                                    element?.status === 'active'
-                                        ? 'quiz-dashboard-active'
-                                        : 'quiz-dashboard-hidden'
-                                }`}
-                            >
-                                {edit === element?._id ? (
-                                    <div className="container m-0 p-0 d-flex justify-content-around">
-                                        <select
-                                            defaultValue={element?.status}
-                                            className="custom-select-edit-dash"
-                                            onChange={(e) => setUpdatedStatus(e.target.value)}
-                                        >
-                                            <option value="active">Active</option>
-                                            <option value="hidden">Hidden</option>
-                                        </select>
-                                        <span
-                                            role="button"
-                                            className="edit-dash"
-                                            tabIndex={0}
-                                            onClick={() => handleEdit(element.status, element?._id)}
-                                        >
-                                            <i className="fa-solid fa-check" />
-                                        </span>
-                                    </div>
-                                ) : (
-                                    element?.status && capitalize(element?.status)
-                                )}
-                            </td>
+                            {role === 'teacher' && (
+                                <td
+                                    className={`${
+                                        element?.status === 'active'
+                                            ? 'quiz-dashboard-active'
+                                            : 'quiz-dashboard-hidden'
+                                    }`}
+                                >
+                                    {edit === element?._id ? (
+                                        <div className="container m-0 p-0 d-flex justify-content-around">
+                                            <select
+                                                defaultValue={element?.status}
+                                                className="custom-select-edit-dash"
+                                                onChange={(e) => setUpdatedStatus(e.target.value)}
+                                            >
+                                                <option value="active">Active</option>
+                                                <option value="hidden">Hidden</option>
+                                            </select>
+                                            <span
+                                                role="button"
+                                                className="edit-dash"
+                                                tabIndex={0}
+                                                onClick={() =>
+                                                    handleEdit(element.status, element?._id)
+                                                }
+                                            >
+                                                <i className="fa-solid fa-check" />
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        element?.status && capitalize(element?.status)
+                                    )}
+                                </td>
+                            )}
                             <td>{dateconverter(element?.quizDate)}</td>
                             <td>
                                 <button
@@ -138,24 +152,26 @@ export default function QuizControls() {
                                     View
                                 </button>
                             </td>
-                            <td>
-                                <div className="container-fluid d-flex justify-content-center responsive-icons">
-                                    <span
-                                        className="table-quiz-edit-icon"
-                                        role="presentation"
-                                        onClick={() => handleEditToggle(element?._id)}
-                                    >
-                                        <i className="fa-solid fa-pen-to-square" />
-                                    </span>
-                                    <span
-                                        className="table-quiz-delete-icon"
-                                        role="presentation"
-                                        onClick={() => handleDeleteQuestion(element?._id)}
-                                    >
-                                        <i className="fa-solid fa-trash" />
-                                    </span>
-                                </div>
-                            </td>
+                            {role === 'teacher' && (
+                                <td>
+                                    <div className="container-fluid d-flex justify-content-center responsive-icons">
+                                        <span
+                                            className="table-quiz-edit-icon"
+                                            role="presentation"
+                                            onClick={() => handleEditToggle(element?._id)}
+                                        >
+                                            <i className="fa-solid fa-pen-to-square" />
+                                        </span>
+                                        <span
+                                            className="table-quiz-delete-icon"
+                                            role="presentation"
+                                            onClick={() => handleDeleteQuestion(element?._id)}
+                                        >
+                                            <i className="fa-solid fa-trash" />
+                                        </span>
+                                    </div>
+                                </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>

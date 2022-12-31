@@ -9,7 +9,15 @@ export const getRoomInfo = apiSlice.injectEndpoints({
             }),
             providesTags: ['getRoomInfo'],
         }),
+        deletePost: builder.mutation({
+            query: (data) => ({
+                url: '/api/user/delete-post',
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: ['getCoursePost', 'getPrivatePost'],
+        }),
     }),
 });
 
-export const { useGetInfoQuery } = getRoomInfo;
+export const { useGetInfoQuery, useDeletePostMutation } = getRoomInfo;

@@ -17,14 +17,44 @@ export const PostApi = apiSlice.injectEndpoints({
             }),
             providesTags: ['getCoursePost'],
         }),
-        getPrivatePost: builder.query({
+        getAllPosts: builder.query({
             query: (email) => ({
-                url: `/api/user/get-private-post/${email}`,
+                url: `/api/user/get-all-posts/${email}`,
                 method: 'GET',
             }),
             providesTags: ['getPrivatePost'],
         }),
+        addComment: builder.mutation({
+            query: (data) => ({
+                url: '/api/user/add-comment',
+                method: 'POST',
+                body: data,
+            }),
+            invalidatesTags: ['getCoursePost', 'getPrivatePost'],
+        }),
+        getComment: builder.query({
+            query: (id) => ({
+                url: `/api/user/get-comment/${id}`,
+                method: 'GET',
+            }),
+            providesTags: ['getComment'],
+        }),
+        addPublicPost: builder.mutation({
+            query: (data) => ({
+                url: '/api/user/add-public-post-unq',
+                method: 'POST',
+                body: data,
+            }),
+            invalidatesTags: ['getPrivatePost'],
+        }),
     }),
 });
 
-export const { useAddCoursePostMutation, useGetCoursePostQuery, useGetPrivatePostQuery } = PostApi;
+export const {
+    useAddCoursePostMutation,
+    useGetCoursePostQuery,
+    useGetAllPostsQuery,
+    useAddCommentMutation,
+    useGetCommentQuery,
+    useAddPublicPostMutation,
+} = PostApi;

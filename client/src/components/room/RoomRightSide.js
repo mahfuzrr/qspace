@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FaCopy, FaInfoCircle } from 'react-icons/fa';
+import { HiOutlineArrowNarrowRight, HiUserGroup } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { useGetInfoQuery } from '../../features/singleRoom/getRoomInfo';
 import RoomTasks from './RoomTasks';
@@ -11,6 +12,7 @@ export default function RoomRightSide() {
     const { roomId } = useParams();
     const [roomInfo, setRoomInfo] = useState({});
     const { role } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
 
     const { data } = useGetInfoQuery(roomId);
 
@@ -19,6 +21,10 @@ export default function RoomRightSide() {
             position: toast.POSITION.TOP_RIGHT,
             pauseOnHover: false,
         });
+    };
+
+    const handleNavigate = (id) => {
+        navigate(`/studentlists/${id}`);
     };
 
     useEffect(() => {
@@ -88,9 +94,15 @@ export default function RoomRightSide() {
                 {/* <!-- Student Progress --> */}
                 <div className="container" id="course-progress">
                     <div className="container-fluid d-flex align-items-center position-relative">
-                        <i className="fa-solid fa-chart-simple me-3" />
-                        <p className="m-0">Student Progress</p>
-                        <i className="fa-solid fa-arrow-right" />
+                        <HiUserGroup size={18} color="#ffa801" className="me-3" />
+                        <p className="m-0">Student Lists</p>
+                        <HiOutlineArrowNarrowRight
+                            className="arrow-right-room"
+                            size={20}
+                            color="#ffa801"
+                            role="presentation"
+                            onClick={() => handleNavigate(roomId)}
+                        />
                     </div>
                 </div>
 

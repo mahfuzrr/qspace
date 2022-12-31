@@ -44,37 +44,18 @@ export default function RoomLeftSide() {
                                 id="room-add-btn"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
+                                onClick={handleClose}
                             >
                                 <IoAddCircleSharp size={23} />
-                                <span className="d-block ms-2">Add</span>
+                                <span className="d-block ms-2">Add Post</span>
                             </button>
-
-                            <ul
-                                className="dropdown-menu"
-                                aria-labelledby="room-add-btn"
-                                id="add-room-post-quiz"
-                            >
-                                <li className="dropdown-item">
-                                    <p className="dropdown-item m-0">Add Quiz</p>
-                                </li>
-                                <li>
-                                    <p
-                                        className="dropdown-item m-0"
-                                        role="presentation"
-                                        onClick={handleClose}
-                                    >
-                                        Add Post
-                                    </p>
-                                </li>
-                            </ul>
                         </div>
                     )}
                 </div>
-                {/* <!-- add and buton section --> */}
 
                 {/* <!-- Add sort button section --> */}
-                <div className="container d-flex justify-content-end" id="room-sort">
-                    {/* <!-- sort button section --> */}
+                {/* <div className="container d-flex justify-content-end" id="room-sort">
+                    
                     <div className="d-flex align-items-center justify-content-between" id="select">
                         <label htmlFor="sort-content" className="form-label d-block p-0 m-0">
                             Sort by:
@@ -87,21 +68,21 @@ export default function RoomLeftSide() {
                             <option value="quiz">Quiz</option>
                             <option value="post">Post</option>
                         </select>
-                    </div>
-                    {/* <!-- sort button section --> */}
-                </div>
-                {/* <!-- Add sort button section --> */}
+                    </div>  
+                </div> */}
             </div>
 
             {isOpen && <TextEditor handleClose={handleClose} />}
 
             <div className="container-fluid" id="room-allPost">
-                {postData
-                    .slice(0)
-                    .reverse()
-                    .map((post) => (
-                        <RoomPostCard key={post._id} content={post} />
-                    ))}
+                <div className="container-fluid" id="room-post-cards">
+                    {postData
+                        .slice(0)
+                        .reverse()
+                        .map((post) => (
+                            <RoomPostCard key={post._id} content={post} />
+                        ))}
+                </div>
             </div>
         </div>
     );

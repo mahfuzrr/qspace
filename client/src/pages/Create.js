@@ -1,21 +1,24 @@
-import { Toaster } from 'react-hot-toast';
-import Footer from '../components/footer/Footer';
+import { ToastContainer } from 'react-toastify';
+import QuizInfo from '../components/CreateQuiz/QuizInfo';
 import Navbar from '../components/navbar/Navbar';
-import QuizControls from '../components/teacherQuiz/QuizControls';
-import QuizFilters from '../components/teacherQuiz/QuizFilters';
 
 export default function Create() {
+    // useEffect(() => {
+    //     const unloadCallback = (event) => {
+    //         event.preventDefault();
+    //         // eslint-disable-next-line no-param-reassign
+    //         event.returnValue = '';
+    //         return '';
+    //     };
+
+    //     window.addEventListener('beforeunload', unloadCallback);
+    //     return () => window.removeEventListener('beforeunload', unloadCallback);
+    // }, []);
     return (
         <>
             <Navbar />
-            <div className="container-fluid" id="quiz-dashboard">
-                <Toaster />
-                <div className="container-fluid" id="quiz-dashboard-contents">
-                    <QuizFilters />
-                    <QuizControls />
-                </div>
-            </div>
-            <Footer />
+            <ToastContainer />
+            <QuizInfo />
         </>
     );
 }

@@ -1,6 +1,6 @@
 import AllQuizes from './AllQuizes';
 
-export default function QuizContents() {
+export default function QuizContents({ data }) {
     return (
         <div className="container" id="quiz-section">
             <div className="container-fluid" id="quiz-all-content">
@@ -23,7 +23,7 @@ export default function QuizContents() {
                     </li>
                     <li className="nav-item ms-4" role="presentation">
                         <button
-                            className="nav-link pill-button"
+                            className="nav-link pill-button ps-4 pe-4"
                             id="pills-profile-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-public"
@@ -36,7 +36,7 @@ export default function QuizContents() {
                         </button>
                     </li>
                 </ul>
-                <AllQuizes />
+                <AllQuizes data={data} />
             </div>
         </div>
     );

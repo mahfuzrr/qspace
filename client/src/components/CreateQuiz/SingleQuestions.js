@@ -155,6 +155,7 @@ export default function SingleQuestions({
             questionData: allQuestions,
         };
 
+        console.log(allData);
         createQuiz(allData);
         dispatch(clearQuestion());
     };
@@ -188,6 +189,7 @@ export default function SingleQuestions({
 
     useEffect(() => {
         setAllQuestions(questions);
+        console.log(res);
         if (res?.success) {
             toast.success(res?.message, {
                 position: toast.POSITION.TOP_RIGHT,

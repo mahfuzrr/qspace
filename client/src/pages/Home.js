@@ -4,11 +4,11 @@ import HomeContent from '../components/home/HomeContent';
 import Loader from '../components/Loader/Loader';
 import Navbar from '../components/navbar/Navbar';
 import Sidebar from '../components/sidebar/Sidebar';
-import { useGetPrivatePostQuery } from '../features/addPost/PostApi';
+import { useGetAllPostsQuery } from '../features/addPost/PostApi';
 
 export default function Home() {
     const { email } = useSelector((state) => state.auth);
-    const { data, isLoading } = useGetPrivatePostQuery(email);
+    const { data, isLoading } = useGetAllPostsQuery(email);
 
     if (isLoading) {
         return <Loader />;

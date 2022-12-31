@@ -43,7 +43,7 @@ export default function RoomContents({ data }) {
                 {Role === 'teacher' ? <CreateRoom /> : <JoinRoom />}
 
                 <div className="container mt-5" id="all-room-cards">
-                    <div className="container-fluid d-flex justify-content-center row gap-5">
+                    <div className="container-fluid d-flex row gap-5">
                         {roomLists.map((content) => (
                             <RoomLists key={content?._id} content={content} />
                         ))}

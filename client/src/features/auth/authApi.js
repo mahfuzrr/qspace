@@ -26,6 +26,7 @@ export const authApi = apiSlice.injectEndpoints({
                                 email: result.data.info?.email,
                                 isLogged: true,
                                 photoURL: result.data.info?.photoURL,
+                                id: result.data?.info?.id,
                             })
                         );
 

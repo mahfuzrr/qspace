@@ -1,60 +1,52 @@
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { useGetAllQuizQuery } from '../../features/quiz/quizPageApi';
-import Loader from '../Loader/Loader';
 import CourseQuizes from './CourseQuizes';
 import PublicQuizes from './PublicQuizes';
 
-export default function AllQuizes() {
-    const [courseQuiz, setcourseQuiz] = useState([]);
+export default function AllQuizes({ data }) {
     const [publicQuiz, setpublicQuiz] = useState([]);
-
-    const { data, isLoading } = useGetAllQuizQuery();
 
     useEffect(() => {
         if (data?.success) {
             const getDate = (d, hm) => {
-                const hm1 = hm?.split(':');
-                let h = parseInt(hm1[0], 10);
-                const m = parseInt(hm1[1], 10);
+                const temp = new Date(hm).getTime();
 
-                h *= 60;
-                h += m;
-                h -= 6 * 60;
+                // const hm1 = hm?.split(':');
+                // let h = parseInt(hm1[0], 10);
+                // const m = parseInt(hm1[1], 10);
 
-                const date1 = moment(d).add(h, 'm').toDate();
+                // h *= 60;
+                // h += m;
+                // h -= 6 * 60;
+
+                const date1 = moment(d).millisecond(temp);
                 const currTime = new Date(date1);
 
                 return currTime;
             };
 
-            let tmp = data?.message?.filter(
-                (elem) =>
-                    elem?.catagory === 'course' &&
-                    getDate(elem?.quizDate, elem?.quizTime) > Date.now()
-            );
+            // console.log(data?.message);
 
-            setcourseQuiz(tmp);
-
-            tmp = data?.message?.filter(
+            const tmp = data?.message?.filter(
                 (elem) =>
                     elem?.catagory === 'public' &&
-                    getDate(elem?.quizDate, elem?.quizTime) > Date.now()
+                    getDate(elem?.quizDate, elem?.startTime) > Date.now() &&
+                    elem?.status === 'active'
             );
+
+            // console.log(tmp[0]);
+
+            tmp.sort((a, b) => new Date(a?.quizDate) - new Date(b?.quizDate));
 
             setpublicQuiz(tmp);
             // console.log(tmp);
         }
     }, [data]);
 
-    let element = (
+    return (
         <div className="tab-content mt-4" id="pills-tabContent">
-            <CourseQuizes quizData={courseQuiz} />
+            <CourseQuizes />
             <PublicQuizes quizData={publicQuiz} />
         </div>
     );
-
-    if (isLoading) element = <Loader />;
-
-    return element;
 }

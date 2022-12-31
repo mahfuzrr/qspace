@@ -10,12 +10,22 @@ export default function Result({ resultData }) {
     useEffect(() => {
         if (resultData) {
             let correctAns = 0;
+            //  console.log(resultData?.submission);
+
+            const customIndexOf = (mainAnswer, val) => {
+                for (let i = 0; i < mainAnswer?.length; i += 1) {
+                    if (mainAnswer[i]?.input === val) return i;
+                }
+
+                return -1;
+            };
 
             for (let i = 0; i < resultData?.submission?.length; i += 1) {
                 let check = true;
 
                 for (let j = 0; j < resultData?.submission[i]?.userAnswer?.length; j += 1) {
-                    const index = resultData.submission[i].mainAnswer.indexOf(
+                    const index = customIndexOf(
+                        resultData.submission[i].mainAnswer,
                         resultData.submission[i].userAnswer[j]
                     );
                     if (index < 0) {

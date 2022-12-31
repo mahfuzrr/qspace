@@ -1,4 +1,3 @@
-import moment from 'moment';
 import Countdown from 'react-countdown';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,16 +33,37 @@ export default function PublicQuizes({ quizData }) {
         };
     };
 
-    const getHourAndMinute = (d, hm) => {
-        const hm1 = hm?.split(':');
-        let h = parseInt(hm1[0], 10);
-        const m = parseInt(hm1[1], 10);
+    const getMilliseconds = (d, hm) => {
+        const temp = new Date(hm).toLocaleTimeString();
+        let tmp = temp.split(':');
+        let hr = parseInt(tmp[0], 10);
+        const mint = parseInt(tmp[1], 10);
 
-        h -= 6;
-        h *= 60;
-        h += m;
+        tmp = temp.split(' ');
 
-        const date1 = moment(d).add(h, 'm').toDate();
+        if (tmp[1] === 'PM') {
+            hr += 12;
+        }
+
+        const date = new Date(d);
+
+        date.setHours(hr);
+        date.setMinutes(mint);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+
+        // console.log(a, b);
+        // console.log(moment(b).);
+
+        // const hm1 = hm?.split(':');
+        // let h = parseInt(hm1[0], 10);
+        // const m = parseInt(hm1[1], 10);
+
+        // h -= 6;
+        // h *= 60;
+        // h += m;
+
+        const date1 = new Date(date);
 
         return date1;
     };
@@ -72,9 +92,9 @@ export default function PublicQuizes({ quizData }) {
                     quizData?.map((elem) => (
                         <div
                             key={elem?._id}
-                            className="container-fluid m-0 d-flex align-items-center justify-content-between course-quiz-cards"
+                            className="container-fluid m-0 d-flex p-4 align-items-center justify-content-between course-quiz-cards"
                         >
-                            <div className="container quiz-time-header">
+                            <div className="container p-3 quiz-time-header">
                                 <h6>{elem?.title}</h6>
                                 <p>
                                     Starts on {getDate(elem?.quizDate).date}{' '}
@@ -92,9 +112,10 @@ export default function PublicQuizes({ quizData }) {
                             <div className="container d-flex flex-column align-items-center quiz-time-remain">
                                 <p>Before Quiz</p>
                                 <p>
-                                    {getHourAndMinute(elem?.quizDate, elem?.quizTime) > 0 ? (
+                                    {getMilliseconds(elem?.quizDate, elem?.startTime) - Date.now() >
+                                    0 ? (
                                         <Countdown
-                                            date={getHourAndMinute(elem?.quizDate, elem?.quizTime)}
+                                            date={getMilliseconds(elem?.quizDate, elem?.startTime)}
                                         />
                                     ) : (
                                         <span>Finished</span>

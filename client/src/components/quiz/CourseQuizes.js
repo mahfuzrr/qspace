@@ -1,11 +1,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 import moment from 'moment';
+import { useEffect, useState } from 'react';
 import Countdown from 'react-countdown';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useGetCourseQuizQuery } from '../../features/quiz/quizPageApi';
 
-export default function CourseQuizes({ quizData }) {
+export default function CourseQuizes() {
+    const [quizData, setQuizData] = useState([]);
     const navigate = useNavigate();
+    const { email } = useSelector((state) => state.auth);
+
+    const { data } = useGetCourseQuizQuery(email);
 
     const getDate = (d) => {
         const date = new Date(d);
@@ -36,24 +43,36 @@ export default function CourseQuizes({ quizData }) {
     };
 
     const getHourAndMinute = (d, hm) => {
-        const hm1 = hm?.split(':');
-        let h = parseInt(hm1[0], 10);
-        const m = parseInt(hm1[1], 10);
+        const temp = new Date(hm).toLocaleTimeString();
+        let tmp = temp.split(':');
+        let hr = parseInt(tmp[0], 10);
+        const mint = parseInt(tmp[1], 10);
 
-        h -= 6;
-        h *= 60;
-        h += m;
+        tmp = temp.split(' ');
 
-        const date1 = moment(d).add(h, 'm').toDate();
+        if (tmp[1] === 'PM') {
+            hr += 12;
+        }
+
+        const date = new Date(d);
+
+        date.setHours(hr);
+        date.setMinutes(mint);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+
+        // const hm1 = hm?.split(':');
+        // let h = parseInt(hm1[0], 10);
+        // const m = parseInt(hm1[1], 10);
+
+        // h -= 6;
+        // h *= 60;
+        // h += m;
+
+        const date1 = new Date(date);
 
         return date1;
     };
-
-    const renderer = ({ hours, minutes, seconds }) => (
-        <span>
-            {hours}:{minutes}:{seconds}
-        </span>
-    );
 
     const handleOnComplete = (id) => {
         navigate(`/quizz/${id}`);
@@ -62,6 +81,39 @@ export default function CourseQuizes({ quizData }) {
     const handleNavigate = (id) => {
         navigate(`/quizz/${id}`);
     };
+
+    useEffect(() => {
+        if (data?.success) {
+            // console.log(data?.message);
+            const getD = (d, hm) => {
+                const temp = new Date(hm).getTime();
+                // console.log(temp);
+                // const hm1 = hm?.split(':');
+                // let h = parseInt(hm1[0], 10);
+                // const m = parseInt(hm1[1], 10);
+
+                // h *= 60;
+                // h += m;
+                // h -= 6 * 60;
+
+                const date1 = moment(d).millisecond(temp);
+                const currTime = new Date(date1);
+
+                return currTime;
+            };
+
+            const tmp = data?.message?.filter(
+                (elem) =>
+                    elem?.catagory === 'course' &&
+                    getD(elem?.quizDate, elem?.startTime) > Date.now() &&
+                    elem?.status === 'active'
+            );
+
+            // console.log(data);
+            tmp.sort((a, b) => new Date(a?.quizDate) - new Date(b?.quizDate));
+            setQuizData(tmp);
+        }
+    }, [data]);
 
     return (
         <div
@@ -77,9 +129,9 @@ export default function CourseQuizes({ quizData }) {
                     quizData?.map((elem) => (
                         <div
                             key={elem?._id}
-                            className="container-fluid m-0 d-flex align-items-center justify-content-between course-quiz-cards"
+                            className="container-fluid m-0 d-flex p-4 align-items-center justify-content-between course-quiz-cards"
                         >
-                            <div className="container quiz-time-header">
+                            <div className="container p-4 quiz-time-header">
                                 <h6>{elem?.title}</h6>
                                 <p>
                                     Starts on {getDate(elem?.quizDate).date}{' '}
@@ -97,9 +149,11 @@ export default function CourseQuizes({ quizData }) {
                             <div className="container d-flex flex-column align-items-center quiz-time-remain">
                                 <p>Before Quiz</p>
                                 <p>
-                                    {getHourAndMinute(elem?.quizDate, elem?.quizTime) > 0 ? (
+                                    {getHourAndMinute(elem?.quizDate, elem?.startTime) -
+                                        Date.now() >
+                                    0 ? (
                                         <Countdown
-                                            date={getHourAndMinute(elem?.quizDate, elem?.quizTime)}
+                                            date={getHourAndMinute(elem?.quizDate, elem?.startTime)}
                                             onComplete={() => handleOnComplete(elem?._id)}
                                         />
                                     ) : (

@@ -1,7 +1,11 @@
+/* eslint-disable prettier/prettier */
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
-import { useUpdateMutation } from '../../features/updateProfile/updateProfileApi';
+import {
+    useUpdateMutation,
+    useUpdatePhotoMutation
+} from '../../features/updateProfile/updateProfileApi';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 export default function UpdateProfileInfo() {
@@ -14,7 +18,10 @@ export default function UpdateProfileInfo() {
     const [updateCollege, setUpdatedCollege] = useState(college);
     const [newName, setUpNewName] = useState(name);
     const [newCollege, setNewCollege] = useState(college);
-    const [isSame, setIsSame] = useState(true);
+    const [imgFile, setImgFile] = useState(null);
+
+    const [updatePhoto, { data: phoRes }] = useUpdatePhotoMutation();
+    const {id} = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (name) {
@@ -30,10 +37,57 @@ export default function UpdateProfileInfo() {
             setUpdatedCollege(updateData?.message?.institution);
             setUpNewName(updateData?.message?.userName);
             setNewCollege(updateData?.message?.institution);
-
-            setIsSame(true);
+            toast.success('Successfully Updated !', {
+                position: toast.POSITION.TOP_RIGHT,
+            });
         }
-    }, [updateData, name, college]);
+        if(phoRes?.success){
+            toast.success('Successfully Updated !', {
+                position: toast.POSITION.TOP_RIGHT,
+                toastId: 'photo-update',
+            });
+        }
+
+    }, [updateData, name, college, phoRes]);
+
+    const handleNameChange = (e) => {
+        setUpdatedName(e.target.value);
+    };
+
+    const handleCollegeChange = (e) => {
+        setUpdatedCollege(e.target.value);
+    };
+
+    const updateProfilePicture = () => {
+        const imageHostKey = process.env.REACT_APP_imgbb_key;
+
+        const formData = new FormData();
+        formData.append('image', imgFile);
+
+        const imgbbUrl = `https://api.imgbb.com/1/upload?expiration=15552000&key=${imageHostKey}`;
+
+        const updateObject = {
+            id,
+        };
+
+        fetch(imgbbUrl, {
+            method: 'POST',
+            body: formData,
+        })
+            .then((result) => {
+                result.json().then((upRes) => {
+                    if (upRes?.success) {
+                        // handleAnother(upRes?.data?.url, body);
+                        updateObject.imgLink = upRes?.data?.url;
+                        updatePhoto(updateObject);
+                        setImgFile('');
+                    }
+                });
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    };
 
     const handleUpdate = () => {
         const updateObj = {};
@@ -44,20 +98,12 @@ export default function UpdateProfileInfo() {
         if (updateObj) {
             updateObj.email = email;
             update(updateObj);
-            toast.success('Successfully Updated !', {
-                position: toast.POSITION.TOP_RIGHT,
-            });
         }
-    };
 
-    const handleNameChange = (e) => {
-        setUpdatedName(e.target.value);
-        setIsSame(false);
-    };
+        console.log(imgFile);
 
-    const handleCollegeChange = (e) => {
-        setUpdatedCollege(e.target.value);
-        setIsSame(false);
+        if (imgFile) updateProfilePicture();
+
     };
 
     return (
@@ -99,11 +145,11 @@ export default function UpdateProfileInfo() {
 
                     <div className="container-fluid d-flex flex-column p-0">
                         <label htmlFor="profile-name">Profile Picture</label>
-                        <input type="file" className="mt-2" />
+                        <input type="file" className="mt-2" onChange={(e) => setImgFile(e.target.files[0])} />
                     </div>
 
                     <button
-                        disabled={isSame}
+                        
                         type="button"
                         className="btn update"
                         id="profile-update"

@@ -6,7 +6,7 @@
 
 .text-editor {
     padding: 15px 10px;
-    width: 100%;
+    width: 85%;
 }
 
 #text-editor-save-cancel {
@@ -21,9 +21,36 @@
 }
 
 .text-editor .ql-editor {
-    min-height: 15em;
+    min-height: 7em;
     background-color: white;
     font-size: 13px;
+}
+
+#post-editor .post-editor-below .text-editor .ql-editor {
+    min-height: 4em;
+    background-color: white;
+    font-size: 13px;
+}
+
+#post-editor .post-editor-below .text-editor {
+    width: 80%;
+    margin-left: 0 !important;
+}
+
+#post-editor .post-btn {
+    font-size: 14px;
+    background-color: #8854C0;
+    color: white;
+    padding: 3px 15px;
+    border-radius: 3px;
+}
+
+#post-editor .post-btn:focus {
+    box-shadow: none;
+}
+
+#post-editor .post-btn:active {
+    transform: scale(0.98);
 }
 
 .ql-font-hind-siliguri {

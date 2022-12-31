@@ -32,6 +32,7 @@ export default function ResultPage() {
 
     useEffect(() => {
         if (data?.success) {
+            console.log(data);
             setResultData(data?.message);
         }
         const handleResize = () => {
