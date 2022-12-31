@@ -26,7 +26,6 @@ const userInfo = require("../controller/userDBinfo/userInfo");
 const studentTaskDelete = require("../controller/addTask/studentTaskDelete");
 const addCoursePostController = require("../controller/Posts/addCoursePost");
 const getRoomPostsController = require("../controller/Posts/getRoomPostsController");
-const getPrivatePostsController = require("../controller/Posts/getPrivatePostsController");
 const createQuizController = require("../controller/create-quiz/createQuizHandler");
 const getCourseController = require("../controller/getCourse/getCouresController");
 const getQuizInfoController = require("../controller/getQuizDash/getQuizInfoController");
@@ -34,7 +33,23 @@ const getQuestionController = require("../controller/getQuizDash/getQuestionCont
 const deleteQuizController = require("../controller/getQuizDash/deleteQuizController");
 const editStatusController = require("../controller/getQuizDash/editStatusController");
 const getAllQuizController = require("../controller/quiz/getAllQuizController");
-
+const submitQuizController = require("../controller/quiz/submitQuizController");
+const checkQuizMiddleware = require("../controller/quiz/CheckQuizMiddleWare");
+const getResultController = require('../controller/quiz/getResultController');
+const deletePostController = require("../controller/room/deletePostController");
+const getStudentListsController = require("../controller/room/getStudentLists");
+const removeStudentController = require("../controller/room/removeStudentController");
+const getCourseQuizController = require("../controller/quiz/getCourseQuizController");
+const getDetailsController = require("../controller/quiz/getDetailsController");
+const addMarkController = require("../controller/quiz/addMarkController");
+const deleteLater = require("../controller/quiz/deleteLater");
+const getQuizForStudent = require("../controller/getQuizDash/getQuizForStudent");
+const addComment = require("../controller/Posts/addComment");
+const getCommentController = require("../controller/Posts/getCommentController");
+const addPublicPostController = require("../controller/Posts/addPublicPost");
+const getAllPostController = require("../controller/Posts/getAllPostController");
+const photoUpdateController = require("../controller/userDBinfo/photoUpdateController");
+const getStandingsController = require("../controller/quiz/getStandingsController");
 //router
 const router = express.Router();
 
@@ -96,7 +111,7 @@ router.post("/add-course-post", checkAuth, addCoursePostController);
 router.get("/get-course-post/:roomId", getRoomPostsController);
 
 // get private posts
-router.get('/get-private-post/:email', getPrivatePostsController);
+router.get('/get-all-posts/:email', getAllPostController);
 
 // Quiz Routers
 router.post('/create-quiz', createQuizController);
@@ -106,6 +121,9 @@ router.get('/get-courses/:email', getCourseController);
 
 // get quiz list for quiz dashboard
 router.get('/get-quizzes/:email', getQuizInfoController);
+
+// get quiz for student dashboard
+router.get('/get-quiz-student/:email', getQuizForStudent);
 
 // get questions
 router.get('/get-questions/:id', getQuestionController);
@@ -118,5 +136,47 @@ router.patch('/update-quiz-status', editStatusController);
 
 // get all quizzes
 router.get('/get-all-quizzes', getAllQuizController);
+
+// get course quizzes
+router.get('/get-course-quizzes/:email', getCourseQuizController);
+
+// submit the quiz
+router.post('/submit-quizz', checkQuizMiddleware, submitQuizController);
+
+// get result
+router.get('/get-result/:email/:quizid', getResultController);
+
+// delete post
+router.patch('/delete-post', deletePostController);
+
+// get studentLists
+router.get('/get-studentlists/:id', getStudentListsController);
+
+// remove student
+router.patch('/remove-student/:email/:courseid', removeStudentController);
+
+// get quiz details for teacher
+router.get('/get-quiz-details/:quizid', getDetailsController);
+
+// update mark
+router.patch('/update-quiz-mark', addMarkController);
+
+// add comment
+router.post('/add-comment', addComment);
+
+// get comment
+router.get('/get-comment/:id', getCommentController);
+
+// add public post
+router.post('/add-public-post-unq', addPublicPostController);
+
+//delete later
+router.get('/delete-later/:id/:quizid', deleteLater);
+
+//photo update
+router.patch('/update-profile-photo', photoUpdateController);
+
+// get standings
+router.get('/standings-api/:id', getStandingsController);
 
 module.exports = router;

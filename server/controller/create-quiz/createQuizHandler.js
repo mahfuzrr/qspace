@@ -6,23 +6,23 @@ const Quiz = require('../../models/Quiz');
 const { default: mongoose } = require("mongoose");
 
 const createQuizController = (req, res) => {
-    const {author, title, subjectId, subjectName, date, startTime, duration, status, questionData} = req.body;
+    const {author, title, subjectId, subjectName, date, startTime, endTime, status, questionData} = req.body;
 
     const responseObject = {
         author,
         title,
         subjectName,
         quizDate: date,
-        quizTime: startTime,
-        duration,
+        startTime,
+        endTime,
         status,
         isOver: false,
         questions: questionData,
     }
 
-    console.log(responseObject);
+    const tp = subjectName?.toLowerCase();
 
-    if(responseObject.subjectName !== 'public')responseObject.catagory = 'course';
+    if(tp !== 'public')responseObject.catagory = 'course';
 
 
     const quiz = new Quiz(responseObject);

@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 
 const postSchema = mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
     writter: {
       type: String,
       required: true,
@@ -15,9 +11,16 @@ const postSchema = mongoose.Schema(
       require: true,
       trim: true,
     },
+    writerId:{
+      type: mongoose.Types.ObjectId,
+      ref: 'User',
+    },
     content: {
       type: String,
       require: true,
+    },
+    imgLink:{
+      type: String,
     },
     isPublic: {
       type: Boolean,
@@ -35,6 +38,21 @@ const postSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    courseId:{
+      type: mongoose.Types.ObjectId,
+      ref: 'Course',
+    },
+    comment: [
+      {
+        userId:{
+          type: mongoose.Types.ObjectId,
+          ref: "User", 
+        },
+        content:{
+          type: String,
+        },
+      }
+    ]
   },
   {
     timestamps: true,

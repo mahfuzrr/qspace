@@ -6,17 +6,23 @@ const Post = require("../../models/Post");
 const User = require("../../models/User");
 
 const addCoursePostController = (req, res) => {
-  const { title, description, roomId, email } = req.body;
+  const { description, roomId, email, isPublic, id } = req.body;
 
   const updatedRoomId = mongoose.Types.ObjectId(roomId);
+  const updatedId = mongoose.Types.ObjectId(id);
 
   let updateObject = {
-    title,
     content: description,
     writterEmail: email,
     isPublic: false,
     postedOn: Date.now().toString(),
+    courseId: updatedRoomId,
+    writerId: updatedId,
   };
+
+  if(req.body?.imgLink){
+    updateObject.imgLink = req.body?.imgLink;
+  }
 
 
   User.findOne({ email: email }).then((user) => {

@@ -14,6 +14,8 @@ const authChecker = (req, res) => {
             email,
             role: user.role,
             college: user.institution,
+            photoURL: user.avatar,
+            id: user._id,
         };
 
         res.json({

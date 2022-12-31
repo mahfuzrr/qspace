@@ -11,6 +11,7 @@ const logInController = (req, res) => {
     const { errors, isValid } = logInValidator(req.body);
     const { email, password } = req.body;
 
+
     if (!isValid) {
         res.json({
             success: false,
@@ -42,24 +43,14 @@ const logInController = (req, res) => {
                                     }
                                 );
 
-                                // let updatedToken = JSON.stringify(token);
-
-                                // const currentTimeAsMs = Date.now();
-                                // const adjustedTimeAsMs = currentTimeAsMs + (1000 * 60 * 60 * 24 * 30);
-                                
-                                // //set cookie
-                                // res.cookie(process.env.COOKIE_NAME, updatedToken, {
-                                //     maxAge: adjustedTimeAsMs,
-                                //     httpOnly: true,
-                                //     signed: true,
-                                // });
-
                                 res.status(200).json({
                                     info:{
                                         accessToken: token,
                                         userName: user.userName,
                                         email: user.email,
                                         role: user.role,
+                                        photoURL: user.avatar,
+                                        id: user._id,
                                     },
                                     success: true,
                                     message: "LogIn successful",

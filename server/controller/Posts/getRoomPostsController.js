@@ -9,22 +9,12 @@ const getRoomPostsController = (req, res) => {
 
     const updateRoomId = mongoose.Types.ObjectId(roomId);
 
-    Course.findOne({_id: updateRoomId}).populate('posts').then((result) => {
-
-        if(result && result._id){
-            res.json({
-                success: true,
-                message: result?.posts,
-            });
-        }
-        else{
-
-            res.json({
-                success: false,
-                message: "Server Error!",
-            });
-        }
-    }).catch((err)=>{
+    Post.find({'courseId': updateRoomId}).populate('courseId').populate('comment.userId').populate('writerId').then((result) => {
+        res.json({
+            success: true,
+            message: result,
+        })
+    }).catch((err) => {
         res.json({
             success: false,
             message: err.message,

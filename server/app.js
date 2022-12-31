@@ -42,8 +42,6 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 //routing setup
 app.use("/api/user/", userRouter);
-app.use("/api/user/", userRouter);
-app.use("/api/user/", userRouter);
 
 //404 handler
 app.use(notFoundHandler);

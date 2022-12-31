@@ -11,7 +11,6 @@ const quizSchema = mongoose.Schema({
   },
   subjectName:{
     type: String,
-    required: true,
   },
   catagory:{
     type: String,
@@ -23,11 +22,11 @@ const quizSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
-  quizTime:{
+  startTime:{
     type: String,
     required: true
   },
-  duration: {
+  endTime: {
     type: String,
     required: true,
   },
@@ -41,7 +40,7 @@ const quizSchema = mongoose.Schema({
   },
   questions: [
     {
-      question:{
+      questions:{
         type: String,
         required: true,
       },
@@ -49,20 +48,31 @@ const quizSchema = mongoose.Schema({
         type: String,
         required: true,
       },
+      imgLink: {
+        type: String,
+      },
       mark:{
         type: Number,
         required: true,
       },
       options: [
         {
-          type: String,
-          required: true,
+          id: {
+            type: String,
+          },
+          input:{
+            type: String,
+          },
         }
       ],
       answer:[
         {
-          type: String,
-          required: true,
+          id:{
+            type: String,
+          },
+          input: {
+            type: String,
+          },
         }
       ],
     },
@@ -77,6 +87,10 @@ const quizSchema = mongoose.Schema({
         type: Number,
         default: null,
       },
+      submittedQuiz:[{
+        type: mongoose.Types.ObjectId,
+        ref: "SubmittedQuiz",
+      }],
       submitTime:{
         type: Date,
         default: null,
