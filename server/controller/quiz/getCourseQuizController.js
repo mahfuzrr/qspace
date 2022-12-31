@@ -15,7 +15,8 @@ const getCourseQuizController = (req, res) => {
 
         for(let i = 0; i<result?.course?.length; i+=1){
             //upRes.push(result?.course[i]?.quizzes)
-            upRes = [... result?.course[i]?.quizzes];
+            const temp = [...result?.course[i]?.quizzes];
+            upRes = [...upRes, ...temp];
         }
         
         res.json({
