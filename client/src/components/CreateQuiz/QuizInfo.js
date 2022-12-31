@@ -45,6 +45,7 @@ export default function QuizInfo() {
     const [endTime, setEndTime] = useState(null);
     const [questions, setQuestions] = useState([1]);
     const [showModal, setShowModal] = useState(false);
+    const [preview, setPreview] = useState('');
 
     // single input
     const [content, setContent] = React.useState({ value: null });
@@ -184,6 +185,8 @@ export default function QuizInfo() {
             setContent({ value: null });
             setOptions([]);
             setAnswer([]);
+            setImgLink('');
+            setPreview('');
             return;
         }
 
@@ -198,6 +201,7 @@ export default function QuizInfo() {
 
         console.log(allData);
 
+
         finalInput.push(allData);
 
         setShowModal(false);
@@ -205,6 +209,8 @@ export default function QuizInfo() {
         setOptions([]);
         setAnswer([]);
         setMark(1);
+        setImgLink('');
+        setPreview('');
     };
 
     /* prettier-ignore */
@@ -230,7 +236,9 @@ export default function QuizInfo() {
              .then((result) => {
                  result.json().then((upRes) => {
                      if (upRes?.success) {
+                        console.log(upRes?.data?.url);
                          setImgLink(upRes?.data?.url);
+                         setPreview(upRes?.data?.url);
                      }
                  });
              })
@@ -454,7 +462,7 @@ export default function QuizInfo() {
                                 <p className="question-main">{parse(qData.questions)}</p>
                                 {qData.imgLink && (
                                     <img
-                                        src={imgLink}
+                                        src={qData.imgLink}
                                         alt="sample"
                                         className="img-fluid custom-q-img"
                                     />
@@ -543,7 +551,7 @@ export default function QuizInfo() {
                                     id="left-tool-box"
                                 >
                                     <label className="filelabel">
-                                        <i className="fa-regular fa-image" />
+                                        {preview ? <img src={preview} className="img-fluid" alt='preview-img'/> : <i className="fa-regular fa-image" />}
                                         <span className="title">Add Image</span>
                                         <input
                                             className="FileUpload1"

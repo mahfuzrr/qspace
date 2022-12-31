@@ -52,7 +52,7 @@ export default function AddTask() {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="create-taskLabel">
-                            Add Task
+                            Pin Resource
                         </h5>
                         <button
                             type="button"

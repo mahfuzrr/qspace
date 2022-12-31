@@ -4,10 +4,11 @@
 import * as DOMPurify from 'dompurify';
 import React, { useEffect, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 import ReactQuill from 'react-quill';
 import { useSelector } from 'react-redux';
 import { useAddPublicPostMutation } from '../../features/addPost/PostApi';
-import QuillBar, { formats, modules } from '../textEditor/QuilBar';
+import PostEditor, { formats, modules } from '../textEditor/PostEditor';
 import HomePostCard from './HomePostCard';
 
 export default function HomeContent({ data }) {
@@ -15,8 +16,9 @@ export default function HomeContent({ data }) {
     const [postData, setPostData] = useState([]);
     const [content, setContent] = React.useState({ value: null });
     const [imgFile, setImgFile] = useState(null);
+    const [preview, setPreview] = useState('');
 
-    const { photoURL, id, email, user } = useSelector((state) => state.auth);
+    const { id, email, user } = useSelector((state) => state.auth);
 
     const [addPublicPost, { data: resData }] = useAddPublicPostMutation();
 
@@ -33,13 +35,15 @@ export default function HomeContent({ data }) {
 
             setPostData(temp);
         }
-        if (resData?.success) {
-            toast.success(resData?.message, {
-                position: 'top-right',
-                id: 'post-sc',
-            });
-        }
-    }, [data, resData]);
+
+        if (!imgFile) return;
+        const objectUrl = URL.createObjectURL(imgFile);
+        setPreview(objectUrl);
+
+        // free memory when ever this component is unmounted
+        // eslint-disable-next-line consistent-return
+        return () => URL.revokeObjectURL(objectUrl);
+    }, [data, resData, imgFile]);
 
     const handleAddPost = () => {
         const updateObject = {
@@ -67,6 +71,10 @@ export default function HomeContent({ data }) {
                             addPublicPost(updateObject);
                             setContent({ value: null });
                             setImgFile('');
+                            toast.success(resData?.message, {
+                                position: 'top-right',
+                                id: 'post-sc',
+                            });
                         }
                     });
                 })
@@ -81,6 +89,8 @@ export default function HomeContent({ data }) {
             toast.warn('Please add Content!', {
                 position: toast.POSITION.TOP_RIGHT,
             });
+
+        setPreview('');
     };
 
     return (
@@ -88,19 +98,10 @@ export default function HomeContent({ data }) {
             <Toaster />
             <div className="container-fluid" id="inner-content">
                 <div className="container-fluid ps-0 pe-0" id="post-editor">
-                    <div className="container-fluid post-editor-upper mb-2">
-                        <p className="ms-0 mt-0 me-0 mb-2 ps-2">Post Something</p>
-                    </div>
-                    <div className="container-fluid d-flex justify-content-around align-items-center post-editor-below">
-                        <img
-                            src={photoURL}
-                            alt="post-avatar"
-                            className="img-fluid post-editor-avatar"
-                        />
+                    <div className="container-fluid d-flex flex-column justify-content-around align-items-center post-editor-below">
                         <div className="text-editor">
-                            <QuillBar />
+                            <PostEditor />
                             <ReactQuill
-                                theme="snow"
                                 value={content.value}
                                 onChange={handleChange}
                                 placeholder="Post something creative ..."
@@ -109,21 +110,34 @@ export default function HomeContent({ data }) {
                                 bounds=".text-editor"
                             />
                         </div>
-                        <label className="filelabel">
-                            <i className="fa-solid fa-image pdf-icon" />
-                            <input
-                                className="FileUpload1"
-                                id="FileInput"
-                                type="file"
-                                onChange={(e) => setImgFile(e.target.files[0])}
-                                accept="image/*"
-                            />
-                        </label>
-                    </div>
-                    <div className="container ps-0 pb-0 pt-0 pe-5 m-0 d-flex justify-content-end">
-                        <button type="button" className="btn post-btn" onClick={handleAddPost}>
-                            Post
-                        </button>
+                        <div className="container-fluid d-flex pb-3 justify-content-between">
+                            <label className="filelabel d-flex align-items-center">
+                                {preview ? (
+                                    <PhotoProvider>
+                                        <PhotoView src={preview}>
+                                            <img
+                                                src={preview}
+                                                alt="preview"
+                                                className="img-fluid preview-img"
+                                            />
+                                        </PhotoView>
+                                    </PhotoProvider>
+                                ) : (
+                                    <i className="fa-solid fa-image pdf-icon" />
+                                )}
+                                <input
+                                    className="FileUpload1"
+                                    id="FileInput"
+                                    type="file"
+                                    onChange={(e) => setImgFile(e.target.files[0])}
+                                    accept="image/*"
+                                />
+                                <span className="d-block ms-2">Photo</span>
+                            </label>
+                            <button type="button" className="btn post-btn" onClick={handleAddPost}>
+                                Post
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div className="container-fluid d-grid gap-5 mt-5" id="all-post-cards">

@@ -26,6 +26,10 @@
     font-size: 13px;
 }
 
+#post-toolbar {
+    background-color: rgb(249, 249, 249);
+}
+
 #post-editor .post-editor-below .text-editor .ql-editor {
     min-height: 4em;
     background-color: white;
@@ -33,7 +37,7 @@
 }
 
 #post-editor .post-editor-below .text-editor {
-    width: 80%;
+    width: 100%;
     margin-left: 0 !important;
 }
 

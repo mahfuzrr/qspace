@@ -109,10 +109,11 @@ export default function CourseQuizes() {
                     elem?.status === 'active'
             );
 
-            // console.log(data);
             tmp.sort((a, b) => new Date(a?.quizDate) - new Date(b?.quizDate));
             setQuizData(tmp);
         }
+
+        // console.log(data);
     }, [data]);
 
     return (

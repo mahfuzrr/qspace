@@ -487,8 +487,7 @@ footer a {
 #post-editor {
     width: 87% !important;
     background-color: white;
-    padding: 0px 1rem 1rem 1rem;
-    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.2), 0px -3px 7px 0px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
 }
 
@@ -502,8 +501,11 @@ footer a {
     border-radius: 5px 5px 0px 0px;
 }
 
-#post-editor .post-editor-below {
-    padding: 1rem 5px;
+#post-editor .post-editor-below .post-btn {
+    background-color: var(--blue);
+    padding: 5px 1.2rem;
+    border-radius: 3px;
+    font-size: 14px;
 }
 
 #post-editor .post-editor-below .editor-input {
@@ -520,22 +522,31 @@ footer a {
 #post-editor .post-editor-below .filelabel {
     border-radius: 5px;
     display: block;
-    padding: 1rem 5px;
     transition: border 300ms ease;
     cursor: pointer;
     text-align: center;
 }
 
+#post-editor .post-editor-below .filelabel .preview-img {
+    width: 30px;
+    height: 30px;
+}
+
+#post-editor .post-editor-below .filelabel span {
+    font-size: 14px;
+    color: black;
+    font-weight: 500;
+}
+
 #post-editor .post-editor-below .filelabel i {
     display: block;
     font-size: 30px;
-    padding-bottom: 5px;
     cursor: pointer;
 }
 
 #post-editor .post-editor-below .filelabel .pdf-icon,
 #post-editor .post-editor-below .filelabel {
-    color: black;
+    color: var(--blue);
     transition: 200ms color;
 }
 

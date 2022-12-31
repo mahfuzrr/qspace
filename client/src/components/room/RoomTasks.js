@@ -38,7 +38,7 @@ export default function RoomTasks({ code }) {
                 >
                     <div className="container w-75 d-flex align-items-center ps-0">
                         <FaTasks size={17} color="#8854C0" className="me-2" />
-                        <h6 className="m-0">Tasks</h6>
+                        <h6 className="m-0">Pinned Resource</h6>
                     </div>
                     <div className="container w-25 d-flex justify-content-end" id="task-edit">
                         {role === 'teacher' && (
@@ -79,7 +79,7 @@ export default function RoomTasks({ code }) {
                     id="completed-tasks-header"
                 >
                     <BsCheckAll size={20} className="me-2" color="#05c46b" />
-                    <h6 className="m-0">Completed Tasks</h6>
+                    <h6 className="m-0">Marked as Read</h6>
                 </div>
 
                 {/* <!-- Tasks --> */}

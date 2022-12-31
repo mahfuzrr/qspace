@@ -6,6 +6,7 @@ import parse from 'html-react-parser';
 import { useEffect, useState } from 'react';
 import { BsFillFileEarmarkPdfFill } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -433,7 +434,15 @@ export default function LeftSideQuestions() {
 
                         {ques?.imgLink && (
                             <div className="container question-img-style ms-0 ps-0">
-                                <img src={ques?.imgLink} alt="qimage" className="img-fluid" />
+                                <PhotoProvider>
+                                    <PhotoView src={ques?.imgLink}>
+                                        <img
+                                            src={ques?.imgLink}
+                                            alt="qimage"
+                                            className="img-fluid"
+                                        />
+                                    </PhotoView>
+                                </PhotoProvider>
                             </div>
                         )}
 
