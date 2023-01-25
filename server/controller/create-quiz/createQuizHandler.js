@@ -6,12 +6,14 @@ const Quiz = require('../../models/Quiz');
 const { default: mongoose } = require("mongoose");
 
 const createQuizController = (req, res) => {
-    const {author, title, subjectId, subjectName, date, startTime, endTime, status, questionData} = req.body;
+    const {author, title, subjectId, subjectName, date, startTime, endTime, status, questionData, authorName, quizCover} = req.body;
 
     const responseObject = {
         author,
         title,
         subjectName,
+        authorName,
+        quizCover,
         quizDate: date,
         startTime,
         endTime,

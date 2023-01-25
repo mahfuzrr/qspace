@@ -5,11 +5,17 @@ const quizSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  authorName:{
+    type: String,
+  },
   title:{
     type: String,
     required: true,
   },
   subjectName:{
+    type: String,
+  },
+  quizCover:{
     type: String,
   },
   catagory:{

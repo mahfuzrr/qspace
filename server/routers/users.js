@@ -50,9 +50,17 @@ const addPublicPostController = require("../controller/Posts/addPublicPost");
 const getAllPostController = require("../controller/Posts/getAllPostController");
 const photoUpdateController = require("../controller/userDBinfo/photoUpdateController");
 const getStandingsController = require("../controller/quiz/getStandingsController");
+const getPublicQuizController = require("../controller/quiz/getPublicQuizController");
 //router
 const router = express.Router();
 
+const sample = (req, res) => {
+    res.json({
+        message: 'Welcome to Qspace api'
+    });
+}
+// get
+router.get('/', sample);
 //register router
 router.post("/register", regController);
 
@@ -178,5 +186,8 @@ router.patch('/update-profile-photo', photoUpdateController);
 
 // get standings
 router.get('/standings-api/:id', getStandingsController);
+
+// get public quiz
+router.get('/get-public-quiz', getPublicQuizController);
 
 module.exports = router;
