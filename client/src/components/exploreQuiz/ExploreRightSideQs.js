@@ -22,19 +22,13 @@ export default function RightSideNavigator() {
             const savedDate = localStorage.getItem('end-time');
 
             if (savedDate === null) {
-                const d = new Date(data?.message?.endTime) - new Date(data?.message?.startTime);
-                const seconds = ((d % 60000) / 1000).toFixed(0);
-                let minute = Math.floor(d / 60000);
-                if (seconds >= 59) minute += 1;
-                minute *= 60000;
-
                 setDateData({
-                    minutes: Date.now() + minute,
+                    minutes: Date.now() + parseInt(data?.message?.duration, 10) * 60 * 1000,
                     seconds: 0,
                 });
             }
 
-            console.log(savedDate);
+            // console.log(savedDate);
 
             // eslint-disable-next-line no-restricted-globals
             if (savedDate != null && !isNaN(savedDate)) {
@@ -80,7 +74,7 @@ export default function RightSideNavigator() {
                         {questions?.isOver ? 'Finished' : 'Running'}
                     </p>
                     <p className="m-0 text-center quiz-time">
-                        {!questions?.isOver ? (
+                        {questions?.duration && !questions?.isOver ? (
                             <Countdown
                                 date={dateData.minutes + dateData.seconds}
                                 renderer={renderer}

@@ -174,7 +174,9 @@ export default function Sidebar() {
                                             {getHourAndMinute(
                                                 element?.quizDate,
                                                 element?.startTime
-                                            ) > 0 ? (
+                                            ) -
+                                                Date.now() >
+                                            0 ? (
                                                 <Countdown
                                                     date={getHourAndMinute(
                                                         element?.quizDate,

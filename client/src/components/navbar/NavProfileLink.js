@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { userLoggedOut } from '../../features/auth/authSlice';
 
 export default function NavProfileLink() {
@@ -29,13 +29,12 @@ export default function NavProfileLink() {
             </button>
             <ul className="dropdown-menu dropdown-menu-start" id="drop-menu">
                 <li>
-                    <button className="dropdown-item" type="button">
-                        <Link
-                            to="/profile"
-                            className="text-decoration-none text-dark w-100 d-inline-block"
-                        >
-                            Profile
-                        </Link>
+                    <button
+                        className="dropdown-item"
+                        type="button"
+                        onClick={() => navigate('/profile')}
+                    >
+                        Profile
                     </button>
                 </li>
                 <li>

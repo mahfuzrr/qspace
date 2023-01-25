@@ -8,6 +8,8 @@ import { useCookieQuery } from './features/getUserInfo/getAuthApi';
 import Create from './pages/Create';
 import Details from './pages/Details';
 import Exam from './pages/Exam';
+import Explore from './pages/Explore';
+import ExploreExam from './pages/ExploreExam';
 import Home from './pages/Home';
 import Library from './pages/Library';
 import LogIn from './pages/LogIn';
@@ -112,6 +114,14 @@ function App() {
                     }
                 />
                 <Route
+                    path="explore/quizz/:id"
+                    element={
+                        <PrivateRoute>
+                            <ExploreExam />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
                     path="/result/:id"
                     element={
                         <PrivateRoute>
@@ -142,6 +152,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <StandingPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/explore"
+                    element={
+                        <PrivateRoute>
+                            <Explore />
                         </PrivateRoute>
                     }
                 />

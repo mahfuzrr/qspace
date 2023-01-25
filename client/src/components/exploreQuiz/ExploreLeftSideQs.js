@@ -7,15 +7,12 @@ import { useEffect, useState } from 'react';
 import { BsFillFileEarmarkPdfFill } from 'react-icons/bs';
 import { FaTrashAlt } from 'react-icons/fa';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import swal from 'sweetalert';
 import { useGetQuestionsQuery } from '../../features/dashboard/getQuizInfoApi';
-import { useSubmitQuizMutation } from '../../features/quiz/quizPageApi';
-import UpperButton from './UpperButton';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
-export default function LeftSideQuestions() {
+export default function ExploreLeftSideQs() {
     const [questions, setQuestions] = useState([]);
     const [answer, setAnswer] = useState([]);
     const [checkBox, setCheckBox] = useState([]);
@@ -23,10 +20,8 @@ export default function LeftSideQuestions() {
     const [allFiles, setAllFiles] = useState({});
 
     const { id } = useParams();
-    const { email } = useSelector((state) => state.auth);
 
     const { data } = useGetQuestionsQuery(id);
-    const [submitQuiz, { data: submitRes }] = useSubmitQuizMutation();
 
     const isSelected = (value, id2) => {
         for (let i = 0; i < answer.length; i += 1) {
@@ -157,24 +152,6 @@ export default function LeftSideQuestions() {
     };
 
     useEffect(() => {
-        if (submitRes) {
-            if (submitRes?.success) {
-                swal({
-                    title: 'Good job!',
-                    text: submitRes?.message,
-                    icon: 'success',
-                    button: 'Ok',
-                });
-            } else {
-                swal({
-                    title: 'Oops',
-                    text: submitRes?.message,
-                    icon: 'warning',
-                    dangerMode: true,
-                });
-            }
-        }
-
         if (data?.success) {
             setQuestions(data?.message?.questions);
         }
@@ -187,7 +164,7 @@ export default function LeftSideQuestions() {
 
         window.addEventListener('beforeunload', unloadCallback);
         return () => window.removeEventListener('beforeunload', unloadCallback);
-    }, [data, submitRes]);
+    }, [data]);
 
     const customIndexOf = (mainAnswer, val) => {
         for (let i = 0; i < mainAnswer?.length; i += 1) {
@@ -236,15 +213,12 @@ export default function LeftSideQuestions() {
             }
         }
 
-        const requestData = {
-            email,
-            quizId: id,
-            marks: totalMarks,
-            submitTime: Date.now(),
-            submittedResult: [...allData],
-        };
-
-        submitQuiz(requestData);
+        swal({
+            title: 'Good job!',
+            text: `Mark: ${totalMarks}`,
+            icon: 'success',
+            button: 'Ok',
+        });
     };
 
     const handleSubmit = (e) => {
@@ -333,23 +307,13 @@ export default function LeftSideQuestions() {
             }
         }
 
-        const requestData = {
-            email,
-            quizId: id,
-            marks: totalMarks,
-            submitTime: Date.now(),
-            submittedResult: [...allData],
-        };
-
-        submitQuiz(requestData);
+        swal({
+            title: 'Good job!',
+            text: `Mark: ${totalMarks}`,
+            icon: 'success',
+            button: 'Ok',
+        });
     };
-
-    // const handleResult = () => {
-    //     if (role === 'teacher') navigate(`/quiz-details/${id}`);
-    //     else navigate(`/result/${id}`);
-
-    //     return null;
-    // };
 
     const handleBlankAnswer = (id1, userAnswer, index, mainAnswer, type, mark) => {
         let check = false;
@@ -420,8 +384,6 @@ export default function LeftSideQuestions() {
 
     return (
         <div className="container min-vh-100 overflow-hidden" id="quiz-page-leftSide">
-            <UpperButton />
-
             <div className="container" id="page-all-questions">
                 {questions.map((ques, index) => (
                     <div className="container-fluid single-question" key={ques._id}>

@@ -113,7 +113,7 @@ export default function UserRegister() {
         };
 
         if (formData.get('image') === 'undefined') {
-            handleAnother('https://i.ibb.co/hcCP2K4/u.png', body);
+            handleAnother('https://i.ibb.co/60QPHRb/u.png', body);
             return;
         }
 

@@ -37,6 +37,7 @@ export default function QuizInfo() {
     const [subjectId, setSubjectId] = useState('public');
     const [status, setStatus] = useState('active');
     const [courses, setCourses] = useState([]);
+    const [quizCover, setQuizCover] = useState('');
     // const [titleError, setTitleError] = useState('');
     // const [timeError, setTimeError] = useState('');
     // const [durationError, setDurationError] = useState('');
@@ -59,7 +60,7 @@ export default function QuizInfo() {
     // single input
     const [finalInput, setFinalInput] = useState([]);
 
-    const { email } = useSelector((state) => state.auth);
+    const { email, user } = useSelector((state) => state.auth);
     const { data } = useGetCoursesQuery(email);
     const [createQuiz, { data: resData }] = useCreateQuizMutation();
 
@@ -199,8 +200,7 @@ export default function QuizInfo() {
             imgLink,
         };
 
-        console.log(allData);
-
+        // console.log(allData);
 
         finalInput.push(allData);
 
@@ -213,39 +213,41 @@ export default function QuizInfo() {
         setPreview('');
     };
 
-    /* prettier-ignore */
-    /*eslint-disable */
-    const handleFileSelected = (e : React.ChangeEvent<HTMLInputElement>): void => {
-         const files = Array.from(e.target.files);
+    const handleFileSelected = (e) => {
+        const files = Array.from(e.target.files);
 
-         const imgData = files[0];
-         const formData = new FormData();
-         formData.append('image', imgData);
+        // console.log(files);
 
-         if (formData.get('image') === 'undefined') {
-             return;
-         }
+        // return;
 
-         const imageHostKey = process.env.REACT_APP_imgbb_key;
-         const imgbbUrl = `https://api.imgbb.com/1/upload?expiration=15552000&key=${imageHostKey}`;
+        const imgData = files[0];
+        const formData = new FormData();
+        formData.append('image', imgData);
 
-         fetch(imgbbUrl, {
-             method: 'POST',
-             body: formData,
-         })
-             .then((result) => {
-                 result.json().then((upRes) => {
-                     if (upRes?.success) {
-                        console.log(upRes?.data?.url);
-                         setImgLink(upRes?.data?.url);
-                         setPreview(upRes?.data?.url);
-                     }
-                 });
-             })
-             .catch((err) => {
-                 console.log(err.message);
-             });
-     };
+        if (formData.get('image') === 'undefined') {
+            return;
+        }
+
+        const imageHostKey = process.env.REACT_APP_imgbb_key;
+        const imgbbUrl = `https://api.imgbb.com/1/upload?expiration=15552000&key=${imageHostKey}`;
+
+        fetch(imgbbUrl, {
+            method: 'POST',
+            body: formData,
+        })
+            .then((result) => {
+                result.json().then((upRes) => {
+                    if (upRes?.success) {
+                        // console.log(upRes?.data?.url);
+                        setImgLink(upRes?.data?.url);
+                        setPreview(upRes?.data?.url);
+                    }
+                });
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    };
 
     const isCorrectAns = (inputIndex, opt) => {
         for (let i = 0; i < finalInput[inputIndex].answer?.length; i += 1) {
@@ -326,6 +328,7 @@ export default function QuizInfo() {
 
         const allData = {
             author: email,
+            authorName: user,
             title,
             subjectName: subject,
             subjectId,
@@ -336,12 +339,43 @@ export default function QuizInfo() {
             questionData: finalInput,
         };
 
-        createQuiz(allData);
+        // console.log(allData);
+
+        const imgData = quizCover;
+        const formData = new FormData();
+        formData.append('image', imgData);
+
+        if (quizCover === '') {
+            createQuiz(allData);
+        } else {
+            const imageHostKey = process.env.REACT_APP_imgbb_key;
+            const imgbbUrl = `https://api.imgbb.com/1/upload?expiration=15552000&key=${imageHostKey}`;
+
+            fetch(imgbbUrl, {
+                method: 'POST',
+                body: formData,
+            })
+                .then((result) => {
+                    result.json().then((upRes) => {
+                        if (upRes?.success) {
+                            // console.log(upRes?.data?.url);
+                            allData.quizCover = upRes?.data?.url;
+                            createQuiz(allData);
+                        }
+                    });
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        }
+
         setMark(1);
+        setImgLink('');
         setFinalInput([]);
         setTitle('');
         setStartDate(null);
         setStartTime(null);
+        setQuizCover('');
         setSubject('public');
     };
 
@@ -422,6 +456,18 @@ export default function QuizInfo() {
                             timeCaption="Time"
                             dateFormat="h:mm aa"
                         />
+                    </div>
+                    <div className="container upper-lw-create">
+                        <label className="filelabel">
+                            <span>Cover photo</span>
+                            <input
+                                className="FileUpload1"
+                                id="FileInput"
+                                name="inputimg"
+                                type="file"
+                                onChange={(e) => setQuizCover(e.target.files[0])}
+                            />
+                        </label>
                     </div>
                 </div>
 
@@ -551,14 +597,22 @@ export default function QuizInfo() {
                                     id="left-tool-box"
                                 >
                                     <label className="filelabel">
-                                        {preview ? <img src={preview} className="img-fluid" alt='preview-img'/> : <i className="fa-regular fa-image" />}
+                                        {preview ? (
+                                            <img
+                                                src={preview}
+                                                className="img-fluid"
+                                                alt="preview-img"
+                                            />
+                                        ) : (
+                                            <i className="fa-regular fa-image" />
+                                        )}
                                         <span className="title">Add Image</span>
                                         <input
                                             className="FileUpload1"
                                             id="FileInput"
                                             name="inputimg"
                                             type="file"
-                                            onChange={handleFileSelected}
+                                            onChange={(e) => handleFileSelected(e)}
                                         />
                                     </label>
                                     {/* <input type='reset' onClick={handleFileSelected} /> */}

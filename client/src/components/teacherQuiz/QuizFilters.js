@@ -1,13 +1,24 @@
+import { useState } from 'react';
 import { BsFillPlusCircleFill } from 'react-icons/bs';
 import { FaFilter } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { v4 } from 'uuid';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
-export default function QuizFilters() {
+export default function QuizFilters({ subjects, setSubj, setStatus }) {
+    const [sbj, setSbj] = useState('Public');
+    const [sts, setSts] = useState('active');
+
     const navigate = useNavigate();
 
     const handleAddQuiz = () => {
         navigate('/dashboard');
+    };
+
+    const handleAddFilter = () => {
+        // console.log(sbj);
+        setSubj(sbj);
+        setStatus(sts);
     };
 
     return (
@@ -23,36 +34,39 @@ export default function QuizFilters() {
             <div className="container d-flex align-items-center" id="filter-dashboard">
                 <div className="container d-flex justify-content-around" id="filter-select-group">
                     <div className="d-flex flex-column gap-1" id="subject-filter">
-                        <label htmlFor="sort-content" className="form-label d-block p-0 m-0">
+                        <label
+                            htmlFor="filter-quiz-dashboard"
+                            className="form-label d-block p-0 m-0"
+                        >
                             Subject
                         </label>
                         <select
                             id="filter-quiz-dashboard"
                             className="form-select form-select-sm m-0"
-                            name="filter-quiz-dashboard"
-                            defaultValue="select"
+                            onChange={(e) => setSbj(e.target.value)}
+                            value={sbj}
                         >
-                            <option hidden disabled value="select">
-                                Select
-                            </option>
-                            <option value="math">Math</option>
-                            <option value="algorithm">Algorithm</option>
+                            {subjects?.map((subj) => (
+                                <option key={v4()} value={subj}>
+                                    {subj}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
                     <div className="d-flex flex-column gap-1" id="status-filter">
-                        <label htmlFor="sort-content" className="form-label d-block p-0 m-0">
+                        <label
+                            htmlFor="status-filter-quiz-dashboard"
+                            className="form-label d-block p-0 m-0"
+                        >
                             Status
                         </label>
                         <select
                             id="status-filter-quiz-dashboard"
                             className="form-select form-select-sm m-0"
-                            name="status-filter-quiz-dashboard"
-                            defaultValue="select"
+                            onChange={(e) => setSts(e.target.value)}
+                            value={sts}
                         >
-                            <option hidden disabled value="select">
-                                Select
-                            </option>
                             <option value="active">Active</option>
                             <option value="hidden">Hidden</option>
                         </select>
@@ -60,7 +74,11 @@ export default function QuizFilters() {
                 </div>
 
                 <span>
-                    <button type="button" className="btn filter-dashboard-btn mt-2">
+                    <button
+                        type="button"
+                        className="btn filter-dashboard-btn mt-2"
+                        onClick={handleAddFilter}
+                    >
                         <FaFilter /> Add filter
                     </button>
                 </span>

@@ -21,7 +21,6 @@
 }
 
 body {
-    background-image: url('../snow.svg') !important;
     background-color: #6b6b6b !important;
 
 }
@@ -41,7 +40,7 @@ body {
 }
 
 #navBar>ul {
-    width: 50%;
+    width: 65%;
 }
 
 #drop-menu {
@@ -439,7 +438,7 @@ footer a {
 }
 
 #navbar .navbar-brand img {
-    width: 150px;
+    width: 130px;
 }
 
 /* #all-post-cards .home-post-card .line-post{
@@ -540,7 +539,7 @@ footer a {
 
 #post-editor .post-editor-below .filelabel i {
     display: block;
-    font-size: 30px;
+    font-size: 25px;
     cursor: pointer;
 }
 

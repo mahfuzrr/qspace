@@ -110,7 +110,7 @@ export default function UserLogIn() {
                                         className="container w-50 d-flex align-items-center justify-content-end"
                                         id="forgot-password"
                                     >
-                                        <a href="/">Forget Password?</a>
+                                        {/* <a href="/">Forget Password?</a> */}
                                     </div>
                                 </div>
                                 <button

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { FaBookReader } from 'react-icons/fa';
 import { HiHome } from 'react-icons/hi';
-import { MdGroups, MdLibraryBooks } from 'react-icons/md';
+import { MdExplore, MdGroups, MdLibraryBooks } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/Qspace-logo.png';
@@ -90,6 +90,16 @@ export default function Navbar() {
                                 onClick={() => setActive('room')}
                             >
                                 <MdGroups size={18} /> <span className="ms-1">Room</span>
+                            </Link>
+                        </li>
+
+                        <li className="nav-item">
+                            <Link
+                                className={`nav-link ${activeLink === 'explore' ? 'active' : ''}`}
+                                to="/explore"
+                                onClick={() => setActive('explore')}
+                            >
+                                <MdExplore /> <span className="ms-1">Explore</span>
                             </Link>
                         </li>
                     </ul>

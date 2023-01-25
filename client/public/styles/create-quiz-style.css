@@ -68,6 +68,32 @@
     margin-top: 2%;
 }
 
+#full-create-contents .upper-create .upper-lw-create {
+    width: 70%;
+    margin-top: 2%;
+}
+
+#full-create-contents .upper-create .upper-lw-create .filelabel {
+    width: 120px;
+    border: 1px solid var(--border-2);
+    border-radius: 5px;
+    display: block;
+    padding: 5px;
+    transition: border 300ms ease;
+    cursor: pointer;
+    text-align: center;
+    background-color: white;
+}
+
+#full-create-contents .upper-create .upper-lw-create .filelabel span:hover {
+    color: #8854C0 !important;
+}
+
+#full-create-contents .upper-create .upper-lw-create .filelabel:hover {
+    border: 1px solid var(--blue);
+    color: #8854C0;
+}
+
 #full-create-wrapper .lower-create .lower-single-question {
     background-color: white;
     width: 70%;
