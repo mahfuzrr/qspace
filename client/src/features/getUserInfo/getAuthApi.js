@@ -5,16 +5,15 @@ import { setUserInfo } from './getUserInfoSlice';
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         cookie: builder.query({
-            query: () => ({
-                url: '/api/user/reload-user-save',
-                credentials: 'include',
+            query: (data) => ({
+                url: `/api/user/reload-user-save/${data?.email}/${data?.accessToken}`,
             }),
             providesTags: ['AddUserInfo'],
 
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
                     const result = await queryFulfilled;
-                    if (result?.data?.success && result) {
+                    if (result?.data?.success) {
                         // console.log(result.data);
                         dispatch(
                             userLoggedIn({

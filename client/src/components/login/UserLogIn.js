@@ -32,7 +32,10 @@ export default function UserLogIn() {
             };
             cookie = JSON.stringify(cookie);
 
-            Cookies.set('qspace', cookie, { expires: 2 });
+            Cookies.set('qspace', cookie, {
+                expires: 2,
+                secure: false,
+            });
         }
     }, [data]);
 

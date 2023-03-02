@@ -11,10 +11,9 @@ export const createRoomApi = apiSlice.injectEndpoints({
             invalidatesTags: ['createRoom'],
         }),
         getRooms: builder.query({
-            query: () => ({
-                url: 'api/user/get-all-rooms',
+            query: (email) => ({
+                url: `api/user/get-all-rooms/${email}`,
                 method: 'GET',
-                credentials: 'include',
             }),
             providesTags: ['createRoom'],
         }),

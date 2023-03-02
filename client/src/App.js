@@ -1,10 +1,14 @@
-import React from 'react';
+import Cookies from 'js-cookie';
+import React, { useEffect } from 'react';
 import 'react-photo-view/dist/react-photo-view.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Loader from './components/Loader/Loader';
 import PrivateRoute from './components/privateRouter/PrivateRoute';
 import PublicRoute from './components/publicRouter/PublicRoute';
+import { userLoggedIn } from './features/auth/authSlice';
 import { useCookieQuery } from './features/getUserInfo/getAuthApi';
+import { setUserInfo } from './features/getUserInfo/getUserInfoSlice';
 import Create from './pages/Create';
 import Details from './pages/Details';
 import Exam from './pages/Exam';
@@ -23,8 +27,49 @@ import StandingPage from './pages/StandingPage';
 import Students from './pages/Students';
 
 function App() {
-    useCookieQuery({ count: 5 }, { refetchOnMountOrArgChange: true });
+    let cookie = Cookies.get('qspace') || '';
+
+    if (cookie) {
+        cookie = JSON.parse(cookie);
+    }
+
+    const { data, isLoading } = useCookieQuery(
+        cookie,
+        { count: 5 },
+        { refetchOnMountOrArgChange: true }
+    );
     const { role } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log(data);
+
+        if (data?.success) {
+            dispatch(
+                userLoggedIn({
+                    accessToken: data?.accessToken,
+                    user: data?.message?.name,
+                    role: data?.message?.role,
+                    email: data?.message?.email,
+                    photoURL: data?.message?.photoURL,
+                    isLogged: true,
+                    id: data?.message?.id,
+                })
+            );
+
+            dispatch(
+                setUserInfo({
+                    name: data?.message?.name,
+                    email: data?.message?.email,
+                    college: data?.message?.college,
+                })
+            );
+        }
+    }, [data, dispatch]);
+
+    if (isLoading) {
+        return <Loader />;
+    }
 
     return (
         <BrowserRouter>

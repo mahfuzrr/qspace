@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import Footer from '../components/footer/Footer';
 import Loader from '../components/Loader/Loader';
 import Navbar from '../components/navbar/Navbar';
@@ -6,7 +7,13 @@ import Sidebar from '../components/sidebar/Sidebar';
 import { useGetRoomsQuery } from '../features/createRoom/createRoomApi';
 
 export default function Room() {
-    const { data, isLoading } = useGetRoomsQuery({ count: 5 }, { refetchOnMountOrArgChange: true });
+    const { email } = useSelector((state) => state.auth);
+
+    const { data, isLoading } = useGetRoomsQuery(
+        email,
+        { count: 5 },
+        { refetchOnMountOrArgChange: true }
+    );
 
     if (isLoading) {
         return <Loader />;
